@@ -1,0 +1,231 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Variables</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="type.html">Type operations</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="networking.html">Networking</a>
+</div>
+<h1 class="links">Arc: Variables</h1>
+<h2>Variables</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='do'></a>
+<a target='CODE' href='/src/do.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?do'>do</a> <span class='args'>[statement ...]</span>
+    <div class='desc'>Executes the statements in order.  The do statement is useful when multiple statements need to be executed in a context that permits only a single statement, such as an 'if' clause.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(do (= x 2) (+ x 3))
+<span class="return">5
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='do1'></a>
+<a target='CODE' href='/src/do1.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?do1'>do1</a> <span class='args'>expr [body ...]</span>
+    <div class='desc'>Saves the first expression and returns it after executing the body. </div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x 42
+  (do1 x (= x 50)))
+<span class="return">42
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='def'></a>
+<a target='CODE' href='/src/def.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?def'>def</a> <span class='args'>name params [body ...]</span>
+    <div class='desc'>Defines a function with the given name, taking the specified parameters.  This is the standard way of creating a new function in Arc. The parameter list params can be an empty list (for a function that takes no arguments), a variable (which will hold an arbitrary number of parameters as a list), or a dotted list (with the last variable holding any left-over parameters as a list).</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(do (def foo x (prn x)) (foo 1 2 3))
+<span class="stdout">(1 2 3)
+
+</span><span class="return">(1 2 3)
+</span></pre>
+<pre>
+&gt;(do (def bar (a b c) (prn a "," b "," c)) (bar 1 2 3))
+<span class="stdout">1,2,3
+
+</span><span class="return">1
+</span></pre>
+<pre>
+&gt;(do (def baz (a . rest) (prn a "," rest)) (baz 1 2 3))
+<span class="stdout">1,(2 3)
+
+</span><span class="return">1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='defs'></a>
+<a target='CODE' href='/src/defs.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defs'>defs</a> <span class='args'>[name params body] ...</span>
+    <div class='desc'>Performs multiple def operations.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(def foo x (prn x) bar (a b c) (prn a "." b "." c))
+<span class="return">#&lt;procedure: foo&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='defmemo'></a>
+<a target='CODE' href='/src/defmemo.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defmemo'>defmemo</a> <span class='args'>name parms [body ...]</span>
+    <div class='desc'>Creates a memoized function.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='memo'></a>
+<a target='CODE' href='/src/memo.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?memo'>memo</a> <span class='args'>f</span>
+    <div class='desc'>Creates a memoized function from f.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='safeset'></a>
+<a target='CODE' href='/src/safeset.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?safeset'>safeset</a> <span class='args'>var value</span>
+    <div class='desc'>Sets var to value.  This is similar to =, except it prints a warning to stderr if var is already defined.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(do (safeset var 1) (safeset var 2))
+<span class="return">2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='with'></a>
+<a target='CODE' href='/src/with.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?with'>with</a> <span class='args'>([var val ...]) [body ...]</span>
+    <div class='desc'>Creates a new variable binding and executes the body.  The values are computed before any of the assignments are done (like Scheme's <code>let</code>, rather than <code>let*</code>).  If the last variable doesn't have a value, it is assigned nil.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(with (a 1 b 2 c 3) (+ a b c))
+<span class="return">6
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='let'></a>
+<a target='CODE' href='/src/let.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?let'>let</a> <span class='args'>var val [body ...]</span>
+    <div class='desc'>The let statement sets the variable var to the value within the scope of the body.  Outside the let statement, any existing value of var is unaffected.  Let is like <code>with</code> but with a single variable binding.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x 3 (+ x 1))
+<span class="return">4
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='withs'></a>
+<a target='CODE' href='/src/withs.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?withs'>withs</a> <span class='args'>([var val ...]) [body ...]</span>
+    <div class='desc'>Creates a new variable binding and executes the body.  The values are computed sequentially (like Scheme's <code>let*</code>, rather than <code>let</code>).  If the last variable doesn't have a value, it is assigned nil.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(withs (a 1 b (+ a 1)) (+ a b))
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='fn'></a>
+<a target='CODE' href='/src/fn.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fn'>fn</a> <span class='args'>args [body ...]</span>
+    <div class='desc'>fn is used to create lambda functions.  The args can be a variable (which
+   will pick up all the arguments as a list), a list of variables, or a dotted list of
+   variables (the last will pick up the remainder as a list ).</div>
+    </td>
+    <td class='arc'><pre>
+&gt;((fn (x y) (+ x y)) 1 2)
+<span class="return">3
+</span></pre>
+<pre>
+&gt;((fn all (len all)) 1 2 3)
+<span class="return">3
+</span></pre>
+<pre>
+&gt;((fn (arg1 arg2 . rest) rest) 1 2 3 4)
+<span class="return">(3 4)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='in'></a>
+<a target='CODE' href='/src/in.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?in'>in</a> <span class='args'>x [choices ...]</span>
+    <div class='desc'>This predicate returns true if x is in the choices.  Note that each choice is a separate argument.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(in 1 2 "b" 1 #\c)
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(in 1 '(1 2 3))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='copy'></a>
+<a target='CODE' href='/src/copy.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?copy'>copy</a> <span class='args'>x [key val] ...</span>
+    <div class='desc'>Copies x, updating entries corresponding to the args..  The input must be of type sym, cons, string, or table.  For a sym, additional arguments are not permitted.  For a list, the keys are numeric indices into the list, and the corresponding entries are replaced with the values.  For a string, the keys are indices into the string and the values must be characters.  For a table, the keys and values add or update entries in the table. Original object x is unmodified.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='sig'></a>
+<a target='CODE' href='/src/sig.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sig'>sig</a> <span class='args'> </span>
+    <div class='desc'>Hash table containing function signatures.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(sig 'map)
+<span class="return">(f . seqs)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='defhook'></a>
+<a target='CODE' href='/src/defhook.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defhook'>defhook</a> <span class='args'>name [body ...]</span>
+    <div class='desc'>Creates a function (similar to def), except the function is registered in hooks*</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='hook'></a>
+<a target='CODE' href='/src/hook.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hook'>hook</a> <span class='args'>name [arg ...]</span>
+    <div class='desc'>Executes a function registered in hooks*</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='hooks*'></a>
+<a target='CODE' href='/src/hooks%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hooks*'>hooks*</a> <span class='args'></span>
+    <div class='desc'>(tests)</div>
+    </td>
+    <td class='arc'>  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Atomic operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="networking.html">Networking</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="os.html">Operating system</a>
+</div>
+<h1 class="links">Arc: Atomic operations</h1>
+Atomic operations
+<h2>Atomic operations</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='atomic-invoke'></a>
+<a target='CODE' href='/src/atomic-invoke.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?atomic-invoke'>atomic-invoke</a> <span class='args'>function</span>
+    <div class='desc'>Invokes function, making sure that only one
+  thread at a time invokes something wrapped inside an atomic-invoke.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(atomic-invoke (fn () "critical section" (+ 1 2)))
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='atomic'></a>
+<a target='CODE' href='/src/atomic.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?atomic'>atomic</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Executes the body statements atomically.  The body is wrapped in <code>atomic-invoke</code> to ensure that only one such body can execute at a time.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(atomic (pr "hello"))
+<span class="stdout">hello
+</span><span class="return">"hello"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='atlet'></a>
+<a target='CODE' href='/src/atlet.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?atlet'>atlet</a> <span class='args'>var value [body ...]</span>
+    <div class='desc'>Atomic version of <code>let</code>.   The value is assigned to var, and the body is executed, all inside <code>atomic</code>. </div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='atwith'></a>
+<a target='CODE' href='/src/atwith.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?atwith'>atwith</a> <span class='args'>args</span>
+    <div class='desc'></div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='atwiths'></a>
+<a target='CODE' href='/src/atwiths.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?atwiths'>atwiths</a> <span class='args'>args</span>
+    <div class='desc'></div>
+    </td>
+    <td class='arc'>  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

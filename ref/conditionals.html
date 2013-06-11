@@ -1,0 +1,162 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Conditionals</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="iteration.html">Iteration</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="evaluation.html">Evaluation</a>
+</div>
+<h1 class="links">Arc: Conditionals</h1>
+The fundamental conditional operator in Arc is <code>if</code>.  It is similar to the Lisp <code>if</code>, except it eliminates the parentheses around the clauses.  For a simple conditional with multiple body statements, <code>when</code> or its opposite <code>unless</code> can be used.
+<p>
+Arc provides several conditionals that assign the test expression to a variable, similar to <code>let</code>.  The <code>iflet</code>, <code>caselet</code>, and <code>whenlet</code> macros are useful if the test expression is used inside the body.
+<h2>Conditionals</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='if'></a>
+<a target='CODE' href='/src/if.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?if'>if</a> <span class='args'>[test expr] ... [else-expr]</span>
+    <div class='desc'>Arc is the basic conditional operation.
+  It takes a sequence of tests and expressions.  The expression corresponding
+  to the first true test is returned.  Other expressions are not evaluated.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(if nil "Nil is true"
+    0   "0 is true"
+    "What is true?")
+<span class="return">"0 is true"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='iflet'></a>
+<a target='CODE' href='/src/iflet.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?iflet'>iflet</a> <span class='args'>var expr then-expr [test1 expr1] ... [else-expr]</span>
+    <div class='desc'>Evaluates <code>expr</code>.  If true, <code>expr</code> is assigned to <code>var</code> and <code>then-expr</code> is evaluated and returned.  Otherwise, the remaining arguments are processed as normal <code>if</code> clauses.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(iflet x 42 (+ x 1))
+<span class="return">43
+</span></pre>
+<pre>
+&gt;(iflet x nil (+ x 1))
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(iflet x nil (+ x 1)
+        (< 1 2) 55)
+<span class="return">55
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='when'></a>
+<a target='CODE' href='/src/when.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?when'>when</a> <span class='args'>test [body ...]</span>
+    <div class='desc'>Executes body if test is true.  This is similar to <code>if</code>, except it allows multiple body statements but only has a single test clause. </div>
+    </td>
+    <td class='arc'><pre>
+&gt;(when 1 (pr "a") (pr "b"))
+<span class="stdout">ab
+</span><span class="return">"b"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='whenlet'></a>
+<a target='CODE' href='/src/whenlet.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?whenlet'>whenlet</a> <span class='args'>var expr [body ...]</span>
+    <div class='desc'>Evaluates <code>expr</code>.  If true, the value is assigned to <code>var</code> and <code>body</code> is executed.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(whenlet x nil (prn "hi") (+ x 1))
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(whenlet x 1 (prn "hi") (+ x 1))
+<span class="stdout">hi
+
+</span><span class="return">2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='unless'></a>
+<a target='CODE' href='/src/unless.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?unless'>unless</a> <span class='args'>test [body ...]</span>
+    <div class='desc'>Executes body if test is false.  This is the opposite of 'when'.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(unless 1 (pr "a") (pr "b"))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='case'></a>
+<a target='CODE' href='/src/case.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?case'>case</a> <span class='args'>arg [test1 expr1] ... [else-expr]</span>
+    <div class='desc'><code>arg</code> is evaluated.  It is then compared to the test values in sequence.  If it matches one, the corresponding expr is evaluated and returned.  If there is no match and no <code>else-expr</code>, <code>nil</code> is returned.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(case 'b
+   a 1
+   b 2
+     3)
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(case 42
+   10 "foo"
+   42 "bar")
+<span class="return">"bar"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='caselet'></a>
+<a target='CODE' href='/src/caselet.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?caselet'>caselet</a> <span class='args'>var arg [test1 expr1] ... [else-expr]</span>
+    <div class='desc'><code>arg</code> is evaluated and assigned to <code>var</code>.  It is then compared to the test values in sequence.  If it matches one, the corresponding expr is evaluated and returned.  If there is no match and no <code>else-expr</code>, <code>nil</code> is returned.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(caselet x 'b
+   a 1
+   b 2
+     3)
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(caselet x 42
+   10 (+ x 3)
+   42 (+ x 5))
+<span class="return">47
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='check'></a>
+<a target='CODE' href='/src/check.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?check'>check</a> <span class='args'>expr test [alt]</span>
+    <div class='desc'>Evaluates <code>expr</code> and applies predicate <code>test</code>.  If true, returns the evaluated value.  Otherwise returns <code>alt</code> or nil. <code>alt</code> can be a function to try again, even calling <code>check</code> recursively.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(check (+ 10 10) odd "foo")
+<span class="return">"foo"
+</span></pre>
+<pre>
+&gt;(check (+ 10 10) even "bar")
+<span class="return">20
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

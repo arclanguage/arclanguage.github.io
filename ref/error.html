@@ -1,0 +1,164 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Error handling and continuations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="queue.html">Queues</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="anaphoric.html">Anaphoric operations</a>
+</div>
+<h1 class="links">Arc: Error handling and continuations</h1>
+<h2>Error handling and continuations</h2>
+Arc provides several operations for error handling and non-linear control flow.
+Since Arc's control flow mechanisms are built on top of MzScheme, see the MzScheme manual on <a href='http://download.plt-scheme.org/doc/mzscheme/mzscheme-Z-H-6.html#node_chap_6'>exceptions and control flow</a> for details.
+<p>
+Arc's simplest mechanism for non-linear control flow is <code>catch</code> and <code>throw</code>.  This allows execution to jump back to the <code>catch</code> expression, for example to exit a loop early.
+<pre class="repl">
+arc> (catch (each x '(2 4 6 9 10 12) (prn "Examining " x) (if (odd x) (throw x))))
+Examining 2
+Examining 4
+Examining 6
+Examining 9
+9
+</pre>
+<p>
+Arc also provides access to MzScheme's exception mechanism, which provides a way to trap errors or raise error.
+<p>
+The <code>ccc</code> function is equivalent to Scheme's <code>call-with-current-continuation</code> (often abbreviated as <code>call/cc</code>).  Continuations are extremely powerful; for details
+see <a href="http://gd.tuwien.ac.at/languages/scheme/tutorial-dsitaram/t-y-scheme-Z-H-14.html">Teach Yourself Scheme in Fixnum Days</a>, <a href="http://www.bookshelf.jp/texi/onlisp/onlisp_21.html">Chapter 20</a> of "On Lisp",
+<a href="http://jerry.cs.uiuc.edu/~plop/plop2001/accepted_submissions/PLoP2001/dferguson0/PLoP2001_dferguson0_1.pdf">Call with Current Continuation Patterns</a>, or <a href="http://people.csail.mit.edu/jhbrown/scheme/continuationslides04.pdf">Advanced Scheme Techniques</a>.  In MzScheme, continuations are relatively expensive if the call stack is deep since capturing a continuation copies the stack.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='point'></a>
+<a target='CODE' href='/src/point.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?point'>point</a> <span class='args'>name [body ...]</span>
+    <div class='desc'>Creates a 'throw' function called
+<code>name</code> and executes <code>body</code>.  If <code>name</code> is
+executed within <code>body</code>, that value will be returned from
+<code>point</code>.  Otherwise, <code>point</code> has no effect and the value from <code>body</code> will be
+returned.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(+ 10 (point throw (+ 20 (throw 3) 30)))
+<span class="return">13
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='catch'></a>
+<a target='CODE' href='/src/catch.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?catch'>catch</a> <span class='args'>body</span>
+    <div class='desc'>Executes <code>body</code> and catches any value passed to <code>throw</code>.  This is the same as <code>point</code> with the throw function's name predefined.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(+ 10 (catch (+ 20 (throw 3) 30)))
+<span class="return">13
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='ccc'></a>
+<a target='CODE' href='/src/ccc.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ccc'>ccc</a> <span class='args'>procedure</span>
+    <div class='desc'>Packages up the current continuation into an 'escape
+  procedure' and passes it to the procedure.  Equivalent to Scheme's <code>call/cc</code> or <a
+  href='http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-9.html#%_idx_566'>call-with-current-continuation</a>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(ccc (fn (ep) (ep "bailout value") 42))
+<span class="return">"bailout value"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='protect'></a>
+<a target='CODE' href='/src/protect.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?protect'>protect</a> <span class='args'>during-procedure after-procedure</span>
+    <div class='desc'>Uses Scheme's
+  <a
+  href='http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-9.html#%_idx_576'>dynamic-wind</a> to
+  ensure that <code>after-procedure</code> is executed whenever <code>during-procedure</code> exits.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(protect (fn () (/ 1 0))
+    (fn () (prn "after")))
+<span class="stdout">after
+Error: /: division by zero
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='after'></a>
+<a target='CODE' href='/src/after.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?after'>after</a> <span class='args'>during-body [after-body ...]</span>
+    <div class='desc'>Ensures that
+<code>after-body</code> executes whenever <code>during-body</code> exits.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='details'></a>
+<a target='CODE' href='/src/details.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?details'>details</a> <span class='args'>exception</span>
+    <div class='desc'>Returns the message associated with an exception.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(on-err (fn (ex) (details ex)) (err "boo"))
+<span class="stdout">Error: boo
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='err'></a>
+<a target='CODE' href='/src/err.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?err'>err</a> <span class='args'>string ...</span>
+    <div class='desc'>Raises an exception with the given text.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(err "Failure" 42)
+<span class="stdout">Error: Failure 42
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='on-err'></a>
+<a target='CODE' href='/src/on-err.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?on-err'>on-err</a> <span class='args'>err-proc proc</span>
+    <div class='desc'>Executes proc.  Calls err-proc if an exception
+  occurs in proc.  The exception is passed to err-proc</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(on-err (fn (ex) (string "caught " (details ex)))
+          (fn () (/ 1 0)))
+<span class="return">"caught /: division by zero"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='errsafe'></a>
+<a target='CODE' href='/src/errsafe.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?errsafe'>errsafe</a> <span class='args'>expr</span>
+    <div class='desc'>Executes expr, returning nil if an error occurs.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(errsafe (/ 1 2))
+<span class="return">1/2
+</span></pre>
+<pre>
+&gt;(errsafe (/ 1 0))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

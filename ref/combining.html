@@ -1,0 +1,97 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Boolean operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="assignment.html">Assignment and places</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="iteration.html">Iteration</a>
+</div>
+<h1 class="links">Arc: Boolean operations</h1>
+<h2>Booleans</h2>
+Arc provides basic Boolean operations.
+ Only nil and empty list are false; any other value, including 0 and empty string, is true.  The operations provide short-circuit evaluation, so only the necessary arguments are evaluated, left-to-right.
+<p>
+See also the <a href="anaphoric.html">Anaphoric operations </a> <code>aand</code> and <code>aor</code>.
+
+
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='no'></a>
+<a target='CODE' href='/src/no.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?no'>no</a> <span class='args'>expr</span>
+    <div class='desc'>Complement: returns true if <code>expr</code> is false, and false if <code>expr</code> is true.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(no 1)
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(no nil)
+<span class="return">t
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='and'></a>
+<a target='CODE' href='/src/and.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?and'>and</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>The and boolean operator tests if all the arguments are true.  It evaluates its arguments in turn until a false argument is found.
+If all arguments are true, the last argument is returned.  If all arguments are false, nil is returned.  The and operator performs 'short-circuit' evaluation, and doesn't evaluate arguments that follow a false one.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(and 1 t 0 "x")
+<span class="return">"x"
+</span></pre>
+<pre>
+&gt;(and nil t)
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(and nil (/ 1 0))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='or'></a>
+<a target='CODE' href='/src/or.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?or'>or</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>The or boolean operator tests if any of the arguments are true.  It evaluates its arguments in turn until a true argument is found.  If any argument is true, the first true argument is returned.  If all arguments are false, nil is returned.  The or operator performs 'short-circuit' evaluation, and doesn't evaluate arguments that follow a true one.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(or nil 42 '() (/ 1 0))
+<span class="return">42
+</span></pre>
+<pre>
+&gt;(or nil '())
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='nor'></a>
+<a target='CODE' href='/src/nor.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?nor'>nor</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>The nor boolean operator tests if all of the arguments are false.  It returns t if all arguments are false, and nil if any arguments are true.  It performs 'short-circuit' evaluation, and doesn't evaluate arguments that follow a true one.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(nor nil nil)
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(nor nil 1 (/ 1 0))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

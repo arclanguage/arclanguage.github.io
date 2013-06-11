@@ -1,0 +1,124 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Type handling</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="table.html">Table operations</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="variables.html">Variable operations</a>
+</div>
+<h1 class="links">Arc: Type handling</h1>
+Arc has functions to convert types and to determine the type of an object.
+<h2>Type handling</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='annotate'></a>
+<a target='CODE' href='/src/annotate.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?annotate'>annotate</a> <span class='args'>type obj</span>
+    <div class='desc'>Tags the object with the given type.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(type (annotate 'mac car))
+<span class="return">mac
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rep'></a>
+<a target='CODE' href='/src/rep.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rep'>rep</a> <span class='args'>obj</span>
+    <div class='desc'>Returns the underlying object for an annotated object</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rep whilet)
+<span class="return">#&lt;procedure: whilet&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='sym'></a>
+<a target='CODE' href='/src/sym.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sym'>sym</a> <span class='args'>x</span>
+    <div class='desc'>Coerces x to a 'sym.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(sym "a")
+<span class="return">a
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='coerce'></a>
+<a target='CODE' href='/src/coerce.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?coerce'>coerce</a> <span class='args'>obj type [args]</span>
+    <div class='desc'>Coerces object to a new type.  A char can be
+  coerced to int, string, or sym.  A number can be coerced to int, char, or string
+  (of specified base).  A string can be coerced to sym, cons (char list), or int (of
+  specified base).  A list of characters can be coerced to a string.  A symbol
+  can be coerced to a string.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(coerce "a" 'sym)
+<span class="return">a
+</span></pre>
+<pre>
+&gt;(coerce 65 'char)
+<span class="return">#\A
+</span></pre>
+<pre>
+&gt;(coerce 65 'int 2)
+<span class="return">65
+</span></pre>
+<pre>
+&gt;(coerce "abc" 'cons)
+<span class="return">(#\a #\b #\c)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='int'></a>
+<a target='CODE' href='/src/int.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?int'>int</a> <span class='args'>x [base]</span>
+    <div class='desc'>Coerces x to an integer.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(int "3.14")
+<span class="return">3
+</span></pre>
+<pre>
+&gt;(int "1111" 2)
+<span class="return">15
+</span></pre>
+<pre>
+&gt;(int #\a)
+<span class="return">97
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='type'></a>
+<a target='CODE' href='/src/type.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?type'>type</a> <span class='args'>object</span>
+    <div class='desc'>Returns the type of an object (as a symbol).
+  Possibilities are cons, sym, fn, char, string, int, num, table, output,
+  input, socket, exception, or mac.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(type 1)
+<span class="return">int
+</span></pre>
+<pre>
+&gt;(type car)
+<span class="return">fn
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

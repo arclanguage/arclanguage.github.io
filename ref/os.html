@@ -1,0 +1,82 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Other OS Operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="atomic.html">Atomic operations</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="io.html">I/O in the Arc language</a>
+</div>
+<h1 class="links">Arc: Other OS Operations</h1>
+<h2>Other OS Operations</h2>
+The following are miscellaneous operating system operations.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='declare'></a>
+<a target='CODE' href='/src/declare.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?declare'>declare</a> <span class='args'>key value</span>
+    <div class='desc'>Sets an interpreter option.  The key <code>direct-calls</code>, when set to t, optimizes function calls on the assumption they will not be redefined as table.  The key <code>explicit-flush</code>, when set to t, disables automatic flushing of output, requiring explicit flushout calls.  Both are initializes to nil.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(declare direct-calls t)
+<span class="stdout">Error: _direct-calls: undefined;
+ cannot reference undefined
+ identifier
+
+</span></pre>
+<pre>
+&gt;(declare explicit-flush t)
+<span class="stdout">Error: _explicit-flush: undefined;
+ cannot reference undefin
+ed identifier
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='memory'></a>
+<a target='CODE' href='/src/memory.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?memory'>memory</a> <span class='args'></span>
+    <div class='desc'>Returns the current memory usage.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(memory)
+<span class="return">38313968
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='system'></a>
+<a target='CODE' href='/src/system.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?system'>system</a> <span class='args'>string</span>
+    <div class='desc'>Executes the string in the underlying OS.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(system "date")
+<span class="stdout">Tue Jun 11 06:02:10 GMT 2013
+
+</span><span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='quit'></a>
+<a target='CODE' href='/src/quit.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?quit'>quit</a> <span class='args'></span>
+    <div class='desc'>Exits the interpreter.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(quit)
+--exits--
+</pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

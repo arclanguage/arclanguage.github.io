@@ -1,0 +1,1025 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: HTML operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="anaphoric.html">Anaphoric operations</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="srv.html">The Arc web server</a>
+</div>
+<h1 class="links">Arc: HTML operations</h1>
+Arc provides a large number of operations for generating HTML.  The basic operations are <code>gentag</code> to generate a standalone tag such as <code>&lt;img&gt;</code>, and <code>tag</code> to generate an open/close tag pair surrounding something.  In addition, Arc provides special-purpose functions for common HTML operations.
+Arc has many operations to support forms, as well as many table operations, as tables are its primary layout technique.
+<p>
+For example, the following code generates a simple page with text, formatting, and a link.
+<pre class="repl">
+    (whitepage (prn "Hello world!") (para) (link "Click here") (prn "for") (prbold "more stuff"))
+</pre>
+<p>
+The basic model is <code>gentag</code> generates a stand-alone tag, <code>tag</code> generates a begin/end tag pair surrounding something, and a variety of operations can be used for many tags. 
+<p>
+A tag in Arc can be defined with a tag spec, which is a tag followed by attributes and values.  The syntax is slightly different for <code>gentag</code> and <code>tag</code>.  <code>gentag</code> takes the tag, attributes and values as arguments, while <code>tag</code> takes the tag spec as a single argument followed by body code that outputs the tag content to stdout.  For example:
+<pre class="repl">
+arc> (tostring (gentag p style "mystyle"))
+"&lt;p style=\"mystyle\">"
+arc> (tostring (tag (p style "mystyle") (pr "Content.") (pr "More content")))
+"&lt;p style=\"mystyle\">Content.More content&lt;/p>"
+</pre>
+<p>
+Most of the HTML generation in Arc is stdout-based, rather than
+return-value-based.  A typical HTML operation in Arc outputs a tag
+to stdout and executes body code which outputs the tag contents to
+stdout. The return value is generally not useful.
+This programming model fits well with Arc's web server, which expects content to be written to stdout in many cases.
+ Note that this
+programming model is different from the standard functional programming
+model, but it has the advantage that the outputs from multiple functions
+can be collected and concatenated.  For example,
+<pre class="repl">
+arc> (tostring (underline (prn "hello") (prn "world")))
+"&lt;u>hello\nworld\n&lt;/u>"
+</pre>
+(In the examples, the code is wrapped in <code>tostring</code> to explicitly capture stdout for clarity, but <code>tostring</code> normally wouldn't be used when implementing web pages.)
+<p>
+However, some HTML operations don't collect output from the body code, but use explicit arguments.  For example,
+<pre class="repl">
+arc> (tostring (row 1 2))
+"&lt;tr>&lt;td>1&lt;/td>&lt;td>2&lt;/td>&lt;/tr>"
+</pre>
+Other HTML operations accept either a list of atom arguments, or body code that outputs to stdout, but not a mixture.  For example,
+<pre class="repl">
+arc> (tostring (td (pr "hi")))
+"&lt;td>hi&lt;/td>"
+arc> (tostring (td "hi"))
+"&lt;td>hi&lt;/td>"
+</pre>
+Arc's HTML generation is relatively inflexible.  Tags can only use attributes that are explicitly registered in the attributes table.  The only exception is the <code>style</code> attribute; all tags support that attribute.  Other attributes are ignored with a comment in the created HTML code.  The following table shows the attributes supported by Arc:
+<pre>
+&lt;a class=<i>string</i> href=<i>string</i> id=<i>sym</i> onclick=<i>string</i> rel=<i>string</i>&gt;
+&lt;body alink=<i>color</i> bgcolor=<i>color</i> leftmargin=<i>number</i> link=<i>color</i> marginheight=<i>number</i> marginwidth=<i>number</i> topmargin=<i>number</i> vlink=<i>color</i>&gt;
+&lt;font color=<i>color</i> face=<i>string</i> size=<i>number</i>&gt;
+&lt;form action=<i>string</i> method=<i>sym</i>&gt;
+&lt;hr color=<i>color</i>&gt;
+&lt;img align=<i>sym</i> border=<i>number</i> height=<i>number</i> hspace=<i>number</i> src=<i>string</i> vspace=<i>number</i> width=<i>number</i>&gt;
+&lt;input name=<i>string</i> size=<i>number</i> type=<i>sym</i> value=<i>escaped</i>&gt;
+&lt;option selected=<i>selected</i>&gt;
+&lt;rss version=<i>string</i>&gt;
+&lt;select name=<i>string</i>&gt;
+&lt;span align=<i>string</i> class=<i>string</i> id=<i>sym</i>&gt;
+&lt;table bgcolor=<i>color</i> border=<i>number</i> cellpadding=<i>number</i> cellspacing=<i>number</i> width=<i>string</i>&gt;
+&lt;td align=<i>sym</i> bgcolor=<i>color</i> class=<i>string</i> colspan=<i>number</i> valign=<i>sym</i> width=<i>number</i>&gt;
+&lt;textarea cols=<i>number</i> name=<i>string</i> rows=<i>number</i> wrap=<i>sym</i>&gt;
+&lt;tr bgcolor=<i>color</i>&gt;
+</pre>
+New tags do not need to be explicitly defined, but any desired attributes that are not listed above need to be defined using <code>attribute</code>.  For instance to support the "class" attribute for <code>img</code>:
+<pre class="repl">
+arc> (attribute img class opstring)
+arc> (tostring (gentag img class "foo"))
+"&lt;img class=\"foo\">"
+</pre>
+<h2>Generating HTML</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='br'></a>
+<a target='CODE' href='/src/br.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?br'>br</a> <span class='args'>[n]</span>
+    <div class='desc'>Prints <code>n</code> break tags.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(br)
+<span class="stdout">&lt;br&gt;
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='br2'></a>
+<a target='CODE' href='/src/br2.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?br2'>br2</a> <span class='args'></span>
+    <div class='desc'>Prints two break tags.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(br2)
+<span class="stdout">&lt;br&gt;&lt;br&gt;
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='center'></a>
+<a target='CODE' href='/src/center.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?center'>center</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>center</code> tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(center (pr "hello"))
+<span class="stdout">&lt;center&gt;hello&lt;/center&gt;
+</span></pre>
+<hr/>
+<center>hello</center>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='underline'></a>
+<a target='CODE' href='/src/underline.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?underline'>underline</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in an underline tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(underline (pr "hello ") (pr "world"))
+<span class="stdout">&lt;u&gt;hello world&lt;/u&gt;
+</span></pre>
+<hr/>
+<u>hello world</u>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='prbold'></a>
+<a target='CODE' href='/src/prbold.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?prbold'>prbold</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Prints a bold (<code>b</code>) tag around <code>arg</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(prbold "hello")
+<span class="stdout">&lt;b&gt;hello&lt;/b&gt;
+</span></pre>
+<hr/>
+<b>hello</b>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='para'></a>
+<a target='CODE' href='/src/para.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?para'>para</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Prints a paragraph (<code>p</code>) tag followed by the args.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(para "hello " "world")
+<span class="stdout">&lt;p&gt;hello world
+</span></pre>
+<hr/>
+<p>hello world
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='whitepage'></a>
+<a target='CODE' href='/src/whitepage.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?whitepage'>whitepage</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Creates a white page containing the body.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(whitepage (prn "hello"))
+<span class="stdout">&lt;html&gt;&lt;body bgcolor=#ffffff alink=#0000be&gt;hello
+&lt;/body&gt;
+&lt;/html&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='errpage'></a>
+<a target='CODE' href='/src/errpage.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?errpage'>errpage</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Prints a white page containing the args.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(errpage "hello " "world")
+<span class="stdout">&lt;html&gt;&lt;body bgcolor=#ffffff alink=#0000be&gt;hello world
+
+&lt;/body&gt;&lt;/html&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='new-hspace'></a>
+<a target='CODE' href='/src/new-hspace.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?new-hspace'>new-hspace</a> <span class='args'>n</span>
+    <div class='desc'>Prints a horizonal spacer using <code>span</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(new-hspace 3)
+<span class="stdout">&lt;span style="padding-left:3px" /&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='blank-url'></a>
+<a target='CODE' href='/src/blank-url.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?blank-url'>blank-url</a> <span class='args'></span>
+    <div class='desc'>Returns path to a blank spacer GIF (<code>s.gif</code>).</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(blank-url)
+<span class="return">"s.gif"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='hspace'></a>
+<a target='CODE' href='/src/hspace.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hspace'>hspace</a> <span class='args'>w</span>
+    <div class='desc'>Prints a horizontal spacer image of width <code>w</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(hspace 3)
+<span class="stdout">&lt;img src="s.gif" height=1 width=3&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='vspace'></a>
+<a target='CODE' href='/src/vspace.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?vspace'>vspace</a> <span class='args'>h</span>
+    <div class='desc'>Prints a vertical spacer image of height <code>h</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(vspace 3)
+<span class="stdout">&lt;img src="s.gif" height=3 width=0&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='vhspace'></a>
+<a target='CODE' href='/src/vhspace.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?vhspace'>vhspace</a> <span class='args'>h w</span>
+    <div class='desc'>Prints a spacer image of height <code>h</code> and width <code>w</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(vhspace 3 5)
+<span class="stdout">&lt;img src="s.gif" height=3 width=5&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='nbsp'></a>
+<a target='CODE' href='/src/nbsp.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?nbsp'>nbsp</a> <span class='args'></span>
+    <div class='desc'>Prints a non-breaking space.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(nbsp)
+<span class="stdout">&amp;nbsp;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='link'></a>
+<a target='CODE' href='/src/link.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?link'>link</a> <span class='args'>text [href [color]]</span>
+    <div class='desc'>Prints an HTML link.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(link "click here" "http://arcfn.com" orange)
+<span class="stdout">&lt;a href="http://arcfn.com"&gt;&lt;font color=#ff6600&gt;click here
+&lt;/font&gt;&lt;/a&gt;
+</span></pre>
+<hr/>
+<a href="http://arcfn.com"><font color=#ff6600>click here</font></a>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='underlink'></a>
+<a target='CODE' href='/src/underlink.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?underlink'>underlink</a> <span class='args'>text [dest]</span>
+    <div class='desc'>Prints an HTML link with explicitly underlined text.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(underlink "click here" "http://arcfn.com")
+<span class="stdout">&lt;a href="http://arcfn.com"&gt;&lt;u&gt;click here&lt;/u&gt;&lt;/a&gt;
+</span></pre>
+<hr/>
+<a href="http://arcfn.com"><u>click here</u></a>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='shortlink'></a>
+<a target='CODE' href='/src/shortlink.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?shortlink'>shortlink</a> <span class='args'>url</span>
+    <div class='desc'>Prints a link to <code>url</code> with <code>http://</code> removed from the text.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(shortlink "http://arcfn.com")
+<span class="stdout">&lt;a href="http://arcfn.com"&gt;arcfn.com&lt;/a&gt;
+</span></pre>
+<hr/>
+<a href="http://arcfn.com">arcfn.com</a>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='parafy'></a>
+<a target='CODE' href='/src/parafy.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parafy'>parafy</a> <span class='args'>str</span>
+    <div class='desc'>Returns <code>str</code> with paragraph tags.  A <code>p</code> tag is inserted after each blank line.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(parafy "hello\n\nworld\npeople")
+<span class="return">"hello\n\n&lt;p&gt;world\npeople"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='spanclass'></a>
+<a target='CODE' href='/src/spanclass.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?spanclass'>spanclass</a> <span class='args'>classname [body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>span</code> tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(spanclass myclass (pr "hello ") (pr "world"))
+<span class="stdout">&lt;span class="myclass"&gt;hello world&lt;/span&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='pagemessage'></a>
+<a target='CODE' href='/src/pagemessage.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pagemessage'>pagemessage</a> <span class='args'>text</span>
+    <div class='desc'>Prints <code>text</code> followed by two breaks, if it is not <code>nil</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(pagemessage "hello")
+<span class="stdout">hello
+&lt;br&gt;&lt;br&gt;
+
+</span></pre>
+<pre>
+&gt;(pagemessage nil)
+</pre>
+  </td></tr>
+</table>
+<h2>Table operations</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='tab'></a>
+<a target='CODE' href='/src/tab.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tab'>tab</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>table</code> tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tab (pr "hello"))
+<span class="stdout">&lt;table border=0&gt;hello&lt;/table&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='sptab'></a>
+<a target='CODE' href='/src/sptab.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sptab'>sptab</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a table tag with 0 border, 0 cellpadding, and 7 cellspacing.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(sptab (prrow "foo" 1))
+<span class="stdout">&lt;table style="border-spacing: 7px 0px;"&gt;&lt;tr&gt;&lt;td&gt;foo&lt;/td&gt;
+&lt;td align=right&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+</span></pre>
+<hr/>
+<table style="border-spacing: 7px 0px;"><tr><td>foo</td><td align=right>1</td></tr></table>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='widtable'></a>
+<a target='CODE' href='/src/widtable.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?widtable'>widtable</a> <span class='args'>w [body ...]</span>
+    <div class='desc'>Prints a single-cell table containing <code>body</code>.  The table has width <code>w</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(widtable "30%" (pr "hello"))
+<span class="stdout">&lt;table width="30%"&gt;&lt;tr&gt;&lt;td&gt;hello&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+</span></pre>
+<hr/>
+<table width="30%"><tr><td>hello</td></tr></table>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='zerotable'></a>
+<a target='CODE' href='/src/zerotable.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?zerotable'>zerotable</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a table tag with 0 border, cellpadding, and cellspacing.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(zerotable (pr "hello"))
+<span class="stdout">&lt;table border=0 cellpadding=0 cellspacing=0&gt;hello&lt;/table&gt;
+</span></pre>
+<hr/>
+<table border=0 cellpadding=0 cellspacing=0>hello</table>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tr'></a>
+<a target='CODE' href='/src/tr.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tr'>tr</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>tr</code> tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(prn "hello")
+<span class="stdout">hello
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='row'></a>
+<a target='CODE' href='/src/row.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?row'>row</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Prints a table row.  Prints a <code>td</code> tag around each <code>arg</code>, and a <code>tr</code> tag around the whole output.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(row 1 "a" 'b)
+<span class="stdout">&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;a&lt;/td&gt;&lt;td&gt;b&lt;/td&gt;&lt;/tr&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='prrow'></a>
+<a target='CODE' href='/src/prrow.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?prrow'>prrow</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Prints a <code>td</code> tag around each <code>arg</code>, and a <code>tr</code> tag around the whole output.  Each <code>arg</code> that is a number is right-justified.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(prrow 1 "a" 'b)
+<span class="stdout">&lt;tr&gt;&lt;td align=right&gt;1&lt;/td&gt;&lt;td&gt;a&lt;/td&gt;&lt;td&gt;b&lt;/td&gt;&lt;/tr&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='spacerow'></a>
+<a target='CODE' href='/src/spacerow.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?spacerow'>spacerow</a> <span class='args'>h</span>
+    <div class='desc'>Prints a spacer table row of height <code>h</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(spacerow 10)
+<span class="stdout">&lt;tr style="height:10px"&gt;&lt;/tr&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='spanrow'></a>
+<a target='CODE' href='/src/spanrow.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?spanrow'>spanrow</a> <span class='args'>colspan [body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>tr</code> and <code>td</code> tag with the given <code>colspan</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(spanrow 3 (pr "hello"))
+<span class="stdout">&lt;tr&gt;&lt;td colspan=3&gt;hello&lt;/td&gt;&lt;/tr&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='trtd'></a>
+<a target='CODE' href='/src/trtd.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?trtd'>trtd</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in <code>tr</code> and <code>td</code> tags. <code>body</code> can be atoms.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(trtd (prn "hello"))
+<span class="stdout">&lt;tr&gt;&lt;td&gt;hello
+&lt;/td&gt;&lt;/tr&gt;
+</span></pre>
+<pre>
+&gt;(trtd "hello " "world")
+<span class="stdout">&lt;tr&gt;&lt;td&gt;hello world&lt;/td&gt;&lt;/tr&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='td'></a>
+<a target='CODE' href='/src/td.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?td'>td</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>td</code> tag. <code>body</code> can be atoms.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(td (prn "hello"))
+<span class="stdout">&lt;td&gt;hello
+&lt;/td&gt;
+</span></pre>
+<pre>
+&gt;(td "hello " "world")
+<span class="stdout">&lt;td&gt;hello world&lt;/td&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tdr'></a>
+<a target='CODE' href='/src/tdr.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tdr'>tdr</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>td</code> tag with alignment set to the right. <code>body</code> can be atoms.  Renamed from tdright in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tdr (prn "hello"))
+<span class="stdout">&lt;td align=right&gt;hello
+&lt;/td&gt;
+</span></pre>
+<pre>
+&gt;(tdright "world")
+<span class="stdout">Error: _tdright: undefined;
+ cannot reference undefined iden
+tifier
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tdcolor'></a>
+<a target='CODE' href='/src/tdcolor.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tdcolor'>tdcolor</a> <span class='args'>color [body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>td</code> tag with the specified <code>bgcolor</code>. <code>body</code> can be atoms.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tdcolor orange (prn 1))
+<span class="stdout">&lt;td bgcolor=#ff6600&gt;1
+&lt;/td&gt;
+</span></pre>
+<pre>
+&gt;(tdcolor orange 1 "world")
+<span class="stdout">&lt;td bgcolor=#ff6600&gt;1world&lt;/td&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='cellpr'></a>
+<a target='CODE' href='/src/cellpr.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cellpr'>cellpr</a> <span class='args'>content</span>
+    <div class='desc'>Prints content or &amp;nbsp; if the content is <code>nil</code></div>
+    </td>
+    <td class='arc'><pre>
+&gt;(cellpr 42)
+<span class="stdout">42
+</span></pre>
+<pre>
+&gt;(cellpr nil)
+<span class="stdout">&amp;nbsp;
+</span></pre>
+  </td></tr>
+</table>
+<h2>Forms</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='form'></a>
+<a target='CODE' href='/src/form.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?form'>form</a> <span class='args'>action [body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>form</code> tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(form "http://arcfn.com" (pr "hello"))
+<span class="stdout">&lt;form method=post action="http://arcfn.com"&gt;hello&lt;/form&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='submit'></a>
+<a target='CODE' href='/src/submit.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?submit'>submit</a> <span class='args'>[value]</span>
+    <div class='desc'>Prints a <code>submit</code> tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(submit "hello")
+<span class="stdout">&lt;input type=submit value="hello"&gt;
+</span></pre>
+<hr/>
+<input type=submit value="hello">
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='but'></a>
+<a target='CODE' href='/src/but.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?but'>but</a> <span class='args'>[value [name]]</span>
+    <div class='desc'>Prints a <code>submit</code> button tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(but "foo" "bar")
+<span class="stdout">&lt;input type=submit name="bar" value="foo"&gt;
+</span></pre>
+<hr/>
+<input type=submit name="bar" value="foo">
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='buts'></a>
+<a target='CODE' href='/src/buts.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?buts'>buts</a> <span class='args'>name [text ...]</span>
+    <div class='desc'>Prints multiple <code>submit</code> button tags, one for each <code>text</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(buts "foo" "bar" "baz")
+<span class="stdout">&lt;input type=submit name="foo" value="bar"&gt; 
+&lt;input type=submit name="foo" value="baz"&gt;
+</span></pre>
+<hr/>
+<input type=submit name="foo" value="bar"> <input type=submit name="foo" value="baz">
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='textarea'></a>
+<a target='CODE' href='/src/textarea.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?textarea'>textarea</a> <span class='args'>name rows cols [body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a <code>textarea</code> tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(textarea "foo" 1 40 (pr "Contents"))
+<span class="stdout">&lt;textarea name="foo" rows=1 cols=40&gt;Contents&lt;/textarea&gt;
+</span></pre>
+<hr/>
+<textarea name="foo" rows=1 cols=40>Contents</textarea>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='menu'></a>
+<a target='CODE' href='/src/menu.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?menu'>menu</a> <span class='args'>name itemlist [sel]</span>
+    <div class='desc'>Prints a menu with <code>select</code> and </code>option</code>.  Each element of <code>itemlist</code> becomes an option.  If <code>sel</code> is an item in <code>itemlist</code>, that item is marked as selected.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(menu "foo" '(item1 item2 item3) 'item2)
+<span class="stdout">&lt;select name="foo"&gt;&lt;option&gt;item1&lt;/option&gt;
+&lt;option selected&gt;item2&lt;/option&gt;&lt;option&gt;item3&lt;/option&gt;
+&lt;/select&gt;
+</span></pre>
+<hr/>
+<select name="foo"><option>item1</option><option selected>item2</option><option>item3</option></select>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='input'></a>
+<a target='CODE' href='/src/input.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?input'>input</a> <span class='args'>name [val [size ]]</span>
+    <div class='desc'>Prints an <code>input</code> tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(input "foo" "bar" 10)
+<span class="stdout">&lt;input type=text name="foo" value="bar" size=10&gt;
+</span></pre>
+<hr/>
+<input type=text name="foo" value="bar" size=10>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='inputs'></a>
+<a target='CODE' href='/src/inputs.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?inputs'>inputs</a> <span class='args'>[name label size value ...]</span>
+    <div class='desc'>Prints a table of labelled text rows.  If <code>size</code> is an atom, a text input of the specified size is generated.  If <code>size</code> is a list <code>(rows cols)</code>, then a textarea of the specified size is generated.  If the label is <code>password</code> a password input is generated. The label is followed by a colon.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(inputs i1 "Foo" 10 "contents"
+  p1 password 10 "pw"
+  i2 "Bar" '(2 5) "stuff")
+<span class="stdout">&lt;table border=0&gt;&lt;tr&gt;&lt;td&gt;Foo:&lt;/td&gt;&lt;td&gt;
+&lt;input type=text name="i1" size=10 value="contents"&gt;&lt;/td&gt;
+&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;password:&lt;/td&gt;&lt;td&gt;
+&lt;input type=password name="p1" size=10 value="pw"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Bar:&lt;/td&gt;&lt;td&gt;&lt;textarea name="i2" rows=2 cols=5&gt;stuff
+&lt;/textarea&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+</span></pre>
+<hr/>
+<table border=0><tr><td>Foo:</td><td><input type=text name="i1" size=10 value="contents"></td></tr><tr><td>password:</td><td><input type=password name="p1" size=10 value="pw"></td></tr><tr><td>Bar:</td><td><textarea name="i2" rows=2 cols=5>stuff</textarea></td></tr></table>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='single-input'></a>
+<a target='CODE' href='/src/single-input.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?single-input'>single-input</a> <span class='args'>label name size buttontext [password]</span>
+    <div class='desc'>Prints a text or password input prefixed with <code>label</code> followed by a submit button.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(single-input "Secret" 'i1 5 "Submit" 'password)
+<span class="stdout">Secret&lt;input type=password name="i1" size=5&gt; 
+&lt;input type=submit value="Submit"&gt;
+</span></pre>
+<hr/>
+Secret<input type=password name="i1" size=5> <input type=submit value="Submit">
+  </td></tr>
+</table>
+<h2>Other operations</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='attribute'></a>
+<a target='CODE' href='/src/attribute.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?attribute'>attribute</a> <span class='args'>tag attribute f</span>
+    <div class='desc'>Defines that <code>tag</code> can have <code>attribute</code>.  <code>f</code> is on of the <code>op...</code> functions, defining the type of <code>attribute</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(attribute a class opsym)
+<span class="return">#&lt;procedure: opsym&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='color'></a>
+<a target='CODE' href='/src/color.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?color'>color</a> <span class='args'>r g b</span>
+    <div class='desc'>Creates a color object with the specified red, green, and blue components (0 to 255)</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(color 255 0 128)
+<span class="return">#hash((g . 0) (r . 255) (b . 128))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='hex>color'></a>
+<a target='CODE' href='/src/hex%2f3ecolor.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hex>color'>hex>color</a> <span class='args'>str</span>
+    <div class='desc'>Converts a string of length 6 representing a <a href='http://en.wikipedia.org/wiki/Web_colors#Hex_triplet'>hex triplet</a> into a color object. Returns <code>nil</code> on failure.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(hex&gt;color "ff00cc")
+<span class="return">#hash((g . 0) (r . 255) (b . 204))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='gray'></a>
+<a target='CODE' href='/src/gray.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?gray'>gray</a> <span class='args'>n</span>
+    <div class='desc'>Creates a color object representing a gray level. <code>n</code> is between 0 and 255.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(gray 100)
+<span class="return">#hash((g . 100) (r . 100) (b . 100))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='hexrep'></a>
+<a target='CODE' href='/src/hexrep.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hexrep'>hexrep</a> <span class='args'>color</span>
+    <div class='desc'>Converts a color object to a hex triplet string.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(hexrep orange)
+<span class="return">"ff6600"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='dehex'></a>
+<a target='CODE' href='/src/dehex.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?dehex'>dehex</a> <span class='args'>str</span>
+    <div class='desc'>Converts <code>str</code> from hex to integer. Returns <code>nil</code> if the conversion fails.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(dehex "40")
+<span class="return">64
+</span></pre>
+<pre>
+&gt;(dehex "0x12")
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='gentag'></a>
+<a target='CODE' href='/src/gentag.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?gentag'>gentag</a> <span class='args'>tag [attribute value ...]</span>
+    <div class='desc'>Prints the tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(gentag img src "foo.gif")
+<span class="stdout">&lt;img src="foo.gif"&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tag'></a>
+<a target='CODE' href='/src/tag.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tag'>tag</a> <span class='args'>spec [body ...]</span>
+    <div class='desc'>Prints <code>body</code> surrounded by the tag specified by <code>spec</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(gentag a href "/index.html")
+<span class="stdout">&lt;a href="/index.html"&gt;
+</span></pre>
+<hr/>
+<a href="/index.html">
+<pre>
+&gt;(pr "click")
+<span class="stdout">click
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tag-if'></a>
+<a target='CODE' href='/src/tag-if.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tag-if'>tag-if</a> <span class='args'>test spec [body ...]</span>
+    <div class='desc'>If <code>test</code> is true, <code>body</code> is wrapped in the tag <code>spec</code>.  Otherwise, <code>body</code> is printed without the tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tag-if t (underline) (pr "hi"))
+<span class="stdout">&lt;underline&gt;hi&lt;/underline&gt;
+</span></pre>
+<pre>
+&gt;(tag-if nil (underline) (pr "hi"))
+<span class="stdout">hi
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='pr-escaped'></a>
+<a target='CODE' href='/src/pr-escaped.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pr-escaped'>pr-escaped</a> <span class='args'>str</span>
+    <div class='desc'>Prints <code>str</code> with <, >, ", and & HTML-escaped.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(pr-escaped "abc&lt; &gt; \" ' &amp;")
+<span class="stdout">abc&amp;#60; &amp;#62; &amp;#34; ' &amp;#38;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='eschtml'></a>
+<a target='CODE' href='/src/eschtml.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?eschtml'>eschtml</a> <span class='args'>str</span>
+    <div class='desc'>Returns a string that is <code>str</code> with <, >, ", ', and & HTML-escaped.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(eschtml "abc&lt; &gt; \" ' &amp;")
+<span class="return">"abc&amp;#60; &amp;#62; &amp;#34; &amp;#39; &amp;#38;"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='esc<>&'></a>
+<a target='CODE' href='/src/esc%2f3c%2f3e&.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?esc<>&'>esc<>&</a> <span class='args'>str</span>
+    <div class='desc'>Returns a string that is <code>str</code> with <, >, and & HTML-escaped.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(esc&lt;&gt;&amp; "abc&lt; &gt; \" ' &amp;")
+<span class="stdout">Error: _esc
+&lt;&gt;: undefined;
+ cannot reference undefined identifier
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='cdata'></a>
+<a target='CODE' href='/src/cdata.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cdata'>cdata</a> <span class='args'>[body ...]</span>
+    <div class='desc'>Prints <code>body</code> in a CDATA section.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(cdata (pr "hello"))
+<span class="stdout">&lt;![CDATA[hello]]&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='striptags'></a>
+<a target='CODE' href='/src/striptags.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?striptags'>striptags</a> <span class='args'>str</span>
+    <div class='desc'>Returns <code>str</code> without tags.  Anything between angle brackets is removed.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(striptags "abc&lt;foo&gt;def&lt;/foo&gt;ghi")
+<span class="return">"abcdefghi"
+</span></pre>
+  </td></tr>
+</table>
+<h2>Internals</h2>
+The implementation of HTML handling in Arc centers around the <code>opmeths*</code> table, which maps from a tag and attribute to one of the <code>op...</code> functions.  These functions generate the code that generates the HTML to set an attribute.
+<p>  One Arc design pattern used in the HTML code is to use multiple functions to generate the code, and then use these functions inside macros.  This provides a simulation of first-class macros.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='opcolor'></a>
+<a target='CODE' href='/src/opcolor.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opcolor'>opcolor</a> <span class='args'>attribute color</span>
+    <div class='desc'>Generates code to assign a color object to an attribute.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(opcolor 'bgcolor orange)
+<span class="return">(whenlet gs2244 #hash((g . 102) (r . 255) (b . 0)) (pr " bgcolor=#" (hexrep gs2244)))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='opstring'></a>
+<a target='CODE' href='/src/opstring.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opstring'>opstring</a> <span class='args'>attribute string</span>
+    <div class='desc'>Generates code to assign a string to an attribute, if the string is not <code>nil</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(opstring 'class "foo")
+<span class="return">(aif "foo" (pr " class=\"" it #\"))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='opnum'></a>
+<a target='CODE' href='/src/opnum.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opnum'>opnum</a> <span class='args'>attribute num</span>
+    <div class='desc'>Generates code to assign a number to an attribute, if <code>num</code> is not <code>nil</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(opnum 'width 42)
+<span class="return">(aif 42 (pr " width=" it))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='opsym'></a>
+<a target='CODE' href='/src/opsym.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opsym'>opsym</a> <span class='args'>attribute val</span>
+    <div class='desc'>Generates code to assign a value to an attribute.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(opsym 'width 42)
+<span class="return">(pr " width=" 42)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='opesc'></a>
+<a target='CODE' href='/src/opesc.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opesc'>opesc</a> <span class='args'>attribute val</span>
+    <div class='desc'>Generates code to assign a quoted value to an attribute. If <code>val</code> is a string, it is escaped with <code>pr-escaped</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(opesc 'foo 'val)
+<span class="return">(awhen val (pr " foo=\"") (if (isa it (quote string)) (pr-escaped it) (pr it)) (pr #\"))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='opsel'></a>
+<a target='CODE' href='/src/opsel.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opsel'>opsel</a> <span class='args'>attribute val</span>
+    <div class='desc'>Generates code to set <code>attribute</code> to <code>selected</code> if <code>val</code> is true.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(opsel 'foo 'bar)
+<span class="return">(if bar (pr " selected"))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='start-tag'></a>
+<a target='CODE' href='/src/start-tag.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?start-tag'>start-tag</a> <span class='args'>spec</span>
+    <div class='desc'>Generates code to start a tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(start-tag '(a href foo))
+<span class="return">(do (pr "&lt;a") (aif foo (pr " href=\"" it #\")) (pr "&gt;"))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='end-tag'></a>
+<a target='CODE' href='/src/end-tag.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?end-tag'>end-tag</a> <span class='args'>spec</span>
+    <div class='desc'>Generates code to end a tag.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(end-tag '(a href foo))
+<span class="return">(pr "&lt;/a&gt;")
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tag-options'></a>
+<a target='CODE' href='/src/tag-options.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tag-options'>tag-options</a> <span class='args'>tag options</span>
+    <div class='desc'>Generates code to assign values to attributes.  <code>options</code> is a list of attribute/value pairs.  The allowable attributes are defined by <code>opmeth</code>, and <code>style</code> is allowed for all tags.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tag-options 'td '((bgcolor red) (width 42)))
+<span class="return">((whenlet gs2245 red (pr " bgcolor=#" (hexrep gs2245))) " width=42")
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='opmeths*'></a>
+<a target='CODE' href='/src/opmeths%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opmeths*'>opmeths*</a> <span class='args'></span>
+    <div class='desc'>Table indexed by list of tag and attribute.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(opmeths* '(a href))
+<span class="return">#&lt;procedure: opstring&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='opmeth'></a>
+<a target='CODE' href='/src/opmeth.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opmeth'>opmeth</a> <span class='args'>tag attr</span>
+    <div class='desc'>Looks up the HTML tag and attribute in <code>opmeths*</code></div>
+    </td>
+    <td class='arc'><pre>
+&gt;(opmeth 'a 'href)
+<span class="return">#&lt;procedure: opstring&gt;
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

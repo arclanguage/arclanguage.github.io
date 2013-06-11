@@ -1,0 +1,412 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Assignment</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Up: <a href="index.html">Contents</a>
+Next: <a href="combining.html">Boolean operations</a>
+</div>
+<h1 class="links">Arc: Assignment</h1>
+The Arc language features a number of assignment functions to update variables and data structures.  Arc also includes the concept of a "place", which specifies the position to be updated.  Places are also known as "generalized variables", as they can be used as variables in many contexts.
+<p>
+This page describes Arc's basic assignment operators as well as the operators that use places to perform updates.
+
+<h2>Assignment primitives</h2>
+The simplest assignment operator in Arc is
+<code>(set <i>symbol</i> <i>value</i>)</code>.
+The <code>set</code> form can also be used to set multiple variables in once statement:
+<code>(set <i>symbol1</i> <i>value1</i> <i>symbol2</i> <i>value2 ...</i>)</code>.
+<p>A list can be destructively modified with <code>scar</code> or <code>scdr</code>, which update the first element of a list or the remainder of a list, respectively.  Note that these operations do not create a new copy of the list; they modify the existing list.  The modifications will affect any other symbols referring to the list.
+<pre class="repl">
+arc> (set m '(1 2 3) n m)
+(1 2 3)
+arc> (scar m 'a)
+a
+arc> n
+(a 2 3)
+arc> (scdr n '(b c))
+(b c)
+arc> m
+(a b c)
+</pre>
+Unusual list structures, including cyclic lists, can be created by splicing lists together with <code>scar</code> or <code>scdr</code>.  Arc currently hangs if a cyclic list is displayed, so be forewarned.
+<h2>Places and =</h2>
+Generallly, assignment in Arc is performed with the <code>=</code> macro.
+It is similar to <code>set</code>, except it allows assignment not only to a symbol, but also to a "place".
+Roughly speaking, a place is a location that can be updated.
+The place can be a symbol, an index into a table, a character in a string, an index into a list, or a complex location in a list.  The following examples illustrate how these different places can be updated.
+<pre class="repl">
+arc> (= mytable (table) mystring "abcde" mylist '((a b) c (d 3)))
+((a b) c (d 3))
+arc> (= (mytable "key") 42)
+42
+arc> mytable
+#hash(("key" . 42))
+arc> (= (mystring 2) #\x)
+#\x
+arc> mystring
+"abxde"
+arc> (= (mylist 1) 'z)
+z
+arc> (= (car (car mylist)) 'y)
+y
+arc> mylist
+((y b) z (d 3))
+</pre>
+Because of its convenience, <code>=</code> is the operator used most often for assignment and updates in Arc.  It can also be extended to support new types of places; this is considerably more complex, and will be discussed in a later article.
+
+<h2>Operations on places</h2>
+Several other macros allow assignment to places.  <code>wipe</code> and <code>assert</code> allow places to be set to <code>nil</code> or <code>t</code> respectively.  The name of <code>assert</code> may cause confusion; it is used to set a place, not to assert that something is true.
+
+<pre class="repl">
+arc> (= a 1 b 2 c 3)
+3
+arc> (wipe a b c)
+nil
+arc> a
+nil
+arc> (assert a b c)
+t
+arc> b
+t
+</pre>
+<p>
+<code>(swap <i>place1 place2</i>)</code> will swap the values at the two places.  The places do not necessarily need to be in the same data structure and do not necessarily need to be lists.
+<pre class="repl">
+(= x '(a b c d e))
+arc>  (swap (car x) (x 3))
+arc> x
+(d b c a e)
+arc> (= s "abc")
+arc> (swap (s 0) (s 2))
+arc> s
+"cba"
+</pre>
+<code>(rotate <i>place1 place2 ...</i>)</code> will rotate the places to the left.  That is, the value from <code><i>place2</i></code> will go in <code><i>place1</i></code>, the value from
+<code><i>place3</i></code> will go in
+<code><i>place2</i></code>, and so on, and the value from <code><i>place1</i></code> will go in the last place.
+<pre class="repl">
+arc> (= x '(a b c d e))
+arc> (rotate (x 0) (x 2) (x 4))
+arc> x
+(c b e d a)
+</pre>
+<p>Several macros modify the value at a place.
+Similar to the C operators, <code>++</code> and <code>--</code> will decrement or increment a place.  The place is modified by 1 by default, but the amount of increment or decrement can be specified.
+<pre class="repl">
+arc> (= x '(0 0))
+(0 0)
+arc> (++ (x 0))
+1
+arc> (-- (x 1) 10)
+-10
+arc> x
+(1 -10)
+</pre>
+More general read-modify-write modifications can be done with <code>(zap <i>op place [args]</i>)</code>, which gets the value at a place, applies the operation to the value and optional arguments, and puts the value back at the place.
+<pre class="repl">
+arc> (let s "abc" (zap upcase (s 0)) s)
+"Abc"
+arc> (let x '(10 10) (zap mod (car x) 3) x)
+(1 10)
+arc>  (let tb (table) (= (tb "key") "val") (zap + (tb "key") "stuff") tb)
+#hash(("key" . "valstuff"))
+</pre>
+<h2>Places and lists</h2>
+Lists can be modified with
+ <code>push</code>, <code>pushnew</code>, <code>pop</code>, and <code>pull</code>.
+<code>(push <i>obj place</i>)</code> inserts the object before the place.
+<code>pushnew</code> is similar to <code>push</code>, except the object is pushed only if it is new: if it is not already in the list.
+<pre class="repl">
+arc> (let x '(a b c d e) (push 'z x) (push 'b x) (push 'w x) x)
+(w b z a b c d e)
+arc> (let x '(a b c d e) (pushnew 'z x) (pushnew 'b x) (pushnew 'w x) x)
+(w z a b c d e)
+</pre>
+<code>(pop <i>place</i>)</code> returns the object at the place, and removes that object from the list.
+<pre class="repl">
+arc> (= x '(a b c d e))
+(a b c d e)
+arc> (pop x)
+a
+arc> x
+(b c d e)
+</pre>
+Elements can be filtered from a list with <code>(pull <i>test place</i>)</code>.  Objects satisfying <code><i>test</i></code> are removed from the list, and the updated list is returned.  Note that the values kept and returned are the values that fail the test.  For example, to pull the odd elements out of a list:
+<pre class="repl">
+arc> (= x '(1 2 3 5 8 13))
+(1 2 3 5 8 13)
+arc> (pull odd x)
+(2 8)
+</pre>
+<p>Typically the place for these operations indicates a list, but the place doesn't necessarily need to be the beginning of the list.  For instance, <code>cdr</code> can be used to access a place inside the list.
+<pre class="repl">
+arc> (let x '(a b c d e)  (push 'z (cdr (cdr x))) x)
+(a b z c d e)
+arc> (let x '(a b c d e) (pop (cdr x)))
+b
+</pre>
+<h2>Summary</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='assign'></a>
+<a target='CODE' href='/src/assign.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?assign'>assign</a> <span class='args'>symbol expr</span>
+    <div class='desc'>assign is used to assign a value to a variable.  Renamed from <code>set</code> in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(assign x 10)
+<span class="return">10
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='scar'></a>
+<a target='CODE' href='/src/scar.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?scar'>scar</a> <span class='args'>list expr</span>
+    <div class='desc'>Assigns an expression to the  car of list.  If applied to a
+  string, assigns to the first character of the string, which must have length at
+  least one.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(do
+    (= x "abc")
+    (scar x #\d)
+    x)
+<span class="stdout">Error: string-set!: contract violation
+  expected: (and/c st
+ring? (not/c immutable?))
+  given: "abc"
+  argument position
+: 1st
+  other arguments...:
+   0
+   #\d
+
+</span></pre>
+<pre>
+&gt;(do
+    (= x '(1 2 3))
+    (scar x #\d)
+    x)
+<span class="return">(#\d 2 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='scdr'></a>
+<a target='CODE' href='/src/scdr.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?scdr'>scdr</a> <span class='args'>list exp</span>
+    <div class='desc'>Assigns to cdr of a list.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(do
+    (= x '(1 2 3))
+    (scdr x '(4))
+    x)
+<span class="return">(1 4)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='%3d'></a>
+<a target='CODE' href='/src/=.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?%3d'>=</a> <span class='args'>[place expr] ... [place]</span>
+    <div class='desc'>Assigns to each place to the associated expression.  If the last place has no associated expression, it is set to nil.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(= x 1)
+<span class="return">1
+</span></pre>
+<pre>
+&gt;(= x 2 y 4)
+<span class="return">4
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='wipe'></a>
+<a target='CODE' href='/src/wipe.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?wipe'>wipe</a> <span class='args'>[place ...]</span>
+    <div class='desc'>Assigns nil to the places.  Typically, the places are simple variables.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(do (wipe a b c) (list a b c))
+<span class="return">(nil nil nil)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='set'></a>
+<a target='CODE' href='/src/set.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?set'>set</a> <span class='args'>[place ...]</span>
+    <div class='desc'>Assigns t to the places.  Renamed from assert in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(do (set a b c) (list a b c))
+<span class="return">(t t t)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='swap'></a>
+<a target='CODE' href='/src/swap.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?swap'>swap</a> <span class='args'>place1 place2</span>
+    <div class='desc'>The contents of the two places are swapped.  The new contents of <code>place2</code> are returned.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(with (x 'a y '(1 2))
+  (swap x y)
+  (prn "x:" x)
+  y)
+<span class="stdout">x:(1 2)
+
+</span><span class="return">a
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rotate'></a>
+<a target='CODE' href='/src/rotate.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rotate'>rotate</a> <span class='args'>[place1 place2 ...]</span>
+    <div class='desc'>Assigns <i>place2</i> to <i>place1</i>, assigns <i>place3</i> to </i>place2</i>, and so on, assigning <i>place1</i> to the last place.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let s "abc" (rotate (s 0) (s 1) (s 2)) s)
+<span class="stdout">Error: string-set!: contract violation
+  expected: (and/c st
+ring? (not/c immutable?))
+  given: "abc"
+  argument position
+: 1st
+  other arguments...:
+   0
+   #\b
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='%2b%2b'></a>
+<a target='CODE' href='/src/%2f2b%2f2b.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?%2b%2b'>++</a> <span class='args'>place [i]</span>
+    <div class='desc'>Increments the value at <code>place</code> by <code>i</code>.  The default increment is 1.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(10 20) (++ (car x)) (++ (x 1) 5) x)
+<span class="return">(11 25)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='--'></a>
+<a target='CODE' href='/src/--.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?--'>--</a> <span class='args'>place [i]</span>
+    <div class='desc'>Decrements the value at <code>place</code> by <code>i</code>.  The default decrement is 1.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(10 20) (-- (car x)) (-- (x 1) 5) x)
+<span class="return">(9 15)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='zap'></a>
+<a target='CODE' href='/src/zap.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?zap'>zap</a> <span class='args'>op place [args ...]</span>
+    <div class='desc'>Gets the value at the place, evaluates <code>(op <i>value args...</i>)</code>, and stores the result in the place.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(0 10 20) (zap * (x 1) 5) x)
+<span class="return">(0 50 20)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='push'></a>
+<a target='CODE' href='/src/push.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?push'>push</a> <span class='args'>elt place</span>
+    <div class='desc'>Pushes an element at the beginning of the list referenced by place.  The list is modified and returned.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(1 2 3) (push 'a x) x)
+<span class="return">(a 1 2 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='pushnew'></a>
+<a target='CODE' href='/src/pushnew.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pushnew'>pushnew</a> <span class='args'>elt place [test]</span>
+    <div class='desc'>Pushes <code>elt</code> before the place if it is not present in the list.  The equality test can be specified; <code>iso</code> is used by default.  </div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(1 2 3) (pushnew 'a x) x)
+<span class="return">(a 1 2 3)
+</span></pre>
+<pre>
+&gt;(let x '(1 2 3) (pushnew 2 x) x)
+<span class="return">(1 2 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='pop'></a>
+<a target='CODE' href='/src/pop.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pop'>pop</a> <span class='args'>place</span>
+    <div class='desc'>The first element is removed from place and returned.  If the value at the place is nil, then nil is returned.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(1 2 3)
+  (prn "Popped:" (pop x))
+  x)
+<span class="stdout">Popped:1
+
+</span><span class="return">(2 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='pull'></a>
+<a target='CODE' href='/src/pull.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pull'>pull</a> <span class='args'>test place</span>
+    <div class='desc'>Remove elements satisfying <code>test</code> from the list starting at <code>place</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(1 100 2 50 3) (pull [< _ 10] x) x)
+<span class="return">(100 50)
+</span></pre>
+  </td></tr>
+</table>
+<h3>Legend</h3>
+<img src='/doc/foundation.gif' title='Foundation'/>: Foundation operation.
+<br><img src='/doc/macro.gif' title='Macro'/>: Macro.
+<br><img src='/doc/proc.gif' title='Procedure'/>: Procedure.
+<br><img src='/doc/var.gif' title='Variable'/>: Variable.
+<br><img src='/doc/destructive.gif' title='Destructive'/>: Destructive; arguments may be modified.
+<br><img src='/doc/predicate.gif' title='Predicate'/>: Predicate.
+<br><img src='/doc/code.gif' title='View code'/>: View code.
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

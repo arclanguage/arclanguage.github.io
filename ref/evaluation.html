@@ -1,0 +1,153 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Evaluation</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="conditionals.html">Conditionals</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="list.html">List operations</a>
+</div>
+<h1 class="links">Arc: Evaluation</h1>
+<h2>Evaluation</h2>
+Arc provides several syntax innovations beyond Scheme.
+<h2>Square-bracket anonymous functions</h2>
+Anonymous functions on one variable can be created with square brackets; the underscore <code>_</code> is the variable.  For example, <code>[+ 1 _]</code> is equivalent to <code>(fn (_) (+ 1 _))</code>:
+<pre class="repl">
+arc> (map [+ 1 _] '(10 20 30))
+(11 21 31)
+</pre>
+<h2>Special syntax</h2>
+The "special syntax" characters are <code>:</code>, <code>~</code>, <code>.</code>, and <code>!</code>.  The <code>~</code> character provides Boolean complement of a procedure; <code>~a</code> is equivalent to <code>(complement a)</code>
+<pre class="repl">
+arc> (~odd 3)
+nil
+arc> (~even 3)
+t
+</pre>
+The <code>:</code> character implements function composition; <code>a:b</code> is equivalent to <code>(compose a b)</code> and applies <code>a</code> to the result of applying <code>b</code>:
+<pre class="repl">
+arc> (odd:sqrt 4)
+nil
+arc> (odd:sqrt 9)
+t
+</pre>
+The syntax <code>a.b</code> is equivalent to <code>(a b)</code>.  It is intended for structure access:
+<pre class="repl">
+arc> (= x '(a b c d))
+(a b c d)
+arc> x.2
+c
+</pre>
+The syntax <code>a!b</code> is equivalent to <code>(a 'b)</code>.  It is intended for structure access where quoting is needed:
+<pre class="repl">
+arc> (= tb (obj a 10 b 20 c 30))
+#hash((c . 30) (a . 10) (b . 20))
+arc> tb!a
+10
+</pre>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='eval'></a>
+<a target='CODE' href='/src/eval.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?eval'>eval</a> <span class='args'>expression</span>
+    <div class='desc'>Evaluates the expression.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(eval '(+ 1 2))
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='apply'></a>
+<a target='CODE' href='/src/apply.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?apply'>apply</a> <span class='args'>fn arglist</span>
+    <div class='desc'>Applies the function to the arguments.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(apply + '(1 2))
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='ssexpand'></a>
+<a target='CODE' href='/src/ssexpand.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ssexpand'>ssexpand</a> <span class='args'>symbol</span>
+    <div class='desc'>Expands special syntax (: ! . or ~).  The :
+  character indicates composition.  The ~ indicates complementing.  The .
+  applies the first value to the remainder.  The ! is like . except the
+  arguments are quoted.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(ssexpand 'x:~y:z)
+<span class="return">(compose x (complement y) z)
+</span></pre>
+<pre>
+&gt;(ssexpand '+.1.2)
+<span class="return">((+ 1) 2)
+</span></pre>
+<pre>
+&gt;(ssexpand '+!1!2)
+<span class="return">((+ (quote 1)) (quote 2))
+</span></pre>
+<pre>
+&gt;(ssexpand 'cons!a!b)
+<span class="return">((cons (quote a)) (quote b))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='ssyntax'></a>
+<a target='CODE' href='/src/ssyntax.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ssyntax'>ssyntax</a> <span class='args'>symbol</span>
+    <div class='desc'>Tests if the symbol contains special syntax (: ! . or ~).</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(ssyntax 'x:y)
+<span class="return">t
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='compose'></a>
+<a target='CODE' href='/src/compose.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?compose'>compose</a> <span class='args'>[function] ...</span>
+    <div class='desc'>Composes the functions.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;((compose sqrt:len) "abcd")
+<span class="return">2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='complement'></a>
+<a target='CODE' href='/src/complement.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?complement'>complement</a> <span class='args'>function</span>
+    <div class='desc'>Creates a procedure that is the complement of <code>function</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(map (complement odd) '(1 2 3 4 5))
+<span class="return">(nil t nil t nil)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='idfn'></a>
+<a target='CODE' href='/src/idfn.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?idfn'>idfn</a> <span class='args'>x</span>
+    <div class='desc'>Identity function; returns x.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

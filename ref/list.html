@@ -1,0 +1,1277 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: List manipulation</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="evaluation.html">Evaluation</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="macro.html">Macros</a>
+</div>
+<h1 class="links">Arc: List manipulation</h1>
+<h2>List manipulation</h2>
+As lists are the key data structure in Arc, the language includes a large number of operations on lists and sequences.  Some operations apply only to lists, while others apply to strings and tables.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='car'></a>
+<a target='CODE' href='/src/car.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?car'>car</a> <span class='args'>list</span>
+    <div class='desc'>First element of <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(car '(1 2 3))
+<span class="return">1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='cdr'></a>
+<a target='CODE' href='/src/cdr.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cdr'>cdr</a> <span class='args'>list</span>
+    <div class='desc'>Remainder of <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(cdr '(1 2 3))
+<span class="return">(2 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='caar'></a>
+<a target='CODE' href='/src/caar.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?caar'>caar</a> <span class='args'>list</span>
+    <div class='desc'>Equivalent to <code>(car (car list))</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(caar '((1 2) 3 4))
+<span class="return">1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='cadr'></a>
+<a target='CODE' href='/src/cadr.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cadr'>cadr</a> <span class='args'>list</span>
+    <div class='desc'>Equivalent to <code>(car (cdr list))</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(cadr '((1 2) 3 4))
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='cddr'></a>
+<a target='CODE' href='/src/cddr.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cddr'>cddr</a> <span class='args'>list</span>
+    <div class='desc'>Equivalent to <code>(cdr (cdr list))</code>.  Note that <code>cdar</code> is not part of Arc.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(cddr '((1 2) 3 4))
+<span class="return">(4)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='conswhen'></a>
+<a target='CODE' href='/src/conswhen.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?conswhen'>conswhen</a> <span class='args'>f x y</span>
+    <div class='desc'>Cons <code>x</code> and <code>y</code> if <code>(f x)</code> is true.  Otherwise returns <code>y</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(conswhen (fn (_) (&lt; (len _) 3)) '(1 2) '(3 4 5))
+<span class="return">((1 2) 3 4 5)
+</span></pre>
+<pre>
+&gt;(conswhen (fn (_) (&lt; (len _) 3)) '(1 2 3 4) '(3 4 5))
+<span class="return">(3 4 5)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='consif'></a>
+<a target='CODE' href='/src/consif.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?consif'>consif</a> <span class='args'>x list</span>
+    <div class='desc'>Cons <code>x</code> onto <code>list</code> if <code>x</code> is not <code>nil</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(consif 1 '(2 3))
+<span class="return">(1 2 3)
+</span></pre>
+<pre>
+&gt;(consif nil '(2 3))
+<span class="return">(2 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='firstn'></a>
+<a target='CODE' href='/src/firstn.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?firstn'>firstn</a> <span class='args'>n list</span>
+    <div class='desc'>Returns the first <code>n</code> elements of <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(firstn 3 '(1 2))
+<span class="return">(1 2)
+</span></pre>
+<pre>
+&gt;(firstn 3 '(a b c d e))
+<span class="return">(a b c)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='nthcdr'></a>
+<a target='CODE' href='/src/nthcdr.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?nthcdr'>nthcdr</a> <span class='args'>n list</span>
+    <div class='desc'>Returns <code>list</code> after skipping the first <code>n</code> elements.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(nthcdr 0 '(1 2 3))
+<span class="return">(1 2 3)
+</span></pre>
+<pre>
+&gt;(nthcdr 2 '(1 2 3))
+<span class="return">(3)
+</span></pre>
+<pre>
+&gt;(nthcdr 10 '(1 2 3))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='last'></a>
+<a target='CODE' href='/src/last.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?last'>last</a> <span class='args'>list</span>
+    <div class='desc'>Returns the last element of <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(last '(1 2 3))
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='flat'></a>
+<a target='CODE' href='/src/flat.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?flat'>flat</a> <span class='args'>list</span>
+    <div class='desc'>Flattens <code>list</code> into a list of atoms.  Any <code>nil</code>s are removed.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(flat '(1 2 () (3 4 (5))))
+<span class="return">(1 2 3 4 5)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rev'></a>
+<a target='CODE' href='/src/rev.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rev'>rev</a> <span class='args'>list</span>
+    <div class='desc'>Reverses <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rev '(1 2 3))
+<span class="return">(3 2 1)
+</span></pre>
+<pre>
+&gt;(rev '(1 (2 3) 4))
+<span class="return">(4 (2 3) 1)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='carif'></a>
+<a target='CODE' href='/src/carif.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?carif'>carif</a> <span class='args'>x</span>
+    <div class='desc'>Returns <code>(car x)</code> if <code>x</code> is a list, and returns <code>x</code> otherwise.  This provides a 'safe' way to return the first element of something that may or may not be a list.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(carif '(1 2))
+<span class="return">1
+</span></pre>
+<pre>
+&gt;(carif 3)
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='caris'></a>
+<a target='CODE' href='/src/caris.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?caris'>caris</a> <span class='args'>x val</span>
+    <div class='desc'>Tests if <code>x</code> is a list and <code>(car x)</code> is <code>val</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(caris '(1 2) 1)
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(caris 1 1)
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='intersperse'></a>
+<a target='CODE' href='/src/intersperse.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?intersperse'>intersperse</a> <span class='args'>x list</span>
+    <div class='desc'>Inserts <code>x</code> between elements of <code>list</code>.  If <code>list</code> has fewer than 2 elements, there is no effect.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(intersperse 1 '(a b (c d) e))
+<span class="return">(a 1 b 1 (c d) 1 e)
+</span></pre>
+<pre>
+&gt;(intersperse nil '(1 2 3))
+<span class="return">(1 nil 2 nil 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='split'></a>
+<a target='CODE' href='/src/split.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?split'>split</a> <span class='args'>list pos</span>
+    <div class='desc'>Splits <code>list</code> into two lists at the given position, which must be no more than the length of the list.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(split '(a b c) -1)
+<span class="return">((a b) (a b c))
+</span></pre>
+<pre>
+&gt;(split '(a b c) 0)
+<span class="return">(nil (a b c))
+</span></pre>
+<pre>
+&gt;(split '(a b c) 1)
+<span class="return">((a) (b c))
+</span></pre>
+<pre>
+&gt;(split '(a b c) 2)
+<span class="return">((a b) (c))
+</span></pre>
+<pre>
+&gt;(split '(a b c) 3)
+<span class="return">((a b c) nil)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='pair'></a>
+<a target='CODE' href='/src/pair.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pair'>pair</a> <span class='args'>list [f]</span>
+    <div class='desc'>Splits <code>list</code> into pairs.  By default, each pair is made into a list.  If specified, function f is applied to each pair.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(pair '(a b c d))
+<span class="return">((a b) (c d))
+</span></pre>
+<pre>
+&gt;(pair '(a b c d e))
+<span class="return">((a b) (c d) (e))
+</span></pre>
+<pre>
+&gt;(pair '(1 2 3 4) +)
+<span class="return">(3 7)
+</span></pre>
+<pre>
+&gt;(pair '(10 2 3 40 50 6) max)
+<span class="return">(10 40 50)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tuples'></a>
+<a target='CODE' href='/src/tuples.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tuples'>tuples</a> <span class='args'>list [n]</span>
+    <div class='desc'>Splits <code>list</code> into groups of <code>n</code>. <code>tuples</code> is a generalization of <code>pair</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tuples '(1 2 3 4 5) 1)
+<span class="return">((1) (2) (3) (4) (5))
+</span></pre>
+<pre>
+&gt;(tuples '(1 2 3 4 5))
+<span class="return">((1 2) (3 4) (5))
+</span></pre>
+<pre>
+&gt;(tuples '(1 2 3 4 5) 3)
+<span class="return">((1 2 3) (4 5))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='join'></a>
+<a target='CODE' href='/src/join.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?join'>join</a> <span class='args'>[list ...]</span>
+    <div class='desc'>Joins lists into one list.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(join '(1 2) nil '(3 4))
+<span class="return">(1 2 3 4)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='list'></a>
+<a target='CODE' href='/src/list.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?list'>list</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Creates a list of the arguments.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(list 1 2 3)
+<span class="return">(1 2 3)
+</span></pre>
+<pre>
+&gt;(list "a" '(1 2) 3)
+<span class="return">("a" (1 2) 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='copylist'></a>
+<a target='CODE' href='/src/copylist.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?copylist'>copylist</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Identical to list.  New in arc3 and probably temporary.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(copylist 1 2 3)
+<span class="stdout">Error:  copylist: arity mismatch;
+ the expected number of ar
+guments does not match the given number
+  expected: 1
+  give
+n: 3
+  arguments...:
+   1
+   2
+   3
+
+</span></pre>
+<pre>
+&gt;(copylist "a" '(1 2) 3)
+<span class="stdout">Error:  copylist: arity mismatch;
+ the expected number of ar
+guments does not match the given number
+  expected: 1
+  give
+n: 3
+  arguments...:
+   "a"
+   '(1 2 . nil)
+   3
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='range'></a>
+<a target='CODE' href='/src/range.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?range'>range</a> <span class='args'>start end</span>
+    <div class='desc'>Creates a list of numbers from start to end in steps of 1.  The last number is <= end.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(range 0 10)
+<span class="return">(0 1 2 3 4 5 6 7 8 9 10)
+</span></pre>
+<pre>
+&gt;(range 1.5 3.8)
+<span class="return">(1.5 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='n-of'></a>
+<a target='CODE' href='/src/n-of.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?n-of'>n-of</a> <span class='args'>n expr</span>
+    <div class='desc'>Evaluates <code>expr</code> <code>n</code> times and returns a list of the results.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(n-of 5 "a")
+<span class="return">("a" "a" "a" "a" "a")
+</span></pre>
+<pre>
+&gt;(w/instring ins "abcdefg" (n-of 5 (readc ins)))
+<span class="return">(#\a #\b #\c #\d #\e)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='adjoin'></a>
+<a target='CODE' href='/src/adjoin.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?adjoin'>adjoin</a> <span class='args'>elt list [test]</span>
+    <div class='desc'>Cons <code>elt</code> onto <code>list</code> unless <code>(test elt y)</code> is true for some <code>y</code> in <code>list</code>.  By default, <code>test</code> is <code>iso</code>, so <code>elt</code> will be joined if it is not present in <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(adjoin 2 '(1 2 3))
+<span class="return">(1 2 3)
+</span></pre>
+<pre>
+&gt;(adjoin 2 '(1 3 5))
+<span class="return">(2 1 3 5)
+</span></pre>
+<pre>
+&gt;(adjoin 2 '(1 2 3) &lt;)
+<span class="return">(1 2 3)
+</span></pre>
+<pre>
+&gt;(adjoin 2 '(0 1 2) &lt;)
+<span class="return">(2 0 1 2)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='counts'></a>
+<a target='CODE' href='/src/counts.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?counts'>counts</a> <span class='args'>list [table]</span>
+    <div class='desc'>Counts how many times each element of <code>list</code> occurs.  The results are returned as a table mapping from the element to the count.  If a table is passed in, it will be updated.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(counts '(b a n a n a))
+<span class="return">#hash((n . 2) (a . 3) (b . 1))
+</span></pre>
+<pre>
+&gt;(let tl (table)
+  (counts '(1 2) tl)
+  (counts '(1 3) tl))
+<span class="return">#hash((1 . 2) (2 . 1) (3 . 1))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='commonest'></a>
+<a target='CODE' href='/src/commonest.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?commonest'>commonest</a> <span class='args'>list</span>
+    <div class='desc'>Returns the element of <code>list</code> occurring most frequently, along with its count.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(commonest '(b a n a n a))
+<span class="return">(a 3)
+</span></pre>
+<pre>
+&gt;(commonest nil)
+<span class="return">(nil 0)
+</span></pre>
+  </td></tr>
+</table>
+<h2>Applying functions to lists</h2>
+Arc provides several ways of applying functions to the elements of a list.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='reduce'></a>
+<a target='CODE' href='/src/reduce.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?reduce'>reduce</a> <span class='args'>f list</span>
+    <div class='desc'>Reduces <code>list</code> using <code>f</code>.  Applies <code>f</code> to the first two elements of <code>list</code>.  Then recursively applies <code>f</code> to that result and the next element of <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(reduce + '(1 2 3 4 5))
+<span class="return">15
+</span></pre>
+<pre>
+&gt;(reduce + '("a" "b" "c"))
+<span class="return">"abc"
+</span></pre>
+<pre>
+&gt;(reduce / '(1 2 3))
+<span class="return">1/6
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rreduce'></a>
+<a target='CODE' href='/src/rreduce.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rreduce'>rreduce</a> <span class='args'>f list</span>
+    <div class='desc'>Reduces <code>list</code> using <code>f</code> in reverse.  Applies <code>f</code> to the last two elements of <code>list</code>.  Then recursively applies <code>f</code> to that result and the previous element of <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rreduce + '(1 2 3 4 5))
+<span class="return">15
+</span></pre>
+<pre>
+&gt;(rreduce / '(1 2 3))
+<span class="return">3/2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='retrieve'></a>
+<a target='CODE' href='/src/retrieve.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?retrieve'>retrieve</a> <span class='args'>n f list</span>
+    <div class='desc'>Returns the first <code>n</code> elements of <code>list</code> for which predicate <code>f</code> is true.  Renamed from firstn-that in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(retrieve 3 odd '(1 2 3 4 5 6 7 8))
+<span class="return">(1 3 5)
+</span></pre>
+<pre>
+&gt;(retrieve 3 odd '(2 4 6 8))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='most'></a>
+<a target='CODE' href='/src/most.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?most'>most</a> <span class='args'>f list</span>
+    <div class='desc'>Returns the element of <code>list</code> for which rating function <code>f</code> returns the largest value.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(most len '("cat" "bird" "dog"))
+<span class="return">"bird"
+</span></pre>
+<pre>
+&gt;(most abs '(3 -10 5))
+<span class="return">-10
+</span></pre>
+<pre>
+&gt;(most abs '(-1 1 -1))
+<span class="return">-1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='map1'></a>
+<a target='CODE' href='/src/map1.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?map1'>map1</a> <span class='args'>f list</span>
+    <div class='desc'>Applies <code>f</code> to the elements of <code>list</code>.  The results are cons'd together into a list.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(map1 (fn (_) (list _ (* _ 10))) '(1 2 3))
+<span class="return">((1 10) (2 20) (3 30))
+</span></pre>
+<pre>
+&gt;(map1 cdr '((1) (2 3) (4 5)))
+<span class="return">(nil (3) (5))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='mappend'></a>
+<a target='CODE' href='/src/mappend.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?mappend'>mappend</a> <span class='args'>f [list ...]</span>
+    <div class='desc'>Maps <code>f</code> on the arguments, and then joins the results together.  <code>f</code> must return a list.  <code>nil</code> results are omitted.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(mappend (fn (_) (list _ (* _ 10))) '(1 2 3))
+<span class="return">(1 10 2 20 3 30)
+</span></pre>
+<pre>
+&gt;(mappend cdr '((1) (2 3) (4 5)))
+<span class="return">(3 5)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='reclist'></a>
+<a target='CODE' href='/src/reclist.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?reclist'>reclist</a> <span class='args'>f list</span>
+    <div class='desc'>Recursively applies f to tail subsequences of <code>list</code> and returns the first true result.  Returns <code>nil</code> if none.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(reclist (fn (x) (prn x) nil) '(a b c))
+<span class="stdout">(a b c)
+(b c)
+(c)
+
+</span><span class="return">nil
+</span></pre>
+<pre>
+&gt;(reclist (fn (_) (if (is (len _) 2) _)) '(a b c))
+<span class="return">(b c)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='mem'></a>
+<a target='CODE' href='/src/mem.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?mem'>mem</a> <span class='args'>test list</span>
+    <div class='desc'>Tests elements of list.  If test is true for an element, returns the remainder of the list from that point. <code>test</code> is either an element or a predicate.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(mem (fn (_) (odd _)) '(2 4 5 6 7))
+<span class="return">(5 6 7)
+</span></pre>
+<pre>
+&gt;(mem 6 '(2 4 5 6 7))
+<span class="return">(6 7)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='trues'></a>
+<a target='CODE' href='/src/trues.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?trues'>trues</a> <span class='args'>f list</span>
+    <div class='desc'>Maps function <code>f</code> onto <code>list</code> and returns only the true (non-nil) values.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(trues cdr '((1 2) (3) (4 5)))
+<span class="return">((2) (5))
+</span></pre>
+<pre>
+&gt;(trues (fn (_) (if (odd _) (* 10 _))) '(1 2 3 4 5))
+<span class="return">(10 30 50)
+</span></pre>
+  </td></tr>
+</table>
+<h2>Sorting</h2>
+Arc provides an efficient sorting operation based on merge sort.  Sorting in Arc uses a <code>compare</code> predicate function that defines the sort order.  Elements <code>x</code> and <code>y</code> are defined as sorted if <code>(compare x y)</code> is true.  The <code>compare</code> function does not need to define a full order.  That is, it is valid for <code>(compare x y)</code> and <code>(compare y x)</code> to both be true.  In this case, <code>mergesort</code> is stable, and will preserve the existing order of the elements.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='mergesort'></a>
+<a target='CODE' href='/src/mergesort.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?mergesort'>mergesort</a> <span class='args'>compare list</span>
+    <div class='desc'>Destructively sorts <code>list</code> using the given comparison function.  The sort is stable; if two elements compare as equal with <code>compare</code>, they will remain in the same order in the output.  The original list is destroyed.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(mergesort &lt; '(3 0 10 -7))
+<span class="return">(-7 0 3 10)
+</span></pre>
+<pre>
+&gt;(mergesort (fn (a b) (< (len a) (len b)))
+            '("horse" "dog" "elephant" "cat"))
+<span class="return">("dog" "cat" "horse" "elephant")
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='merge'></a>
+<a target='CODE' href='/src/merge.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?merge'>merge</a> <span class='args'>compare list1 list2</span>
+    <div class='desc'>Merges two sorted lists into a sorted list.  The original lists must be ordered according to the predicate function <code>compare.</code></div>
+    </td>
+    <td class='arc'><pre>
+&gt;(merge &lt; '(1 2 3 5) '(2 4 6))
+<span class="return">(1 2 2 3 4 5 6)
+</span></pre>
+<pre>
+&gt;(merge (fn (a b) (> (len a) (len b)))
+  '("aaa" "b") '("cccc" "ddd" "ee"))
+<span class="return">("cccc" "aaa" "ddd" "ee" "b")
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='insert-sorted'></a>
+<a target='CODE' href='/src/insert-sorted.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?insert-sorted'>insert-sorted</a> <span class='args'>compare elt list</span>
+    <div class='desc'>Creates a new list with <code>elt</code> inserted into the sorted list <code>list</code>.  The original list must be sorted according to the comparison function.  The original list is unmodified.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(insert-sorted &gt; 5 '(10 3 1))
+<span class="return">(10 5 3 1)
+</span></pre>
+<pre>
+&gt;(insert-sorted &gt; 5 '(10 5 1))
+<span class="return">(10 5 5 1)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='insort'></a>
+<a target='CODE' href='/src/insort.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?insort'>insort</a> <span class='args'>(compare elt list)</span>
+    <div class='desc'>Insert <code>elt</code> into previously-sorted <code>list</code>, updating <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(2 4 6) (insort &lt; 3 x) x)
+<span class="return">(2 3 4 6)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='reinsert-sorted'></a>
+<a target='CODE' href='/src/reinsert-sorted.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?reinsert-sorted'>reinsert-sorted</a> <span class='args'>compare elt list</span>
+    <div class='desc'>Creates a new list with <code>elt</code> inserted into the sorted list <code>list</code> if it is not already present.  The original list must be sorted according to the comparison function.  The original list is unmodified.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(reinsert-sorted &gt; 5 '(10 3 1))
+<span class="return">(10 5 3 1)
+</span></pre>
+<pre>
+&gt;(reinsert-sorted &gt; 5 '(10 5 1))
+<span class="return">(10 5 1)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='insortnew'></a>
+<a target='CODE' href='/src/insortnew.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?insortnew'>insortnew</a> <span class='args'>(compare elt list)</span>
+    <div class='desc'>Insert <code>elt</code> into previously-sorted <code>list</code> if it is not present, updating <code>list</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let x '(2 4 6) (insortnew &lt; 3 x) x)
+<span class="return">(2 3 4 6)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='best'></a>
+<a target='CODE' href='/src/best.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?best'>best</a> <span class='args'>compare list</span>
+    <div class='desc'>Returns the 'best' element of <code>list</code> as determined by function <code>compare</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(best &gt; '(3 1 4 5 9 6))
+<span class="return">9
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='bestn'></a>
+<a target='CODE' href='/src/bestn.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?bestn'>bestn</a> <span class='args'>n compare list</span>
+    <div class='desc'>Returns the first <code>n</code> elements of <code>list</code> when sorted according to comparison function <code>compare</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(bestn 3 &gt; '(3 1 4 5 9 6))
+<span class="return">(9 6 5)
+</span></pre>
+<pre>
+&gt;(bestn 3 &lt; '(3 1 4 5 9 6))
+<span class="return">(1 3 4)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='sort'></a>
+<a target='CODE' href='/src/sort.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sort'>sort</a> <span class='args'>test seq</span>
+    <div class='desc'>Sorts the sequence (list or string) using the specified comparison function.  The original sequence is unmodified.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(sort &lt; '(3 1 4 9 0))
+<span class="return">(0 1 3 4 9)
+</span></pre>
+<pre>
+&gt;(sort &gt; "Test word")
+<span class="return">"wtsroedT "
+</span></pre>
+  </td></tr>
+</table>
+<h2>Sequence manipulation</h2>
+These operations act on lists, strings, or hash tables.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='sref'></a>
+<a target='CODE' href='/src/sref.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sref'>sref</a> <span class='args'>seq value index</span>
+    <div class='desc'>Sets indexed entry in a list, string, or hash table to
+  the given value.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(do
+    (= x "abc")
+    (sref x #\d 1) x)
+<span class="stdout">Error: string-set!: contract violation
+  expected: (and/c st
+ring? (not/c immutable?))
+  given: "abc"
+  argument position
+: 1st
+  other arguments...:
+   1
+   #\d
+
+</span></pre>
+<pre>
+&gt;(do
+    (= x '(1 2 3))
+    (sref x #\d 1) x)
+<span class="return">(1 #\d 3)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='count'></a>
+<a target='CODE' href='/src/count.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?count'>count</a> <span class='args'>test seq</span>
+    <div class='desc'>Counts the number of elements of <code>seq</code> that satisfy <code>test</code>.  <code>test</code> is an object or predicate.  For a table, the elements are the values.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(count #\a "banana")
+<span class="return">3
+</span></pre>
+<pre>
+&gt;(count (fn (_) (odd _)) '(1 2 3 4 5))
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='union'></a>
+<a target='CODE' href='/src/union.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?union'>union</a> <span class='args'>f xs ys</span>
+    <div class='desc'>Takes union of sequence <code>xs</code> and <code>ys</code>.  Predicate <code>f</code> is used to determine equality to filter out duplicates. <code>xs</code> and <code>ys</code> must both be lists or strings.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(union is '(1 2 3) '(2 3 4))
+<span class="return">(1 2 3 4)
+</span></pre>
+<pre>
+&gt;(union is "ab" "banana")
+<span class="return">"abnn"
+</span></pre>
+<pre>
+&gt;(union (fn (a b) (is (mod a 10) (mod b 10))) '(1 2 3) '(13 24 35))
+<span class="return">(1 2 3 24 35)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='len'></a>
+<a target='CODE' href='/src/len.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?len'>len</a> <span class='args'>seq</span>
+    <div class='desc'>Computes the length of <code>seq</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(len "abc")
+<span class="return">3
+</span></pre>
+<pre>
+&gt;(len '(1 2 3))
+<span class="return">3
+</span></pre>
+<pre>
+&gt;(len (obj a 1 b 2))
+<span class="return">2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='len<'></a>
+<a target='CODE' href='/src/len%2f3c.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?len<'>len<</a> <span class='args'>seq n</span>
+    <div class='desc'>Tests if length of <code>seq</code> is less than <code>n</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(len&lt; "abc" 4)
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(len&lt; '(1 2 3) 4)
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(len&lt; (obj a 1 b 2) 4)
+<span class="return">t
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='len>'></a>
+<a target='CODE' href='/src/len%2f3e.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?len>'>len></a> <span class='args'>seq n</span>
+    <div class='desc'>Tests if length of <code>seq</code> is greater than <code>n</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(len&gt; "abc" 4)
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(len&gt; '(1 2 3) 4)
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(len&gt; (obj a 1 b 2) 4)
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='dedup'></a>
+<a target='CODE' href='/src/dedup.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?dedup'>dedup</a> <span class='args'>seq</span>
+    <div class='desc'>Returns contents of <code>seq</code> without duplicates.  For a string, returns a list of characters.  For a table, returns a list of values.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(dedup '(1 2 3 2 1))
+<span class="return">(1 2 3)
+</span></pre>
+<pre>
+&gt;(dedup "abcba")
+<span class="return">(#\a #\b #\c)
+</span></pre>
+<pre>
+&gt;(dedup (obj a 1 b 2 c 1))
+<span class="return">((c 1) (b 2) (a 1))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='single'></a>
+<a target='CODE' href='/src/single.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?single'>single</a> <span class='args'>list</span>
+    <div class='desc'>Returns true if given a list of length one.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(single '(1))
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(single 1)
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(single '())
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='pos'></a>
+<a target='CODE' href='/src/pos.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pos'>pos</a> <span class='args'>test seq [start]</span>
+    <div class='desc'>Returns the index of the first element of <code>seq</code> that satisfies <code>test</code>.  <code>seq</code> is a list or string</code>.  <code>test</code> is either an object or predicate function.  If <code>start</code> is given, testing starts at that element.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(pos 'c '(a b c d))
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(pos #\c "abcd")
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(pos #\c "abcdc" 3)
+<span class="return">4
+</span></pre>
+<pre>
+&gt;(pos odd '(2 4 5 6 7))
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(pos odd '(2 4 6))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='before'></a>
+<a target='CODE' href='/src/before.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?before'>before</a> <span class='args'>t1 t2 seq [start]</span>
+    <div class='desc'>Tests if <code>t1</code> is true before <code>t2</code> in <code>seq</code>.  <code>seq</code> is either a list or string.  The tests are either objects or predicate functions.  If <code>start</code> is given, search starts with the specified element.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(before 4 odd '(2 4 1 3))
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(before 4 odd '(2 3 4 1))
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(before #\a #\n "banana")
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(before #\a #\n "banana" 2)
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rand-elt'></a>
+<a target='CODE' href='/src/rand-elt.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rand-elt'>rand-elt</a> <span class='args'>seq</span>
+    <div class='desc'>Returns a random element from a list, or a random character from a string.  It also works on a table with integer keys from 0 to n.  Renamed from random-elt in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rand-elt '(1 2 3))
+<span class="return">3
+</span></pre>
+<pre>
+&gt;(rand-elt "abcd")
+<span class="return">#\b
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='mismatch'></a>
+<a target='CODE' href='/src/mismatch.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?mismatch'>mismatch</a> <span class='args'>s1 s2</span>
+    <div class='desc'>Compares sequences and returns the position of the
+first mismatch (as determined by <code>is</code>).  Returns <code>nil</code> if
+the sequences are identical.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(mismatch "abcde" "abXde")
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(mismatch '(1 2 3) '(1 9 3))
+<span class="return">1
+</span></pre>
+<pre>
+&gt;(mismatch "abc" "abc")
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='find'></a>
+<a target='CODE' href='/src/find.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?find'>find</a> <span class='args'>test seq</span>
+    <div class='desc'>Finds and returns the first element of <code>seq</code> that satisfies <code>test</code> (object or predicate).  <code>seq</code> can be a list or string.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(find odd '(2 3 4 5))
+<span class="return">3
+</span></pre>
+<pre>
+&gt;(find odd '(2 4 6))
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(find alphadig "...abc...")
+<span class="return">#\a
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='cut'></a>
+<a target='CODE' href='/src/cut.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cut'>cut</a> <span class='args'>seq start [end]</span>
+    <div class='desc'>Returns subsequence of <code>seq</code> from <code>start</code> to <code>end</code>.  If <code>end</code> is not specified,  the remainder of <code>seq</code> is used.  The seq can be a list or string.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(cut "abcde" 2)
+<span class="return">"cde"
+</span></pre>
+<pre>
+&gt;(cut "abcde" 2 4)
+<span class="return">"cd"
+</span></pre>
+<pre>
+&gt;(cut '(a b c d) 2)
+<span class="return">(c d)
+</span></pre>
+<pre>
+&gt;(cut '(a b c d) 2 4)
+<span class="return">(c d)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rem'></a>
+<a target='CODE' href='/src/rem.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rem'>rem</a> <span class='args'>test seq</span>
+    <div class='desc'>Removes elements from <code>seq</code> that satisfy <code>test</code>.  <code>test</code> is either a function or an object.  <code>seq</code> is either a list or string.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rem odd '(1 2 3 4 5))
+<span class="return">(2 4)
+</span></pre>
+<pre>
+&gt;(rem 3 '(1 2 3 4 5))
+<span class="return">(1 2 4 5)
+</span></pre>
+<pre>
+&gt;(rem #\c "abcde")
+<span class="return">"abde"
+</span></pre>
+<pre>
+&gt;(rem (fn (_) (in _ #\a #\b)) "abcde")
+<span class="return">"cde"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='keep'></a>
+<a target='CODE' href='/src/keep.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?keep'>keep</a> <span class='args'>test seq</span>
+    <div class='desc'>Keeps elements from <code>seq</code> that satisfy <code>test</code>.  <code>test</code> is either a function or an object.  <code>seq</code> is either a list or string.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(keep odd '(1 2 3 4 5))
+<span class="return">(1 3 5)
+</span></pre>
+<pre>
+&gt;(keep 3 '(1 2 3 4 5))
+<span class="return">(3)
+</span></pre>
+<pre>
+&gt;(keep #\c "abcde")
+<span class="return">"c"
+</span></pre>
+<pre>
+&gt;(keep (fn (_) (in _ #\a #\b)) "abcde")
+<span class="return">"ab"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='map'></a>
+<a target='CODE' href='/src/map.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?map'>map</a> <span class='args'>f [seq ...]</span>
+    <div class='desc'>Applies <code>f</code> to the elements of the sequences, taking the first from each, the second from each, and so on.  If there are <code>n</code> sequences, <code>f</code> must be a function accepting <code>n</code> arguments.  The sequences can be lists or strings.  If any sequence is a string, then <code>f</code> must return a character, and the result will be a string made up of the results from <code>f</code>.  Otherwise, the result will be a list of the results from <code>f</code>.  The sequences are processed up to the length of the shortest sequence.  For a single list, <code>map</code> is the same as <code>map1</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(map (fn (a b c) (+ (* a 100) (* b 10) c))
+  '(1 2 3) '(4 5 6) '(7 8 9 10))
+<span class="return">(147 258 369)
+</span></pre>
+<pre>
+&gt;(map (fn (_) (list _ (* _ 10))) '(1 2 3))
+<span class="return">((1 10) (2 20) (3 30))
+</span></pre>
+<pre>
+&gt;(map cdr '((1) (2 3) (4 5)))
+<span class="return">(nil (3) (5))
+</span></pre>
+<pre>
+&gt;(map (fn (c n) (coerce (+ n (coerce c 'int)) 'char)) "abc" '(0 2 4))
+<span class="return">"adg"
+</span></pre>
+<pre>
+&gt;(map min "bird" "elephant")
+<span class="return">"bied"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='sum'></a>
+<a target='CODE' href='/src/sum.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sum'>sum</a> <span class='args'>f seq</span>
+    <div class='desc'>Applies f to the elements of the sequence and sums the results.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(sum int "abc")
+<span class="return">294
+</span></pre>
+<pre>
+&gt;(sum log '(1 2 3))
+<span class="return">1.791759469228055
+</span></pre>
+<pre>
+&gt;(sum idfn (obj 'a 1 'b 2 'c 3))
+<span class="stdout">Error: +: contract violation
+  expected: number?
+  given: '(
+(quote b . nil) 2)
+  argument position: 2nd
+  other argument
+s...:
+   0
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='get'></a>
+<a target='CODE' href='/src/get.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?get'>get</a> <span class='args'>index</span>
+    <div class='desc'>Generates a function to get the element referenced by index; the function can be applied to a table.  This is useful for mapping, for instance.  (It can also be applied to functions, not jus sequences.) New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(map get.2 '((a b c) (1 2 3) (p q r)))
+<span class="return">(c 3 r)
+</span></pre>
+<pre>
+&gt;(get!b (obj a 10 b 20))
+<span class="return">20
+</span></pre>
+<pre>
+&gt;(get.42 log)
+<span class="return">3.7376696182833684
+</span></pre>
+  </td></tr>
+</table>
+<h2>Other</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='rand-choice'></a>
+<a target='CODE' href='/src/rand-choice.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rand-choice'>rand-choice</a> <span class='args'>expr [...]</span>
+    <div class='desc'>Randomly choose one of the expressions.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rand-choice "a" 42 '(1 2 3))
+<span class="return">"a"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='compare'></a>
+<a target='CODE' href='/src/compare.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?compare'>compare</a> <span class='args'>comparer scorer</span>
+    <div class='desc'>Creates a procedure on two values that applies <code>scorer</code> to each value, and then applies <code>comparer</code> to the two scores. </div>
+    </td>
+    <td class='arc'><pre>
+&gt;(compare &lt; len)
+<span class="return">#&lt;procedure: compare&gt;
+</span></pre>
+<pre>
+&gt;((compare &lt; len) "yz" "abc")
+<span class="return">t
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='only'></a>
+<a target='CODE' href='/src/only.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?only'>only</a> <span class='args'>f</span>
+    <div class='desc'>Creates a procedure that will apply <code>f</code> to its arguments only if there are arguments.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(only +)
+<span class="return">#&lt;procedure: only&gt;
+</span></pre>
+<pre>
+&gt;((only +) 1 2 3)
+<span class="return">6
+</span></pre>
+<pre>
+&gt;((only +))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='accum'></a>
+<a target='CODE' href='/src/accum.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?accum'>accum</a> <span class='args'>accfn [body ...]</span>
+    <div class='desc'>Executes body.  Inside body, each time accfn is called, its argument is pushed on a list that becomes the return value.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(accum accfn (each x '(1 2 3) (accfn (* x 10))))
+<span class="return">(10 20 30)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='summing'></a>
+<a target='CODE' href='/src/summing.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?summing'>summing</a> <span class='args'>sumfn [body ...]</span>
+    <div class='desc'>Sums the number of times sumfn is called with a true argument in body.  The sum is returned.  The sumfn argument specifies the name under which the summing function is available to the body.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(summing istrue (map istrue '(1 nil nil t)))
+<span class="return">2
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

@@ -1,0 +1,80 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Networking</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="variables.html">Variable operations</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="atomic.html">Atomic operations</a>
+</div>
+<h1 class="links">Arc: Networking</h1>
+<h2>Networking</h2>
+Arc's networking functions are limited to those necessary to support a
+  web server.  In particular, there is no support for outgoing network
+  connections.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='client-ip'></a>
+<a target='CODE' href='/src/client-ip.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?client-ip'>client-ip</a> <span class='args'>tcp-output-argument</span>
+    <div class='desc'>Returns the IP address of the client
+  connected to a TCP port.  The <code>tcp-output-argument</code> is the second value
+  returned from <code>socket-accept</code>.  The address is returned as a string, the same as
+  the third result from <code>socket-accept</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let s (socket-accept (open-socket 8080))
+    (client-ip (s 1)))
+"10.2.40.71"
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='open-socket'></a>
+<a target='CODE' href='/src/open-socket.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?open-socket'>open-socket</a> <span class='args'>port</span>
+    <div class='desc'>Opens a tcp-listener on the given port.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(open-socket 8000)
+<span class="return">#&lt;tcp-listener&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='socket-accept'></a>
+<a target='CODE' href='/src/socket-accept.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?socket-accept'>socket-accept</a> <span class='args'>tcp-port</span>
+    <div class='desc'>Accepts a connection on the given tcp-listener.
+  The thread blocks until a connection is received.  It returns a list of
+  <code>(input-port output-port client-ip-string)</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(socket-accept (open-socket 8080))
+(#&lt;input-port&gt; #&lt;output-port&gt; "10.2.40.71")
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='w/socket'></a>
+<a target='CODE' href='/src/w%2f2fsocket.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/socket'>w/socket</a> <span class='args'>var port [body ...]</span>
+    <div class='desc'>Opens a socket with <code>open-socket</code>, assigns it to <code>var</code>, executes <code>body</code>, and closes the socket.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(w/socket s 8888 (let (i o ip) (socket-accept s)
+  (w/stdout o (prn "Hello") (close i o))
+  (prn ip)))
+127.0.0.1
+</pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

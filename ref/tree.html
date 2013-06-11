@@ -1,0 +1,95 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Tree operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="template.html">Templates</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="queue.html">Queues</a>
+</div>
+<h1 class="links">Arc: Tree operations</h1>
+One of the datatypes Arc supports is binary trees, built out of cons cells.
+A standard technique in Lisp is to build a binary tree with data at the leaves and cons cells as the interior nodes.
+<p>
+<img src="tree1.gif">
+<br>
+For example, the above balanced tree is expressed as
+<code>((1 . 2) . (3 . 4))</code>, which is normally displayed as
+<code>((1 . 2) 3 . 4)</code>.
+<p>
+<img src="tree2.gif">
+<br>
+The tree does not need to be balanced, for instance, the above tree is
+<code>(((1 . 2) . 3) . 4)</code>.
+<p>
+Arc provides a few operations on binary trees.  However, Arc provides no explicit support for generating binary trees.  The primitive <code>cons</code> can be used to join two nodes or subtrees into a tree.  The primitives <code>car</code> and <code>cdr</code> will return the left and right subtrees (or nodes) respectively.
+<pre class="repl">
+arc> (= mytree (cons (cons 1 2) (cons 3 4)))
+((1 . 2) 3 . 4)
+arc> (car mytree)
+(1 . 2)
+arc> (cdr mytree)
+(3 . 4)
+arc> (cadr mytree)
+3
+</pre>
+For more information on cons-cell binary trees, see <a href='http://en.wikipedia.org/wiki/Cons#Trees'>Wikipedia</a>.
+<h2>Tree operations</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='treewise'></a>
+<a target='CODE' href='/src/treewise.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?treewise'>treewise</a> <span class='args'>join base tree</span>
+    <div class='desc'>Recursively traverses a binary tree.  The <code>base</code> function (of one argument) is applied to each leaf, and then the <code>join</code> function (of two arguments) is recursively called on each pair of branches to join together the results into the final result.  <code>treewise</code> was called <code>trav</code> prior to arc2.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(treewise + sqrt '(1 . (4 . 9)))
+<span class="return">6
+</span></pre>
+<pre>
+&gt;(treewise + string '(1 . (4 . 9)))
+<span class="return">"149"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tree-subst'></a>
+<a target='CODE' href='/src/tree-subst.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tree-subst'>tree-subst</a> <span class='args'>old new tree</span>
+    <div class='desc'>Generates a new, modified tree.  Node(s) with the value <code>old</code> are replaced with <code>new</code> in the tree.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tree-subst 1 9 '((1 . 2) . (3 . 4)))
+<span class="return">((9 . 2) 3 . 4)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='ontree'></a>
+<a target='CODE' href='/src/ontree.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ontree'>ontree</a> <span class='args'>f tree</span>
+    <div class='desc'>Function <code>f</code> is recursively applied to the tree in prefix order, that is first the node, then the left subtree, then the right subtree.  Subtrees as well as nodes are passed to <code>f</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(ontree prn '((1 . 2) . (3 . 4)))
+<span class="stdout">((1 . 2) 3 . 4)
+(1 . 2)
+1
+2
+(3 . 4)
+3
+4
+
+</span><span class="return">nil
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

@@ -1,0 +1,67 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Association lists</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="time.html">Time operations</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="template.html">Templates</a>
+</div>
+<h1 class="links">Arc: Association lists</h1>
+<h2>Association lists</h2>
+Association lists are a simple key/value data structure, consisting of a list of pairs.  Keys are looked up in the association list by linearly scanning the list, which makes association lists inefficient for large numbers of entries.
+Arc's <a href="table.html">tables</a> are an alternative to association lists.  Some <a href="http://ycombinator.com/arc/tut.txt">advantages</a> of association lists are that they can preserve order and preserve old values.  Also, multiple association lists can share the same tail.
+<p>
+For more information on association lists, see <a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node153.html">Common Lisp the Language</a>.  Unlike Common Lisp association lists that are built out of dotted pairs, Arc association lists are built out of list pairs.
+<p>
+Arc includes functions for looking up keys in an association list, but no explicit support for building association lists.  The lists, however, are simple to create and extend:
+<pre class="repl">
+arc> (= al '((key1 val1) (key2 val2)))
+((key1 val1) (key2 val2))
+arc> (push '(key3 val3) al)
+((key3 val3) (key1 val1) (key2 val2))
+arc> (alref al 'key1)
+val1
+</pre>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='alref'></a>
+<a target='CODE' href='/src/alref.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?alref'>alref</a> <span class='args'>al key</span>
+    <div class='desc'>Looks up <code>key</code> in association list <code>al</code>.  Returns the value or <code>nil</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(alref '((k1 v1) (k2 v2)) 'k1)
+<span class="return">v1
+</span></pre>
+<pre>
+&gt;(alref '((k1 v1) (k2 v2)) 'foo)
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='assoc'></a>
+<a target='CODE' href='/src/assoc.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?assoc'>assoc</a> <span class='args'>key al</span>
+    <div class='desc'>Looks up <code>key</code> in association list <code>al</code>.  Returns the key/value pair or <code>nil</code>.  Note that <code>assoc</code> and <code>alref</code> reverse the order of the arguments.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(assoc 'k1 '((k1 v1) (k2 v2)))
+<span class="return">(k1 v1)
+</span></pre>
+<pre>
+&gt;(assoc 'foo '((k1 v1) (k2 v2)))
+<span class="return">nil
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

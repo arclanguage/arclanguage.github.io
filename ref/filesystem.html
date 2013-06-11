@@ -1,0 +1,120 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: File system operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="io.html">I/O in the Arc language</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="threading.html">Threads</a>
+</div>
+<h1 class="links">Arc: File system operations</h1>
+Arc has operations to manipulate files and directories.  These operations do not all work on non-Unix systems.  The I/O operations are closely related to MzScheme's <a
+href='http://download.plt-scheme.org/doc/mzscheme/mzscheme-Z-H-11.html#node_chap_11'>I/O
+operations</a>.
+<p>See <a href='io.html'>I/O in Arc</a> for information on reading and writing files.
+<h2></h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='ensure-dir'></a>
+<a target='CODE' href='/src/ensure-dir.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ensure-dir'>ensure-dir</a> <span class='args'>path</span>
+    <div class='desc'>Creates the specified directory, if it doesn't exist.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(ensure-dir "newdir")
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='dir'></a>
+<a target='CODE' href='/src/dir.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?dir'>dir</a> <span class='args'>path</span>
+    <div class='desc'>Returns the directory contents as a list.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(dir "mydir")
+<span class="stdout">Error: directory-list: could not open directory
+  path: /hom
+e/dram/arc/arclanguage.github.io/_ref/mydir
+  system error: 
+No such file or directory; errno=2
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='dir-exists'></a>
+<a target='CODE' href='/src/dir-exists.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?dir-exists'>dir-exists</a> <span class='args'>path</span>
+    <div class='desc'>Tests if a directory exists.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(dir-exists "mydir")
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='file-exists'></a>
+<a target='CODE' href='/src/file-exists.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?file-exists'>file-exists</a> <span class='args'>path</span>
+    <div class='desc'>Tests if a file exists.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(file-exists "mydir")
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='mvfile'></a>
+<a target='CODE' href='/src/mvfile.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?mvfile'>mvfile</a> <span class='args'>path</span>
+    <div class='desc'>Moves the specified file. New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(mvfile "/tmp/junk" "/tmp/newjunk")
+nil
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rmfile'></a>
+<a target='CODE' href='/src/rmfile.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rmfile'>rmfile</a> <span class='args'>path</span>
+    <div class='desc'>Removes the specified file.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rmfile "/tmp/newjunk")
+<span class="stdout">Error: delete-file: cannot delete file
+  path: /tmp/newjunk
+
+  system error: No such file or directory; errno=2
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rmfile'></a>
+<a target='CODE' href='/src/rmfile.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rmfile'>rmfile</a> <span class='args'>path</span>
+    <div class='desc'>Removes the specified file.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rmfile "oldfile")
+nil
+</pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

@@ -1,0 +1,453 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Math operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="macro.html">Macros</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="predicates.html">Predicates</a>
+</div>
+<h1 class="links">Arc: Math operations</h1>
+<h2>Math operations</h2>
+The math operations of Arc are fairly limited.  Many expected
+  operations, such as trigonometry, are missing.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='*'></a>
+<a target='CODE' href='/src/%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?*'>*</a> <span class='args'>args</span>
+    <div class='desc'>Multiplication.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(* 2 3)
+<span class="return">6
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='%2b'></a>
+<a target='CODE' href='/src/%2f2b.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?%2b'>+</a> <span class='args'>args</span>
+    <div class='desc'>Addition.  This operator also performs string and list
+  concatenation.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(+ 1 2 3)
+<span class="return">6
+</span></pre>
+<pre>
+&gt;(+ "ab" "c" "de")
+<span class="return">"abcde"
+</span></pre>
+<pre>
+&gt;(+ '(1 2) '(3 4) '(5))
+<span class="return">(1 2 3 4 5)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='-'></a>
+<a target='CODE' href='/src/-.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?-'>-</a> <span class='args'>args</span>
+    <div class='desc'>Subtraction.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(- 3 2)
+<span class="return">1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='/'></a>
+<a target='CODE' href='/src/%2f2f.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?/'>/</a> <span class='args'>args</span>
+    <div class='desc'>Division</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(/ 1 2)
+<span class="return">1/2
+</span></pre>
+<pre>
+&gt;(/ 1.0 2)
+<span class="return">0.5
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='cos'></a>
+<a target='CODE' href='/src/cos.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cos'>cos</a> <span class='args'>arg</span>
+    <div class='desc'>Cosine function.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(cos 3.14)
+<span class="return">-0.9999987317275395
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='expt'></a>
+<a target='CODE' href='/src/expt.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?expt'>expt</a> <span class='args'>base exponent</span>
+    <div class='desc'>Exponentiation.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(expt 2 3)
+<span class="return">8
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='log'></a>
+<a target='CODE' href='/src/log.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?log'>log</a> <span class='args'>arg</span>
+    <div class='desc'>Natuarl logarithm function.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(log 100)
+<span class="return">4.605170185988092
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='mod'></a>
+<a target='CODE' href='/src/mod.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?mod'>mod</a> <span class='args'>dividend divisor</span>
+    <div class='desc'>  </div>
+    </td>
+    <td class='arc'><pre>
+&gt;(mod 10 3)
+<span class="return">1
+</span></pre>
+<pre>
+&gt;(mod -10 3)
+<span class="return">2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rand'></a>
+<a target='CODE' href='/src/rand.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rand'>rand</a> <span class='args'>[max] </span>
+    <div class='desc'>Returns a random number between 0 and 1, or between 0 and
+  the specified integer (excluding the integer).</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rand 10)
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(rand)
+<span class="return">0.6282572640752213
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='sin'></a>
+<a target='CODE' href='/src/sin.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sin'>sin</a> <span class='args'>arg</span>
+    <div class='desc'>Sine function.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(sin 3.14)
+<span class="return">0.0015926529164868282
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='sqrt'></a>
+<a target='CODE' href='/src/sqrt.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sqrt'>sqrt</a> <span class='args'>number</span>
+    <div class='desc'>Square root operation</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(sqrt 2)
+<span class="return">1.4142135623730951
+</span></pre>
+<pre>
+&gt;(sqrt -1)
+<span class="return">0+1i
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tan'></a>
+<a target='CODE' href='/src/tan.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tan'>tan</a> <span class='args'>arg</span>
+    <div class='desc'>Tangent function.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tan 3.14)
+<span class="return">-0.001592654936407223
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='trunc'></a>
+<a target='CODE' href='/src/trunc.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?trunc'>trunc</a> <span class='args'>number</span>
+    <div class='desc'>Truncates to an integer.  Was 'truncate' in arc0.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(trunc 1.9)
+<span class="return">1
+</span></pre>
+<pre>
+&gt;(trunc -1.1)
+<span class="return">-1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='number'></a>
+<a target='CODE' href='/src/number.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?number'>number</a> <span class='args'>n</span>
+    <div class='desc'>Tests if n is a number (int or num).</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(number 3.14)
+<span class="return">t
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='positive'></a>
+<a target='CODE' href='/src/positive.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?positive'>positive</a> <span class='args'>x</span>
+    <div class='desc'>Tests if x is a number and is positive (>= 0).  This fails on complex numbers.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(positive 0)
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(positive -2)
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(positive "a")
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='abs'></a>
+<a target='CODE' href='/src/abs.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?abs'>abs</a> <span class='args'>n</span>
+    <div class='desc'>Returns the absolute value.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(abs -3)
+<span class="return">3
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='round'></a>
+<a target='CODE' href='/src/round.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?round'>round</a> <span class='args'>n</span>
+    <div class='desc'>Rounds n to the nearest value.  Halfs are rounded to the nearest even number.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(round 1/2)
+<span class="return">0
+</span></pre>
+<pre>
+&gt;(round 1.5)
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(round 0.4)
+<span class="return">0
+</span></pre>
+<pre>
+&gt;(round -1.5)
+<span class="return">-2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='roundup'></a>
+<a target='CODE' href='/src/roundup.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?roundup'>roundup</a> <span class='args'>n</span>
+    <div class='desc'>Rounds n to the nearest value. Halfs are rounded away from zero.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(roundup 1/2)
+<span class="return">1
+</span></pre>
+<pre>
+&gt;(roundup 1.5)
+<span class="return">2
+</span></pre>
+<pre>
+&gt;(roundup 0.4)
+<span class="return">0
+</span></pre>
+<pre>
+&gt;(roundup -1.5)
+<span class="return">-2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='nearest'></a>
+<a target='CODE' href='/src/nearest.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?nearest'>nearest</a> <span class='args'>n quantum</span>
+    <div class='desc'>Rounds down to the nearest multiple of n.  Renamed in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(nearest 3.14 0.1)
+<span class="return">3.1
+</span></pre>
+<pre>
+&gt;(nearest -5 10)
+<span class="return">-10
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='median'></a>
+<a target='CODE' href='/src/median.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?median'>median</a> <span class='args'>list</span>
+    <div class='desc'>Returns the median of the list (the element at the midpoint of the list when sorted highest-to-lowest).  Takes the earlier element for an even-length list.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(median '(1 5 3 2 4))
+<span class="return">3
+</span></pre>
+<pre>
+&gt;(median '("dog" "cat" "bird") (median '(1 2 3 4)))
+<span class="stdout">Error:  median: arity mismatch;
+ the expected number of argu
+ments does not match the given number
+  expected: 1
+  given:
+ 2
+  arguments...:
+   '("dog" "cat" "bird" . nil)
+   2
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='med'></a>
+<a target='CODE' href='/src/med.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?med'>med</a> <span class='args'>list [compare-fn]</span>
+    <div class='desc'>Returns the median of the list (the element at the midpoint of the list when sorted according to compare-fn).  Takes the later element for an even-length list.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(med '(1 5 3 2 4))
+<span class="return">3
+</span></pre>
+<pre>
+&gt;(med '("dog" "cat" "bird") (med '(1 2 3 4)))
+<span class="stdout">Error: Function call on inappropriate object 2 ("bird" "cat"
+)
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='avg'></a>
+<a target='CODE' href='/src/avg.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?avg'>avg</a> <span class='args'>numbers</span>
+    <div class='desc'>Computes the average of a list of numbers.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(avg '(1+2i 0.4))
+<span class="return">0.7+1.0i
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='even'></a>
+<a target='CODE' href='/src/even.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?even'>even</a> <span class='args'>n</span>
+    <div class='desc'>Tests if n is even.  Argument n must be an integer.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(even 1)
+<span class="return">nil
+</span></pre>
+<pre>
+&gt;(even 2)
+<span class="return">t
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='odd'></a>
+<a target='CODE' href='/src/odd.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?odd'>odd</a> <span class='args'>n</span>
+    <div class='desc'>Tests if n is odd.  Argument n must be an integer.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(odd 1)
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(odd 2)
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='max'></a>
+<a target='CODE' href='/src/max.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?max'>max</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Returns the maximum arg.  The args must be comparable with >.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(max 10 -3 5)
+<span class="return">10
+</span></pre>
+<pre>
+&gt;(max "cat" "dog" "bird")
+<span class="return">"dog"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='min'></a>
+<a target='CODE' href='/src/min.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?min'>min</a> <span class='args'>[arg ...]</span>
+    <div class='desc'>Returns the minimum arg.  The args must be comparable with <.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(min 10 -3 5)
+<span class="return">-3
+</span></pre>
+<pre>
+&gt;(min "cat" "dog" "bird")
+<span class="return">"bird"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='multiple'></a>
+<a target='CODE' href='/src/multiple.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='predicate.gif' title='Predicate'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?multiple'>multiple</a> <span class='args'>x base</span>
+    <div class='desc'>Tests if <code>x</code> is a multiple of <code>base</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(multiple 10 5)
+<span class="return">t
+</span></pre>
+<pre>
+&gt;(multiple 11 5)
+<span class="return">nil
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

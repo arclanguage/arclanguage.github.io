@@ -1,0 +1,1287 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Web server</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="html.html">HTML generation</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="app.html">The Arc application server</a>
+</div>
+<h1 class="links">Arc: Web server</h1>
+Arc includes a web server with several interesting features, including a continuation-based design.  The web server includes many different operations to create forms and links with associated continuations.
+<p>
+The Arc distribution comes with sample web applications including a new site (<code>news.arc</code>) and a blog (<code>blog.arc</code>).
+<h2>Running the server</h2>
+The server can be started simply with
+<pre class="repl">
+arc>(serve 8080)
+</pre>
+<p>
+However, it is generally better to start the server in a separate thread, so the Arc REPL can be used.  This allows the web server to be modified while it is running.
+<pre class="repl">
+arc> (thread (serve 8080))
+</pre>
+A handler can be associated with a URL using the <code>defop</code> macro; this defines a handler function, taking the <code>req</code> parameter:
+<pre class="code">
+(defop hello req (prn "Hello world!"))
+</pre>
+The resulting page can be accessed at <a href="http://localhost:8080/hello">http://localhost:8080/hello</a>.
+<p>
+The Arc web server is rather fragile and platform-dependent.  If you encounter problems, the easiest solution is to use the unofficial <a href="http://arcfn.com/2008/02/git-and-anarki-arc-repository-brief.html">Anarki version</a>, which has multiple patches.
+<p>
+To define a top-level page (<a href="http://localhost:8080">http://localhost:8080</a>), use the page name <code>||</code> (the MzScheme representation of the empty symbol, between <a href="http://download.plt-scheme.org/doc/372/html/mzscheme/mzscheme-Z-H-11.html#node_sec_11.2.4">quoting vertical bars</a>).
+<pre class="code">
+(defop || req (pr "This is the home page."))
+</pre>
+<p>
+To redirect a page to a different page, the <code>defopr</code> macro is used, with a function that outputs the name of the target page.  For example, to redirect <a href="http://localhost:8080/index.html">http://localhost:8080/index.html</a> to the earlier "hello" page:
+<pre class="code">
+(defopr index.html req (prn "hello"))
+</pre>
+<p>
+The <code>req</code> parameter receives a table that has the field <code>ip</code> holding the IP address of the client, and potentially <code>cooks</code> holding the cookies, and <code>args</code> holding a list of key value pairs from the URL's query string.
+<p>
+The <code>defop-raw</code> and <code>defopr-raw</code> macros let the handler function add HTTP headers.  The handler must then output a blank line followed by the HTML content or redirect path.  One use of this is to add cookies to the headers.
+<pre class="code">
+ (defop-raw bar (str req) (w/stdout str
+   (prn "Set-Cookie: mycookie=42")
+   (prn)
+   (prn (req 'ip)) (br) (prn (req 'cooks)) (br) (prn (req 'args))))
+</pre>
+On the second reload (after the cookie gets assigned), <a href="http://localhost:8080/bar?x=1&y=2&z">http://localhost:8080/bar?x=1&y=2&z</a> will display:
+<pre class="code">
+127.0.0.1
+((mycookie 42))
+((x 1) (y 2) (z ))
+</pre>
+This illustrates how the handler can access the client's IP address, the cookies, and the URL query parameters.  The handle does not have access to other HTTP headers.
+<p>
+This functionality can be used to implement a simple form and form handler; the form is at <a href="http://localhost:8080/myform">http://localhost:8080/myform</a>.  This example uses some of the <a href="html.html">HTML functions</a>.
+<pre class="code">
+(defop myform req (form "myhandler" (single-input "Enter:" 'foo 10 "Submit")))
+(defop myhandler req  (prn "You entered") (prbold (alref (req 'args) "foo")))
+</pre>
+
+<p>
+Several types of output functions are supported by Arc.  The simplest is a function that outputs HTML.  A function can also optionally output additional HTTP headers.  Arc also supports redirect functions that can perform server-side operations and then redirect the browser to a new page; these functions can optionally output additional headers.  Finally, Arc has partial support for asynchronous functions, which don't return any response to the request.
+<p>
+The following table shows the macros for generating arbitrary server-side handlers of the given types.
+<table width=100% class="info">
+<tr><th width=16%>&nbsp;</th><th width=16%>HTML</th><th width=16%>Headers + HTML</th><th width=16%>Redirect</th><th width=16%>Headers + Redirect</th></tr>
+<tr>
+<th>Macro</th>
+<td><code>defop</code></td>
+<td><code>defop-raw</code></td>
+<td><code>defopr</code></td>
+<td><code>defopr-raw</code></td>
+</tr></table>
+<h2>Continuations</h2>
+The previous section showed how to implement basic HTML and redirect handlers in Arc.
+Arc's web server also provides continuation support, which is typically used for handlers.  That is, links and forms can be assigned a function that will be executed on the server if the link or form is clicked.
+(The continuation would be called a callback in some languages.)
+<p>
+The continuations used by the web server are explicit function.  (The web server does not use <code>ccc</code> first-class continuations.)  The functions take a request object as argument and print the appropriate response.  By using closures, the functions can maintain state across requests; the state will be included in the closure when the function is defined, and the function can access the state when it is later invoked.
+<p>
+The web server includes many operations to associate continuation functions and fnids with links and forms.
+The web server contains operations to generate links and forms of the various types, as shown in the following table.
+<p>
+The previous example can be implemented with continuations as follows:
+<pre class="code">
+(defop myform2 req (aform myfunc (single-input "Enter:" 'foo 10 "Submit")))
+(def myfunc (req) (prn "You entered") (prbold (alref (req 'args) "foo")))
+</pre>
+Generally, the continuation function is defined within the original form definition, so a closure can be created.  (In this case, the closure is unnecessary, as no state from the first operation is preserved.)
+<pre class="code">
+(defop myform2 req (aform
+  [do (prn "You entered") (prbold (alref (_ 'args) "foo"))]
+  (single-input "Enter:" 'foo 10 "Submit")))
+</pre>
+<p>
+Internally, the web server associates a token called the <code>fnid</code> with each instance of a link or form, and records the continuation function for each token.  Periodically, old fnids are deleted.
+<p>
+The following table illustrates the operations to generate links, URLs, or forms, for the four different types of output functions.  (In practice, both <code>arform</code> and <code>arformh</code> give access to the headers.)
+<table width=100% class="info">
+<tr><th width=16%>&nbsp;</th><th width=16%>HTML</th><th width=16%>Headers + HTML</th><th width=16%>Redirect</th><th width=16%>Headers + Redirect</th></tr>
+<tr>
+<th>Link generation</th>
+<td><code>w/link, w/link-if, onlink, linkf</code></td>
+<td><code></code></td>
+<td><code>w/rlink, rlinkf</code></td>
+<td><code></code></td>
+</tr>
+<tr>
+<th>URL generation</th>
+<td><code>flink, url-for</code></td>
+<td><code></code></td>
+<td><code>rflink</code></td>
+<td><code></code></td>
+</tr>
+<tr>
+<th>Form generation</th>
+<td><code>aform, timed-aform</code></td>
+<td><code>aformh</code></td>
+<td><code>arform</code></td>
+<td><code>arformh</code></td>
+</tr>
+</table>
+<p>
+Different operations use one of five different mechanisms to specify the continuation function.  The function may be specified as an expression, a function of one variable (the request object), a request parameter and body, output stream and request parameters and a body, or a body alone.  The documentation should be consulted to see which mechanism goes with which function.
+<h2>Explanation of the "Arc Challenge" solution</h2>
+The <a href="http://www.paulgraham.com/arcchallenge.html">Arc Challenge</a> posed the problem of implementing a simple web function.  Under the URL "/said", it provides a form with input field.  When submitted, the form goes to a page with a link "click here".  The link leads to a page with the text "You said: " followed by the original input.
+<p>
+The solution in Arc is as follows:
+<pre class="code">
+(defop said req
+  (aform [w/link (pr "you said: " (arg _ "foo"))
+           (pr "click here")]
+    (input "foo") 
+    (submit)))
+</pre>
+The solution may be easier to understand if the continuation functions are made explicit:
+<pre class="code">
+(defop said req
+  (aform form-continuation
+    (input "foo") 
+    (submit)))
+
+(def form-continuation (req) 
+  (w/link 
+      (pr "you said: " (arg req "foo")) ;link continuation expression
+    (pr "click here")))
+</pre>
+The <code>said</code> operation creates a form that when submitted
+executes the <code>form-continuation</code> function.  The continuation function
+creates a link that will execute the link continuation expression.
+The important thing to notice is the link continuation expression is defined
+inside <code>form-continuation</code>, which results in a closure with the
+<code>req</code> object from <code>form-continuation</code>.  That is,
+when the link continuation executes, potentially a long time after
+<code>form-continuation</code> completes, it will still have the state.
+This illustrates how closures can be used to carry state from one request
+to another.
+The form can be executed multiple times, and each execution will have a unique state in the link continuation closure.
+<h2>Web server</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='defop'></a>
+<a target='CODE' href='/src/defop.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defop'>defop</a> <span class='args'>name req-param [body ...]</span>
+    <div class='desc'>Defines a HTML response handler for the URL path <code>name</code>.  The handler body takes one parameter, the <code>req</code> object and should output to <code>stdout</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop foo req (prn "Hello"))
+<span class="return">#&lt;procedure: gs2255&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='defop-raw'></a>
+<a target='CODE' href='/src/defop-raw.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defop-raw'>defop-raw</a> <span class='args'>name (outstream-param req-param) [body ...]</span>
+    <div class='desc'>Defines a HTML response handler for the URL path <code>name</code>.  The handler body takes two parameters: the output stream and the <code>req</code> object.  The handler can output additional HTTP headers.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop-raw fooraw (str req)
+  (w/stdout str (prn "X-Arc: foo") (prn) (prn "Hello")))
+<span class="return">#&lt;procedure: gs2261&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='defopr'></a>
+<a target='CODE' href='/src/defopr.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defopr'>defopr</a> <span class='args'>name req-param [body ...]</span>
+    <div class='desc'>Defines a redirect response handler for the URL path <code>name</code>.  The handler body takes one parameter, the <code>req</code> object and should output to <code>stdout</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defopr bar req (prn "foo"))
+<span class="return">#&lt;procedure: gs2272&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='defopr-raw'></a>
+<a target='CODE' href='/src/defopr-raw.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defopr-raw'>defopr-raw</a> <span class='args'>name (outstream-param req-param) [body ...]</span>
+    <div class='desc'>Defines a redirect response handler for the URL path <code>name</code>.  The handler body takes two parameters: the output stream and the <code>req</code> object.  The handler can output additional HTTP headers.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defopr-raw baz (str req)
+  (disp "Set-Cookie: this=that\n" str) "foo")
+<span class="return">#&lt;procedure: gs2281&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='aform'></a>
+<a target='CODE' href='/src/aform.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?aform'>aform</a> <span class='args'>f [body ...]</span>
+    <div class='desc'>Generates a form from <code>body</code>.  <code>f</code> is a continuation function to execute when the form is submitted.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop af rq (aform (fn (req) (prn req)) (submit)))
+<span class="return">#&lt;procedure: gs2291&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='fnform'></a>
+<a target='CODE' href='/src/fnform.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fnform'>fnform</a> <span class='args'>f bodyfn [redir]</span>
+    <div class='desc'>Generates a form from a body function. <code>f</code> is a continuation function to execute when the form is submitted.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop af rq (fnform (fn (req) (fn (_) (prn req))) (submit)))
+<span class="return">#&lt;procedure: gs2303&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='timed-aform'></a>
+<a target='CODE' href='/src/timed-aform.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?timed-aform'>timed-aform</a> <span class='args'>lasts f [body ...]</span>
+    <div class='desc'>Generates a form.  The <code>fnid</code> has a lifetime of <code>lasts</code> seconds.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop taf rq (timed-aform 10 (fn (req) (prn req)) (submit)))
+<span class="return">#&lt;procedure: gs2314&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='timed-arform'></a>
+<a target='CODE' href='/src/timed-arform.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?timed-arform'>timed-arform</a> <span class='args'>lasts f [body ...]</span>
+    <div class='desc'>Generates a form.  Like timed-aform except with a redirect.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop taf rq (timed-arform 10 (fn (req) (prn req)) (submit)))
+<span class="return">#&lt;procedure: gs2325&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='arform'></a>
+<a target='CODE' href='/src/arform.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?arform'>arform</a> <span class='args'>f [body ...]</span>
+    <div class='desc'>Generates a form that goes to a redirect.  The callback function <code>f</code> must return the redirect target.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop arf rq (arform (fn (req) "foo") (prn "Click:") (submit)))
+<span class="return">#&lt;procedure: gs2336&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='aformh'></a>
+<a target='CODE' href='/src/aformh.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?aformh'>aformh</a> <span class='args'>f [body ...]</span>
+    <div class='desc'>Generates a form with additional headers.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop afh rq (aformh
+  (fn (req) (prn "Set-Cookie: a=b\n") (prn req))
+  (prn "Click:") (submit)))
+<span class="return">#&lt;procedure: gs2347&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='arformh'></a>
+<a target='CODE' href='/src/arformh.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?arformh'>arformh</a> <span class='args'>f [body ...]</span>
+    <div class='desc'>Generates a form that goes to a redirect with additional headers.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop arfh rq (arform (fn (req) (prn "Set-Cookie: a=b") "foo")
+  (prn "Click:") (submit)))
+<span class="return">#&lt;procedure: gs2358&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='url-for'></a>
+<a target='CODE' href='/src/url-for.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?url-for'>url-for</a> <span class='args'>fnid</span>
+    <div class='desc'>Generates a URL linking to the given <code>fnid</code>, using <code>fnurl*</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(url-for '1234)
+<span class="return">"/x?fnid=1234"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='afnid'></a>
+<a target='CODE' href='/src/afnid.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?afnid'>afnid</a> <span class='args'>f</span>
+    <div class='desc'>Generate anaphoric <code>fnid</code>. The continuation function <code>f</code> can access the <code>fnid</code> as the variable <code>it</code>. <code>f</code> must print a blank line before the HTML content.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(afnid (fn (req) (prn "\nFnid is " it)))
+<span class="return">J745H8FKXX
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='flink'></a>
+<a target='CODE' href='/src/flink.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?flink'>flink</a> <span class='args'>f</span>
+    <div class='desc'>Generates a URL that will run the continuation function <code>f</code>.  It creates a <code>fnid</code> to do this.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(flink (fn (req) (prn "hi")))
+<span class="return">"/x?fnid=W2xD3bBeSQ"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rflink'></a>
+<a target='CODE' href='/src/rflink.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rflink'>rflink</a> <span class='args'>f</span>
+    <div class='desc'>Generates a URL that will run the redirect continuation function <code>f</code>.  It creates a <code>fnid</code> to do this.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(rflink (fn (req) (prn "Header: x") "foo"))
+<span class="return">"/r?fnid=ogFYHqT1Sm"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='w/link'></a>
+<a target='CODE' href='/src/w%2f2flink.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/link'>w/link</a> <span class='args'>expr [body ...]</span>
+    <div class='desc'>Wraps <code>body</code> in a link to continuation expression <code>expr</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop wl req (w/link (prn "You clicked.") (prn "Click here")))
+<span class="return">#&lt;procedure: gs2376&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='w/link-if'></a>
+<a target='CODE' href='/src/w%2f2flink-if.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/link-if'>w/link-if</a> <span class='args'>test expr [body ...]</span>
+    <div class='desc'>If <code>test</code> is true, wraps <code>body</code> in a link to continuation expression <code>expr</code>.  Otherwise, just displays <code>body</code> without the link.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop wli req (w/link-if t (prn "You clicked.")
+  (prn "Click here")))
+<span class="return">#&lt;procedure: gs2388&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='w/rlink'></a>
+<a target='CODE' href='/src/w%2f2frlink.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/rlink'>w/rlink</a> <span class='args'>expr [body ...]</span>
+    <div class='desc'>Wraps <code>body</code> in a link to redirect continuation expression <code>expr</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop wrl req (w/rlink "foo" (prn "Click here")))
+<span class="return">#&lt;procedure: gs2400&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='onlink'></a>
+<a target='CODE' href='/src/onlink.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?onlink'>onlink</a> <span class='args'>text [body ...]</span>
+    <div class='desc'>Creates a link with contents <code>text</code> that will execute continuation expression <code>body</code>.  Note that <code>onlink</code> reverses the roles of the arguments compared to <code>w/link</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop ol req (onlink "Click here" (prn "You clicked.")))
+<span class="return">#&lt;procedure: gs2412&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='onrlink'></a>
+<a target='CODE' href='/src/onrlink.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?onrlink'>onrlink</a> <span class='args'>text [body ...]</span>
+    <div class='desc'>Creates a rlink with contents <code>text</code> that will execute continuation expression <code>body</code>.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop ol req (onrlink "Click here" (prn "You clicked.")))
+<span class="return">#&lt;procedure: gs2424&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='linkf'></a>
+<a target='CODE' href='/src/linkf.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?linkf'>linkf</a> <span class='args'>text parms [body ...]</span>
+    <div class='desc'>Creates a link with contents <code>text</code> to run the continuation function specified by <code>params</code> and <code>body</code>.  Params should be a single argument such as <code>(req)</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop lf rq (linkf "Click here" (req) (prn "Your request: " req)))
+<span class="return">#&lt;procedure: gs2436&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rlinkf'></a>
+<a target='CODE' href='/src/rlinkf.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rlinkf'>rlinkf</a> <span class='args'>text parms [body ...]</span>
+    <div class='desc'>Creates a link with contents <code>text</code> to run the redirection continuation function specified by <code>params</code> and <code>body</code>.  Params should be a single argument such as <code>(req)</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(defop rlf rq (rlinkf "Click here" (req) "foo"))
+<span class="return">#&lt;procedure: gs2447&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='arg'></a>
+<a target='CODE' href='/src/arg.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?arg'>arg</a> <span class='args'>req key</span>
+    <div class='desc'>Looks up the URL query value for <code>key</code> in <code>req</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let req (obj args '((foo 1)))
+  (arg req 'foo))
+<span class="return">1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='serve'></a>
+<a target='CODE' href='/src/serve.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?serve'>serve</a> <span class='args'>[port]</span>
+    <div class='desc'>Start server, by default on port 8080.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(serve 8080)
+
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='srvlog'></a>
+<a target='CODE' href='/src/srvlog.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?srvlog'>srvlog</a> <span class='args'>type [args ...]</span>
+    <div class='desc'>Records timestamp and <code>args</code> in the server log <code>type</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(srvlog 'blog "Stuff to log")
+<span class="stdout">Error: open-output-file: cannot open output file
+  path: /ho
+me/dram/arc/arclanguage.github.io/_ref/arc/logs/blog-2013-06
+-11
+  system error: No such file or directory; errno=2
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='defbg'></a>
+<a target='CODE' href='/src/defbg.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defbg'>defbg</a> <span class='args'>id sec [body ...]</span>
+    <div class='desc'>Creates a background thread with the given id tha will run the body every sec seconds.  Any existing thread with the same id is terminated.  New in arc3.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+</table>
+<h2>Web server configuration variables</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='arcdir*'></a>
+<a target='CODE' href='/src/arcdir%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?arcdir*'>arcdir*</a> <span class='args'></span>
+    <div class='desc'>Parent directory for server data.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;arcdir*
+<span class="return">"arc/"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='logdir*'></a>
+<a target='CODE' href='/src/logdir%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?logdir*'>logdir*</a> <span class='args'></span>
+    <div class='desc'>Directory to hold server logs.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;logdir*
+<span class="return">"arc/logs/"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='staticdir*'></a>
+<a target='CODE' href='/src/staticdir%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?staticdir*'>staticdir*</a> <span class='args'></span>
+    <div class='desc'>Directory to hold static files.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;staticdir*
+<span class="return">"static/"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='static-max-age*'></a>
+<a target='CODE' href='/src/static-max-age%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?static-max-age*'>static-max-age*</a> <span class='args'></span>
+    <div class='desc'>Maximum age for static files; used in Cache-Control header.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;static-max-age*
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='max-age*'></a>
+<a target='CODE' href='/src/max-age%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?max-age*'>max-age*</a> <span class='args'></span>
+    <div class='desc'>Table of maximum age by operation; used in Cache-Control header.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;max-age*
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='quitsrv*'></a>
+<a target='CODE' href='/src/quitsrv%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?quitsrv*'>quitsrv*</a> <span class='args'></span>
+    <div class='desc'>Flag to shut down server if set to true.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;quitsrv*
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='breaksrv*'></a>
+<a target='CODE' href='/src/breaksrv%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?breaksrv*'>breaksrv*</a> <span class='args'></span>
+    <div class='desc'>Flag to enable stopping server with control-C.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;breaksrv*
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='srv-noisy*'></a>
+<a target='CODE' href='/src/srv-noisy%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?srv-noisy*'>srv-noisy*</a> <span class='args'></span>
+    <div class='desc'>Flag to enable debug logging in the server.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;srv-noisy*
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='threadlife*'></a>
+<a target='CODE' href='/src/threadlife%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?threadlife*'>threadlife*</a> <span class='args'></span>
+    <div class='desc'>Maximum time (in seconds) for a thread to handle a request before being killed.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;threadlife*
+<span class="return">30
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='throttle-ips*'></a>
+<a target='CODE' href='/src/throttle-ips%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?throttle-ips*'>throttle-ips*</a> <span class='args'></span>
+    <div class='desc'>Table of IP addresses that should be throttled; they will be delayed by up to <code>throttle-time*</code> seconds.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;throttle-ips*
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='throttle-time*'></a>
+<a target='CODE' href='/src/throttle-time%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?throttle-time*'>throttle-time*</a> <span class='args'></span>
+    <div class='desc'>Maximum number of seconds to delay requests from IP addresses in <code>throttle-ips*</code></div>
+    </td>
+    <td class='arc'><pre>
+&gt;throttle-time*
+<span class="stdout">Error: _throttle-time*: undefined;
+ cannot reference undefin
+ed identifier
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='ignore-ips*'></a>
+<a target='CODE' href='/src/ignore-ips%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ignore-ips*'>ignore-ips*</a> <span class='args'></span>
+    <div class='desc'>IP addresses to ignore.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;ignore-ips*
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='spurned*'></a>
+<a target='CODE' href='/src/spurned%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?spurned*'>spurned*</a> <span class='args'></span>
+    <div class='desc'>Count of ignored IP addresses by address.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;spurned*
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='req-limit*'></a>
+<a target='CODE' href='/src/req-limit%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?req-limit*'>req-limit*</a> <span class='args'></span>
+    <div class='desc'>Maximum number of requests in req-window* seconds before triggering DoS attack detection.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;req-limit*
+<span class="return">30
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='req-window*'></a>
+<a target='CODE' href='/src/req-window%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?req-window*'>req-window*</a> <span class='args'></span>
+    <div class='desc'>Time window in seconds for triggering throttling.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;req-window*
+<span class="return">10
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='dos-window*'></a>
+<a target='CODE' href='/src/dos-window%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?dos-window*'>dos-window*</a> <span class='args'></span>
+    <div class='desc'>Time window in seconds for triggering DoS attack detection.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;dos-window*
+<span class="return">2
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='opcounts*'></a>
+<a target='CODE' href='/src/opcounts%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opcounts*'>opcounts*</a> <span class='args'></span>
+    <div class='desc'>Table counting number of times each operation executed. New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;opcounts*
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+</table>
+<h2>Web server internals</h2>
+The key stages in the life cycle of a request are:
+<ul>
+<li> <code>handle-request</code> handles one request.  It accepts a connection on socket <code>s</code>, starts a thread running <code>handle-request-thread</code>, and lets the thread run for <code>life</code> seconds.
+</li> handle-request-thread is the thread to handle a request.  It reads the header, calls <code>parseheader</code>, <code>srvlog</code>, <code>respond</code> (get) or <code>handle-post</code> (post) or <code>respond-err</code>.  Finally, it executes <code>harvest-fnids</code> when done.
+
+<li>
+One key component of the web server is <code>(respond str op args cooks ip)</code>, which generates the response to a GET or POST request.
+ <code>str</code> is the output stream, rest from <code>parseheader</code>
+It performs the following actions:
+<ul>
+<li>
+ If <code>op</code> is in <code>redirector*</code>, it does a redirect.
+<li> Otherwise, if <code>op</code> is in <code>srvops*</code>, it prints <code>header*</code> and executes the associated function.
+<li> Otherwise, a <code>static-filetype</code> is copied with <code>srv-header*</code>.
+<li> Otherwise, it returns <code>respond-err</code>.
+</ul>
+<li>A fnid-based request will go to a handler such as <code>x</code>, which executes the continuation associated with the fnid, which it gets from <code>fns*</code>.  Earlier, the continuation function was registered by <code>fnid</code>.
+</ul>
+<p>
+The URL "/deadlink" displays a "dead link" message.  The URL "/" displays a welcome message.  The URL "/topips" displays the user IP addresses with the heaviest server use.
+<p>
+The table below provides some internal implementation details.  The table shows which URL is assigned to each request type, and which macro is used to implement it.  Somewhat surprisingly, that the HTML functions with and without headers both use the same underlying URL and implementation; the higher-level macros simply don't provide headers if no headers are desired.
+<table width=100% class="info">
+<tr><th width=16%>&nbsp;</th><th width=16%>HTML</th><th width=16%>Headers + HTML</th><th width=16%>Redirect</th><th width=16%>Headers + Redirect</th><th width=16%>Asynchronous</th></tr>
+<tr>
+<th>Path variable</th>
+<td><code>fnurl*</code></td>
+<td><code>fnurl*</code></td>
+<td><code>rfnurl*</code></td>
+<td><code>rfnurl2*</code></td>
+<td><code>jfnurl*</code></td>
+</tr>
+<th>URL Path</th>
+<td><code>/x</code></td>
+<td><code>/x</code></td>
+<td><code>/r</code></td>
+<td><code>/y</code></td>
+<td><code>/a</code></td>
+</tr>
+<th>Implementation macro</th>
+<td><code>defop-raw x</code></td>
+<td><code>defop-raw x</code></td>
+<td><code>defopr r</code></td>
+<td><code>defopr-raw y</code></td>
+<td><code>defop-raw a</code></td>
+</tr>
+</table>
+The following table lists the operations and variables in <code>srv.arc</code> that are generally for internal use.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='serve1'></a>
+<a target='CODE' href='/src/serve1.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?serve1'>serve1</a> <span class='args'>[port]</span>
+    <div class='desc'>Start server to handle a single request.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(serve1 8080)
+ 
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='ensure-srvdirs'></a>
+<a target='CODE' href='/src/ensure-srvdirs.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ensure-srvdirs'>ensure-srvdirs</a> <span class='args'></span>
+    <div class='desc'>Create directories for <code>arcdir*</code> and <code>logdir*</code> if necessary.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(ensure-srvdirs)
+ 
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='handle-request'></a>
+<a target='CODE' href='/src/handle-request.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?handle-request'>handle-request</a> <span class='args'>s [breaksrv]</span>
+    <div class='desc'>Handles a request.  It accepts a connection on socket <code>s</code> and starts a thread running <code>handle-request-thread</code>.  If breaksrv is true, ^C will break out of the server.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='handle-request-thread'></a>
+<a target='CODE' href='/src/handle-request-thread.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?handle-request-thread'>handle-request-thread</a> <span class='args'>i o ip</span>
+    <div class='desc'>The core code to handle a request.  The arguments are the input port, the output port, and the user's IP address.  It reads the header, calls <code>parseheader</code>, <code>srvlog</code>, <code>respond</code> (get) or <code>handle-post</code> (post) or <code>respond-err</code>.  Then executes <code>harvest-fnids</code> when done.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='handle-post'></a>
+<a target='CODE' href='/src/handle-post.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?handle-post'>handle-post</a> <span class='args'>i o op args n cookies ip</span>
+    <div class='desc'>Handles a POST action.  The arguments are the input port, the output port, the path, the arguments, the content-length, the cookies, and the user's IP address.  Collects POST data and calls <code>respond</code>.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='respond'></a>
+<a target='CODE' href='/src/respond.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?respond'>respond</a> <span class='args'>str op args cooks ip</span>
+    <div class='desc'>Responds to a GET or POST request.  <code>str</code> is the output stream, rest from <code>parseheader</code>. If <code>op</code> is in <code>redirector*</code>, it does a redirect.  If <code>op</code> is in <code>srvops*</code> otherwise, it prints <code>header*</code> and executes the associated function.  Otherwise, a <code>static-filetype</code> is copied with <code>type-header*</code>.  Otherwise, <code>respond-err</code>.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='save-optime'></a>
+<a target='CODE' href='/src/save-optime.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?save-optime'>save-optime</a> <span class='args'>name elapsed</span>
+    <div class='desc'>Updates <code>optimes*</code> with the time taken to run <code>name</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(save-optime "foo" 10)
+<span class="return">(10)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='static-filetype'></a>
+<a target='CODE' href='/src/static-filetype.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?static-filetype'>static-filetype</a> <span class='args'>sym</span>
+    <div class='desc'>Returns a filetype symbol for a static file.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(static-filetype "foo.gif")
+<span class="return">gif
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='respond-err'></a>
+<a target='CODE' href='/src/respond-err.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?respond-err'>respond-err</a> <span class='args'>str msg [args ...]</span>
+    <div class='desc'>Generates an error response page containing <code>msg</code> and <code>args</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(respond-err (stdout) "Bad news")
+
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='parseurl'></a>
+<a target='CODE' href='/src/parseurl.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parseurl'>parseurl</a> <span class='args'>s</span>
+    <div class='desc'>Parses an action and URL. Returns a list of <code>type</code> (<code>get</code> or <code>post</code>), <code>op</code> (the path), and an association list of <code>args</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(parseurl "GET /x?foo=1&amp;bar")
+<span class="return">(get x (("foo" "1") ("bar" "")))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='parseheader'></a>
+<a target='CODE' href='/src/parseheader.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parseheader'>parseheader</a> <span class='args'>lines</span>
+    <div class='desc'>Parses a request header.  Returns a list of <code>type</code>, <code>op</code>, <code>args</code>, <code>content-length</code> (for <code>post</code>), and <code>cookies</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(parseheader '("POST /foo?a=b" "Cookie: bar=baz"
+     "Content-Length: 42"))
+<span class="return">(post foo (("a" "b")) 42 (("bar" "baz")))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='parsecookies'></a>
+<a target='CODE' href='/src/parsecookies.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parsecookies'>parsecookies</a> <span class='args'>s</span>
+    <div class='desc'>Parse a HTTP cookies header.  Returns an association list of name/value pairs.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(parsecookies "Cookie: name1=val1;name2=val2")
+<span class="return">(("name1" "val1") ("name2" "val2"))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='parseargs'></a>
+<a target='CODE' href='/src/parseargs.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parseargs'>parseargs</a> <span class='args'>s</span>
+    <div class='desc'>Parses args part of URL. Returns an association list of key/value pairs.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(parseargs "x=a+b&amp;y=%c3%e9&amp;z")
+<span class="return">(("x" "a b") ("y" "��") ("z" ""))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='reassemble-args'></a>
+<a target='CODE' href='/src/reassemble-args.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?reassemble-args'>reassemble-args</a> <span class='args'>req</span>
+    <div class='desc'>Creates the URL query string from the <code>args</code> in <code>req</code>.  The arguments are not URL-encoded, so they must not contain any special characters.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let req (obj args '(("x" "foo") ("y" "bar")))
+  (reassemble-args req))
+<span class="return">"?x=foo&amp;y=bar"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='new-fnid'></a>
+<a target='CODE' href='/src/new-fnid.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?new-fnid'>new-fnid</a> <span class='args'></span>
+    <div class='desc'>Generates a random unused fnid symbol.</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(new-fnid)
+<span class="return">vcyBEvq0ER
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='fnid'></a>
+<a target='CODE' href='/src/fnid.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fnid'>fnid</a> <span class='args'>f</span>
+    <div class='desc'>Generates a <code>fnid</code> with continuation function <code>f</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(fnid (fn (req) (prn "hi")))
+<span class="return">Wx0wopkM1O
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='timed-fnid'></a>
+<a target='CODE' href='/src/timed-fnid.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?timed-fnid'>timed-fnid</a> <span class='args'>lasts f</span>
+    <div class='desc'>Generates a <code>fnid</code> that will expire after <code>lasts</code> seconds.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(timed-fnid 100 (fn (req) (prn "hi")))
+<span class="return">QRtjDm0DRu
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='harvest-fnids'></a>
+<a target='CODE' href='/src/harvest-fnids.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?harvest-fnids'>harvest-fnids</a> <span class='args'>[max]</span>
+    <div class='desc'>If <code>fns*</code> has more than <code>max</code> fnids, purges any expired <code>timed-fnids*</code> and purges the oldest <code>fnids*</code> (10% of <code>max</code> are purged).</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(harvest-fnids 1000)
+<span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='fnid-field'></a>
+<a target='CODE' href='/src/fnid-field.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fnid-field'>fnid-field</a> <span class='args'>id</span>
+    <div class='desc'>Generates a hidden field assigning <code>id</code> to <code>fnid</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(fnid-field 'abc123)
+<span class="stdout">&lt;input type=hidden name="fnid" value="abc123"&gt;
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='unique-id'></a>
+<a target='CODE' href='/src/unique-id.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?unique-id'>unique-id</a> <span class='args'>[length]</span>
+    <div class='desc'>Generates a unique random alphanumeric id.  The minimum length is 5, and the default length is 8.  The table <code>unique-ids*</code> holds all generated ids to ensure uniqueness.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(unique-id)
+<span class="return">UydmuSu1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='memodate'></a>
+<a target='CODE' href='/src/memodate.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?memodate'>memodate</a> <span class='args'></span>
+    <div class='desc'>Returns current date.  Uses memoization for efficiency; dates are cached for 60 seconds.  Only works on some platforms.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='fns*'></a>
+<a target='CODE' href='/src/fns%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fns*'>fns*</a> <span class='args'></span>
+    <div class='desc'>Table mapping from <code>fnid</code> to continuation function.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='fnids*'></a>
+<a target='CODE' href='/src/fnids%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fnids*'>fnids*</a> <span class='args'></span>
+    <div class='desc'>List of fnids without an explicit lifetime.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='timed-fnids*'></a>
+<a target='CODE' href='/src/timed-fnids%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?timed-fnids*'>timed-fnids*</a> <span class='args'></span>
+    <div class='desc'>List of entries for fnids with an explicit lifetime.  Each entry is a list  of <code>fnid, time, lasts</code> for <code>fnids</code> with an expiration time.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='fnurl*'></a>
+<a target='CODE' href='/src/fnurl%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fnurl*'>fnurl*</a> <span class='args'></span>
+    <div class='desc'>URL path for a fnid continuation.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;fnurl*
+<span class="return">"/x"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rfnurl*'></a>
+<a target='CODE' href='/src/rfnurl%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rfnurl*'>rfnurl*</a> <span class='args'></span>
+    <div class='desc'>URL path for a fnid continuation redirect.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;rfnurl*
+<span class="return">"/r"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rfnurl2*'></a>
+<a target='CODE' href='/src/rfnurl2%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rfnurl2*'>rfnurl2*</a> <span class='args'></span>
+    <div class='desc'>URL path for a fnid continuation raw redirect.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;rfnurl2*
+<span class="return">"/y"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='jfnurl*'></a>
+<a target='CODE' href='/src/jfnurl%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?jfnurl*'>jfnurl*</a> <span class='args'></span>
+    <div class='desc'>URL path for an asynchronous fnid continuation.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;jfnurl*
+<span class="return">"/a"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='unique-ids*'></a>
+<a target='CODE' href='/src/unique-ids%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?unique-ids*'>unique-ids*</a> <span class='args'></span>
+    <div class='desc'>Table of ids generated by <code>unique-id</code>.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='unknown-msg*'></a>
+<a target='CODE' href='/src/unknown-msg%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?unknown-msg*'>unknown-msg*</a> <span class='args'></span>
+    <div class='desc'>Message for an unknown operator.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;unknown-msg*
+<span class="return">"Unknown."
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='rdheader*'></a>
+<a target='CODE' href='/src/rdheader%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rdheader*'>rdheader*</a> <span class='args'></span>
+    <div class='desc'>Redirect header</div>
+    </td>
+    <td class='arc'><pre>
+&gt;rdheader*
+<span class="return">"HTTP/1.0 302 Moved"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='srvops*'></a>
+<a target='CODE' href='/src/srvops%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?srvops*'>srvops*</a> <span class='args'></span>
+    <div class='desc'>Holds operations defined by the <code>defop</code> macros. Used by <code>respond</code> to map the URL path to the handler.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='redirector*'></a>
+<a target='CODE' href='/src/redirector%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?redirector*'>redirector*</a> <span class='args'></span>
+    <div class='desc'>Table with entries for names that are 'redirectors'.  These will return <code>rdheader*</code> and the new location.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(keys redirector*)
+<span class="return">(y baz bar r)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='optimes*'></a>
+<a target='CODE' href='/src/optimes%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?optimes*'>optimes*</a> <span class='args'></span>
+    <div class='desc'>Table of the last 1000 elapsed times (in ms) for operations.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='header*'></a>
+<a target='CODE' href='/src/header%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?header*'>header*</a> <span class='args'></span>
+    <div class='desc'>HTTP header</div>
+    </td>
+    <td class='arc'><pre>
+&gt;header*
+<span class="return">"HTTP/1.1 200 OK\nContent-Type: text/html; charset=utf-8\nConnection: close"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='type-header*'></a>
+<a target='CODE' href='/src/type-header%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?type-header*'>type-header*</a> <span class='args'></span>
+    <div class='desc'>Table of return HTML headers for static files.  Renamed from srv-header* in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(keys type-header*)
+<span class="return">(jpg gif png text/html)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='requests*'></a>
+<a target='CODE' href='/src/requests%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?requests*'>requests*</a> <span class='args'></span>
+    <div class='desc'>Counter of the total number of requests handled.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;requests*
+<span class="return">0
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='requests/ip*'></a>
+<a target='CODE' href='/src/requests%2f2fip%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?requests/ip*'>requests/ip*</a> <span class='args'></span>
+    <div class='desc'>Table mapping from IP address to the total number of requests associated with that IP address.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;requests/ip*
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='dead-msg*'></a>
+<a target='CODE' href='/src/dead-msg%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?dead-msg*'>dead-msg*</a> <span class='args'></span>
+    <div class='desc'>Message when a link has an expired <code>fnid</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;dead-msg*
+<span class="return">"\nUnknown or expired link."
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='bgthreads*'></a>
+<a target='CODE' href='/src/bgthreads%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?bgthreads*'>bgthreads*</a> <span class='args'></span>
+    <div class='desc'>Table of background threads.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;bgthreads*
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='pending-threads*'></a>
+<a target='CODE' href='/src/pending-threads%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pending-threads*'>pending-threads*</a> <span class='args'></span>
+    <div class='desc'>List of pending background threads.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;pending-threads*
+<span class="stdout">Error: _pending-threads*: undefined;
+ cannot reference undef
+ined identifier
+
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='req-times*'></a>
+<a target='CODE' href='/src/req-times%2f2a.html'><img src='code.gif' title='code'/></a>
+<img src='var.gif' title='Variable'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?req-times*'>req-times*</a> <span class='args'></span>
+    <div class='desc'>Table of requests by IP addresses for DoS attack detection.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;req-times*
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='handle-request'></a>
+<a target='CODE' href='/src/handle-request.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?handle-request'>handle-request</a> <span class='args'>s [life]</span>
+    <div class='desc'>Implements handle-request without breaksrv.  New in arc3.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='log-request'></a>
+<a target='CODE' href='/src/log-request.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?log-request'>log-request</a> <span class='args'>type op args cooks ip t0 t1</span>
+    <div class='desc'>Logs a request.  New in arc3.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='gen-type-header'></a>
+<a target='CODE' href='/src/gen-type-header.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?gen-type-header'>gen-type-header</a> <span class='args'>ctype</span>
+    <div class='desc'>Generates response header for the type. New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(gen-type-header "gif")
+<span class="return">"HTTP/1.0 200 OK\nContent-Type: gif\nConnection: close"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='timed-aform2'></a>
+<a target='CODE' href='/src/timed-aform2.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?timed-aform2'>timed-aform2</a> <span class='args'>genurl lasts f [body ...]</span>
+    <div class='desc'>timed-aform with ignored genurl argument.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+  <tr>
+    <td class='arc'><a name='logfile-name'></a>
+<a target='CODE' href='/src/logfile-name.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?logfile-name'>logfile-name</a> <span class='args'>type</span>
+    <div class='desc'>Creates logfile name for the given type. New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(logfile-name "gif")
+<span class="return">"arc/logs/gif-2013-06-11"
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='sortable'></a>
+<a target='CODE' href='/src/sortable.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sortable'>sortable</a> <span class='args'>table comparison-fn</span>
+    <div class='desc'>Sorts a table.  Default comparison is >.  New in arc3.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(sortable (obj 'a 5 'b 2 'c 4))
+<span class="return">(((quote a) 5) ((quote c) 4) ((quote b) 2))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='new-bgthread'></a>
+<a target='CODE' href='/src/new-bgthread.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?new-bgthread'>new-bgthread</a> <span class='args'>id f sec</span>
+    <div class='desc'>Creates a background thread with the given id tha will run f every sec seconds.  Any existing thread with the same id is terminated.  New in arc3.</div>
+    </td>
+    <td class='arc'>  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

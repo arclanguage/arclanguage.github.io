@@ -1,0 +1,119 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Queue operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="tree.html">Trees</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="error.html">Error handling</a>
+</div>
+<h1 class="links">Arc: Queue operations</h1>
+Arc implements a queue datatype, which is useful to add and remove elements in a first-in-first-out order.  The queue datatype provides two advantages over using a plain list.  The queue provides constant-time operations to add and remove elements and to determine the queue length.  The queue also provides atomic access to its contents.
+<p>Internally the queue is implemented by a three-element list.  The first element is the queue's contents as a list.  The second element is a reference to the last element in the list.  The third element is the length of the queue.  By maintaining a reference to the end of the queue, an element can be added to the end of the queue in constant time, without traversing the whole list.  By storing the length explicitly, the length can also be returned in constant time.  For example, the following shows a queue with two elements:
+<pre class="repl">
+arc> (let q (queue) (enq 'a q) (enq 'b q) q)
+((a b) (b) 2)
+</pre>
+<p>
+Most Arc operations do not have any "knowledge" of a queue, and if applied to a queue will act on the list implementing the queue; the results are likely to be undesired.  The <code>qlist</code> operation should be used to access the contents of the queue.
+<pre class="repl">
+arc> (do (= q (queue)) (enq 1 q) (enq 2 q))
+(1 2)
+arc> (apply + q)
+Error: "+: expects type <number> as 1st argument, given: (1 2); other arguments were: (2) 2"
+arc> (apply + (qlist q))
+3
+</pre>
+<h2>Queue operations</h2>
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='queue'></a>
+<a target='CODE' href='/src/queue.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?queue'>queue</a> <span class='args'></span>
+    <div class='desc'>Creates a queue.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(queue)
+<span class="return">(nil nil 0)
+</span></pre>
+<pre>
+&gt;(type (queue))
+<span class="return">cons
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='enq'></a>
+<a target='CODE' href='/src/enq.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?enq'>enq</a> <span class='args'>obj q</span>
+    <div class='desc'>Adds obj to the end of queue q.  Returns the queue as a list. The operation is wrapped in <code>atomic</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let q (queue) (enq 'a q) (enq '(1 2) q))
+<span class="return">(a (1 2))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='enq-limit'></a>
+<a target='CODE' href='/src/enq-limit.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?enq-limit'>enq-limit</a> <span class='args'>obj q [limit]</span>
+    <div class='desc'>Adds obj to the queue q.  If the new length would exceed the limit, the first element is dequeued.  The new contents of the queue is returned as a list.  Note that the length of the queue will either grow by one or remain constant; the queue will not be shortened to the limit.  The operation is wrapped in <code>atomic</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let q (queue)
+  (enq-limit 'a q 2)
+  (enq-limit 'b q 2)
+  (enq-limit 'c q 2))
+<span class="return">(b c)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='deq'></a>
+<a target='CODE' href='/src/deq.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?deq'>deq</a> <span class='args'>q</span>
+    <div class='desc'>Removes the first element from the queue q and returns the removed element.  The operation is wrapped in <code>atomic</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let q (queue) (enq 'a q) (enq 4 q) (deq q))
+<span class="return">a
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='qlen'></a>
+<a target='CODE' href='/src/qlen.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?qlen'>qlen</a> <span class='args'>q</span>
+    <div class='desc'>Returns the length of queue q.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let q (queue) (enq 'a q) (enq 4 q) (deq q) (qlen q))
+<span class="return">1
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='qlist'></a>
+<a target='CODE' href='/src/qlist.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?qlist'>qlist</a> <span class='args'>q</span>
+    <div class='desc'>Returns the contents of queue q as a list.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let q (queue) (enq 'a q) (enq '(1 2) q) (qlist q))
+<span class="return">(a (1 2))
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>

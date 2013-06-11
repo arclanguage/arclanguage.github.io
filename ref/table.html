@@ -1,0 +1,238 @@
+<html dir="ltr">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>Arc: Table operations</title>
+<link rel="stylesheet" type="text/css" href="code.css">
+</head>
+<body>
+<a href="http://arcfn.com"><img src="arc.gif" style="position:absolute; right:0px; top:0px; width:135px; height:125; border-style: none" title="Arc de Triomphe under construction.  From English
+Illustrated Magazine."/></a>
+<div class="links">Previous: <a href="string.html">String operations</a>
+Up: <a href="index.html">Contents</a>
+Next: <a href="type.html">Type operations</a>
+</div>
+<h1 class="links">Arc: Table operations</h1>
+<h2>Table operations</h2>
+Arc provides support for hash tables.  An entry in the table is
+accessed by treating the table as a function on the key.  For example, to look
+up <code>key</code> in table <code>tab</code>: <code>(tab key)</code>.  If the key is not present,
+<code>nil</code> is returned.
+The <code>=</code> operator can be used to assign values to a table:
+<code>(= (tab key) 'value)</code>.
+<p>
+See also <a href="template.html">template operations</a>, which provide a more complex abstraction on top of tables.
+<p><table class='arc'>
+  <tr>
+    <td class='arc'><a name='obj'></a>
+<a target='CODE' href='/src/obj.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?obj'>obj</a> <span class='args'>[key value ...]</span>
+    <div class='desc'>Creates a table with the specified key/value
+pairs.  (The table can be considered an object with the keys as field names.)</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(obj key1 42 key2 "hello")
+<span class="return">#hash((key2 . "hello") (key1 . 42))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='w/table'></a>
+<a target='CODE' href='/src/w%2f2ftable.html'><img src='code.gif' title='code'/></a>
+<img src='macro.gif' title='Macro'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/table'>w/table</a> <span class='args'>var [body ...]</span>
+    <div class='desc'>Assigns an empty table to var and then
+executes body.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(w/table t1 (= (t1 "a") 42) (write-table t1))
+<span class="stdout">(("a" 42))
+</span><span class="return">#hash(("a" . 42))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='tablist'></a>
+<a target='CODE' href='/src/tablist.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tablist'>tablist</a> <span class='args'>table</span>
+    <div class='desc'>Returns the table as a list of key/value pairs</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(tablist (obj key1 42 key2 "hello"))
+<span class="return">((key1 42) (key2 "hello"))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='listtab'></a>
+<a target='CODE' href='/src/listtab.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?listtab'>listtab</a> <span class='args'>list</span>
+    <div class='desc'>Converts a list of key/value pairs to a table.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(listtab '((key1 val1) (key2 val2)))
+<span class="return">#hash((key2 . val2) (key1 . val1))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='read-table'></a>
+<a target='CODE' href='/src/read-table.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?read-table'>read-table</a> <span class='args'>[[input-port] eof]</span>
+    <div class='desc'>Reads a table (as a list of pairs) from the
+given input-port or stdin.  If end-of-file is encountered, the given eof value
+is returned; if it is a list, it will be processed into a table.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(w/instring ins "((a 10)(b 20))" (read-table ins))
+<span class="return">#hash((a . 10) (b . 20))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='load-table'></a>
+<a target='CODE' href='/src/load-table.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?load-table'>load-table</a> <span class='args'>filename [eof]</span>
+    <div class='desc'>Reads a table from the given filename.  This
+is similar to read-table, except the input is specified as a filename, rather
+than an input-port.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;load-tablet
+#hash((a . 10) (b . 20))
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='safe-load-table'></a>
+<a target='CODE' href='/src/safe-load-table.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?safe-load-table'>safe-load-table</a> <span class='args'>filename</span>
+    <div class='desc'>Loads a table from the given file, like
+load-table.  However, if an error is encountered, an empty table is returned
+instead of an exception.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(load-table "tfile")
+#hash((a . 10) (b . 20))
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='load-tables'></a>
+<a target='CODE' href='/src/load-tables.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?load-tables'>load-tables</a> <span class='args'>filename</span>
+    <div class='desc'>Loads tables from the specified file until
+end-of-file is reached.  Returns a list of tables.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(load-tables "tfile2")
+(#hash((a . 10) (b . 20)) #hash((
+</pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='write-table'></a>
+<a target='CODE' href='/src/write-table.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?write-table'>write-table</a> <span class='args'>h [output-port]</span>
+    <div class='desc'>Writes the table to the output-port (or
+stdout) as a list of key/value pairs.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(write-table (obj a 1 b 2))
+<span class="stdout">((b 2) (a 1))
+</span><span class="return">nil
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='save-table'></a>
+<a target='CODE' href='/src/save-table.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?save-table'>save-table</a> <span class='args'>table filename</span>
+    <div class='desc'>Writes the table to the specified filename
+as a list of key/value pairs.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(save-table (obj a 10 b 20) "tfile")
+<span class="return">((b 20) (a 10))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='maptable'></a>
+<a target='CODE' href='/src/maptable.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?maptable'>maptable</a> <span class='args'>proc table </span>
+    <div class='desc'>Applies proc to each element of the table and returns the table.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(maptable (fn (key val) (prn key " " val)) (obj a 1 b 2))
+<span class="stdout">b 2
+a 1
+
+</span><span class="return">#hash((a . 1) (b . 2))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='table'></a>
+<a target='CODE' href='/src/table.html'><img src='code.gif' title='code'/></a>
+<img src='foundation.gif' title='Foundation'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?table'>table</a> <span class='args'></span>
+    <div class='desc'>Creates an empty hash table.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(table)
+<span class="return">#hash()
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='fill-table'></a>
+<a target='CODE' href='/src/fill-table.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<img src='destructive.gif' title='Destructive'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fill-table'>fill-table</a> <span class='args'>table data</span>
+    <div class='desc'>Fills the table from the list <code>data</code>, which is interpreted as key-value pairs.  <code>table</code> must already be a table.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(let tb (obj a 1 b 2) (fill-table tb '(c 3 d 4)))
+<span class="return">#hash((d . 4) (a . 1) (b . 2) (c . 3))
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='keys'></a>
+<a target='CODE' href='/src/keys.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?keys'>keys</a> <span class='args'>table</span>
+    <div class='desc'>Returns a list of keys for the table.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(keys (obj a 1 b 2))
+<span class="return">(b a)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='vals'></a>
+<a target='CODE' href='/src/vals.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?vals'>vals</a> <span class='args'>table</span>
+    <div class='desc'>Returns a list of values for the table.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(vals (obj a 1 b 2))
+<span class="return">(2 1)
+</span></pre>
+  </td></tr>
+  <tr>
+    <td class='arc'><a name='memtable'></a>
+<a target='CODE' href='/src/memtable.html'><img src='code.gif' title='code'/></a>
+<img src='proc.gif' title='Procedure'/>
+<a class='op' href='http://practical-scheme.net/wiliki/arcxref?memtable'>memtable</a> <span class='args'>keylist</span>
+    <div class='desc'>Creates a table with the value true for each key in <code>keylist</code>.</div>
+    </td>
+    <td class='arc'><pre>
+&gt;(memtable '(a b c))
+<span class="return">#hash((a . t) (b . t) (c . t))
+</span></pre>
+  </td></tr>
+</table>
+<p>
+Copyright 2008 Ken Shirriff.
+</body>
+</html>
