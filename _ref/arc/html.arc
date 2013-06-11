@@ -176,19 +176,24 @@
 
 (def tag-options (spec options)
   (if (no options)
-      '()
-      (let ((opt val) . rest) options
-        (let meth (if (is opt 'style) opstring (opmeth spec opt))
-          (if meth
-              (if val
-                  (cons (if (precomputable-tagopt val)
-                            (tostring (eval (meth opt val)))
-                            (meth opt val))
-                        (tag-options spec rest))
+    '()
+    (let ((opt val) . rest) options
+      (let meth (if (in opt 'style 'class)
+                      opstring
+                    (is opt 'id)
+                      opsym
+                    'else
+                      (opmeth spec opt))
+        (if meth
+          (if val
+            (cons (if (precomputable-tagopt val)
+                    (tostring (eval (meth opt val)))
+                    (meth opt val))
                   (tag-options spec rest))
-              (do
-                (pr "<!-- ignoring " opt " for " spec "-->")
-                (tag-options spec rest)))))))
+            (tag-options spec rest))
+          (do
+            (pr "<!-- ignoring " opt " for " spec "-->")
+            (tag-options spec rest)))))))
 
 (def precomputable-tagopt (val)
   (and (literal val) 

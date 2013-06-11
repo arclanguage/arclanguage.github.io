@@ -261,16 +261,17 @@
 result))
 
 (def readtop (filename)
-     ; (index* foo.tem) == (prev.tem this.tem next.tem)
+   ; (index* foo.tem) == (title prev.tem this.tem next.tem)
+   (= index* (table))
+   (let temlinks (gettemlinks filename)
      ; pagelist* == ("page1.tem" "page2.tem" ...)
-     (= index* (table))
-     (let temlinks (gettemlinks filename)
-       (= pagelist* (map [_ 1] temlinks))
-       (each (title link) temlinks
-          (= (index* link) title)) ; (index* foo.tem) = title
-       (each trip (triples (+ '(nil) pagelist* '(nil)))
-         (= (index* (trip 1)) (cons (index* (trip 1)) trip))
-       )))
+     (= pagelist* (map [_ 1] temlinks))
+     (each (title link) temlinks
+        (= (index* link) title))
+     (each trip (triples (+ '(nil) pagelist* '(nil)))
+       (if trip
+         (= (index* trip.1) (cons (index* trip.1) trip)))
+     )))
 
 (def htmllink (href text) (prn "<a href=\"" href "\">" text "</a>"))
 
@@ -278,48 +279,38 @@ result))
 (def htmlname(x) (subst ".html" ".tem" x))
 
 (def getlinks (tem)
-     (let info (index* tem)
-      (if info
-       (with (text (info 0) prev (info 1) this (info 2) next (info 3))
-     (tostring (pr "<div class=\"links\">")
-	       (when prev
-		 (pr "Previous: ")
-		 (htmllink (htmlname prev) ((index* prev) 0)))
-	       (pr "Up: ")
-	       (htmllink "index.html" "Contents")
-	       (when next
-		 (pr "Next: ")
-		 (htmllink (htmlname next) ((index* next) 0)))
-	       (pr "</div>")
-     )
-     ))))
-
-(= index* nil)
+  (aif index*.tem
+    (let (_ prev this next) it
+      (tostring
+        (tag (div class "links")
+          (when prev
+            (pr "Previous: ")
+            (htmllink (htmlname prev) ((index* prev) 0)))
+           (pr "Up: ")
+           (htmllink "index.html" "Contents")
+           (when next
+             (pr "Next: ")
+             (htmllink (htmlname next) ((index* next) 0))))))))
 
 ; Generate html from a template
 (def run (filename)
-        (= current-file* filename)
-        (= out-file-name* (+ "html/" (subst "" ".tem" filename) ".html"))
-	(= page* "")
-        (= out-file* (outfile out-file-name*))
-	(when (no index*)
-	  (prn "Reading top.tem")
-	  (readtop "top.tem"))
-	(= links* (getlinks filename))
-	(doit (sread (infile filename) 'eof))
-        out-file-name*
-)
+  (= current-file* filename)
+  (= out-file-name* (+ "html/" (subst "" ".tem" filename) ".html"))
+  (= page* "")
+  (= out-file* (outfile out-file-name*))
+  (= links* (getlinks filename))
+  (doit (sread (infile filename) 'eof))
+  out-file-name*)
 
 ; Run through all the templates listed in the top file.
 (def runall ((o topname "docs/index.html"))
-     (= all-links* '())
-     (readtop topname)
-     (= update-links* t)
-     (on filename pagelist*
-	 (prn "Doing file " filename)
-	 (run filename))
-     (= update-links* nil)
-	 )
+  (= all-links* '())
+  (readtop topname)
+  (= update-links* t)
+  (on filename pagelist*
+    (prn "Doing file " filename)
+    (run filename))
+  (= update-links* nil))
 
 (def tem () (load "template.arc"))
 
