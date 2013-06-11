@@ -30,7 +30,7 @@
     (while (= line (readline inf))
       (if (posmatch "%%INDEX%%" line)
         (disp (subst (getlinkindexhtml) "%%INDEX%%" line))
-        (disp (subst links* "%%LINKS%%" (subst (string "Arc: " page*) "%%TITLE%%" line))))
+        (disp (subst links* "%%LINKS%%" (subst page* "%%TITLE%%" line))))
       (prn)
       )
     (close inf)))

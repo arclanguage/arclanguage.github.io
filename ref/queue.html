@@ -23,7 +23,7 @@
 Up: <a href="index.html">Contents</a>
 Next: <a href="error.html">Error handling</a>
 </div>
-<h1 class="links">Arc: Queue operations</h1>
+<h1 class="links">Queue operations</h1>
 Arc implements a queue datatype, which is useful to add and remove elements in a first-in-first-out order.  The queue datatype provides two advantages over using a plain list.  The queue provides constant-time operations to add and remove elements and to determine the queue length.  The queue also provides atomic access to its contents.
 <p>Internally the queue is implemented by a three-element list.  The first element is the queue's contents as a list.  The second element is a reference to the last element in the list.  The third element is the length of the queue.  By maintaining a reference to the end of the queue, an element can be added to the end of the queue in constant time, without traversing the whole list.  By storing the length explicitly, the length can also be returned in constant time.  For example, the following shows a queue with two elements:
 <pre class="repl">
