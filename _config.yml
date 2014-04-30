@@ -1,11 +1,7 @@
 navbar:
-- url: http://tryarc.org
-  label: Try it
-- url: http://github.com/arclanguage/anarki
-  label: Get it
 - url: http://ycombinator.com/arc/tut.txt
   label: Tutorial
-- url: /ref/
-  label: Reference
 - url: http://arclanguage.org/forum
   label: Forum
+- url: http://paulgraham.com/arc.html
+  label: Philosophy and History

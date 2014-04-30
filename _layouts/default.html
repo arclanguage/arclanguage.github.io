@@ -3,25 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>Arc Programming Language</title>
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="shortcut icon" href="/assets/ico/favicon.png">
-    <link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/assets/favicon.png">
+    <link href="/assets/bootstrap.css" rel="stylesheet">
   </head>
 
   <body>
     <header>
       <div class="navbar navbar-inverse">
-	<div class="navbar-inner">
-	  <a class="brand" href="/">Arc</a>
-	  <ul class="nav">
-	    {% for item in site.navbar %}
-	    <li {% if page.url contains item.url %}class="active"{% endif %}>
-	      <a href="{{ item.url }}">{{ item.label }}</a>
-	    </li>
-	    {% endfor %}
-	  </ul>
-	</div>
+        <div class="navbar-inner">
+          <ul class="nav navbar-nav">
+            {% for item in site.navbar %}
+            <li {% if page.url contains item.url %}class="active"{% endif %}>
+              <a href="{{ item.url }}">{{ item.label }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
     </header>
 
