@@ -166,10 +166,9 @@ b
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='assign'></a>
-<a target='CODE' href='/src/assign.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?assign'>assign</a> <span class='args'>symbol expr</span>
+<span class='op'>assign</span> <span class='args'>symbol expr</span>
     <div class='desc'>assign is used to assign a value to a variable.  Renamed from <code>set</code> in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -179,10 +178,9 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='scar'></a>
-<a target='CODE' href='/src/scar.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?scar'>scar</a> <span class='args'>list expr</span>
+<span class='op'>scar</span> <span class='args'>list expr</span>
     <div class='desc'>Assigns an expression to the  car of list.  If applied to a
   string, assigns to the first character of the string, which must have length at
   least one.</div>
@@ -213,10 +211,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='scdr'></a>
-<a target='CODE' href='/src/scdr.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?scdr'>scdr</a> <span class='args'>list exp</span>
+<span class='op'>scdr</span> <span class='args'>list exp</span>
     <div class='desc'>Assigns to cdr of a list.</div>
     </td>
     <td class='arc'><pre>
@@ -229,10 +226,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='%3d'></a>
-<a target='CODE' href='/src/=.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?%3d'>=</a> <span class='args'>[place expr] ... [place]</span>
+<span class='op'>=</span> <span class='args'>[place expr] ... [place]</span>
     <div class='desc'>Assigns to each place to the associated expression.  If the last place has no associated expression, it is set to nil.</div>
     </td>
     <td class='arc'><pre>
@@ -246,10 +242,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='wipe'></a>
-<a target='CODE' href='/src/wipe.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?wipe'>wipe</a> <span class='args'>[place ...]</span>
+<span class='op'>wipe</span> <span class='args'>[place ...]</span>
     <div class='desc'>Assigns nil to the places.  Typically, the places are simple variables.</div>
     </td>
     <td class='arc'><pre>
@@ -259,10 +254,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='set'></a>
-<a target='CODE' href='/src/set.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?set'>set</a> <span class='args'>[place ...]</span>
+<span class='op'>set</span> <span class='args'>[place ...]</span>
     <div class='desc'>Assigns t to the places.  Renamed from assert in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -272,10 +266,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='swap'></a>
-<a target='CODE' href='/src/swap.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?swap'>swap</a> <span class='args'>place1 place2</span>
+<span class='op'>swap</span> <span class='args'>place1 place2</span>
     <div class='desc'>The contents of the two places are swapped.  The new contents of <code>place2</code> are returned.</div>
     </td>
     <td class='arc'><pre>
@@ -290,10 +283,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='rotate'></a>
-<a target='CODE' href='/src/rotate.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rotate'>rotate</a> <span class='args'>[place1 place2 ...]</span>
+<span class='op'>rotate</span> <span class='args'>[place1 place2 ...]</span>
     <div class='desc'>Assigns <i>place2</i> to <i>place1</i>, assigns <i>place3</i> to </i>place2</i>, and so on, assigning <i>place1</i> to the last place.</div>
     </td>
     <td class='arc'><pre>
@@ -312,10 +304,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='%2b%2b'></a>
-<a target='CODE' href='/src/%2f2b%2f2b.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?%2b%2b'>++</a> <span class='args'>place [i]</span>
+<span class='op'>++</span> <span class='args'>place [i]</span>
     <div class='desc'>Increments the value at <code>place</code> by <code>i</code>.  The default increment is 1.</div>
     </td>
     <td class='arc'><pre>
@@ -325,10 +316,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='--'></a>
-<a target='CODE' href='/src/--.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?--'>--</a> <span class='args'>place [i]</span>
+<span class='op'>--</span> <span class='args'>place [i]</span>
     <div class='desc'>Decrements the value at <code>place</code> by <code>i</code>.  The default decrement is 1.</div>
     </td>
     <td class='arc'><pre>
@@ -338,10 +328,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='zap'></a>
-<a target='CODE' href='/src/zap.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?zap'>zap</a> <span class='args'>op place [args ...]</span>
+<span class='op'>zap</span> <span class='args'>op place [args ...]</span>
     <div class='desc'>Gets the value at the place, evaluates <code>(op <i>value args...</i>)</code>, and stores the result in the place.</div>
     </td>
     <td class='arc'><pre>
@@ -351,10 +340,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='push'></a>
-<a target='CODE' href='/src/push.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?push'>push</a> <span class='args'>elt place</span>
+<span class='op'>push</span> <span class='args'>elt place</span>
     <div class='desc'>Pushes an element at the beginning of the list referenced by place.  The list is modified and returned.</div>
     </td>
     <td class='arc'><pre>
@@ -364,10 +352,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='pushnew'></a>
-<a target='CODE' href='/src/pushnew.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pushnew'>pushnew</a> <span class='args'>elt place [test]</span>
+<span class='op'>pushnew</span> <span class='args'>elt place [test]</span>
     <div class='desc'>Pushes <code>elt</code> before the place if it is not present in the list.  The equality test can be specified; <code>iso</code> is used by default.  </div>
     </td>
     <td class='arc'><pre>
@@ -381,10 +368,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='pop'></a>
-<a target='CODE' href='/src/pop.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pop'>pop</a> <span class='args'>place</span>
+<span class='op'>pop</span> <span class='args'>place</span>
     <div class='desc'>The first element is removed from place and returned.  If the value at the place is nil, then nil is returned.</div>
     </td>
     <td class='arc'><pre>
@@ -398,10 +384,9 @@ ring? (not/c immutable?))
   </td></tr>
   <tr>
     <td class='arc'><a name='pull'></a>
-<a target='CODE' href='/src/pull.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pull'>pull</a> <span class='args'>test place</span>
+<span class='op'>pull</span> <span class='args'>test place</span>
     <div class='desc'>Remove elements satisfying <code>test</code> from the list starting at <code>place</code>.</div>
     </td>
     <td class='arc'><pre>

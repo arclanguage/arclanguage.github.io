@@ -11,47 +11,47 @@
   for falsity and t for truth.  Note that anything except nil and the empty
   list will evaluate as true, including 0 and an empty table.")
   
-  (op-nolink numbers "" "Arc includes integers (fixed size and arbitrarily large),
+  (op numbers "" "Arc includes integers (fixed size and arbitrarily large),
   floats, fractions, and complex numbers.  It also has positive and negative infinities
   and \"Not a Number\".  Arc supports escapes for hex, decimal, octal, or
   binary numbers: #x, #d, #o, and #b. Numbers are of type 'int or 'num."
     (tests 42 5. 2-3.i +inf.0 "(+ #x10 #d10 #o10 #b10)"  1/2+3/4i "1e3"
     "1/2e3" (type 5.0) (type 1+2i)))
-  (op-nolink characters "" "Arc supports Unicode characters, and a variety of
+  (op characters "" "Arc supports Unicode characters, and a variety of
   escapes."
     (tests "(prn #\\a #\\102 #\\newline #\\null #\\u5a #\\u4e9c #\\U12031 #\\日)" (type #\a)))
-  (op-nolink strings "" "Arc supports Unicode strings, and a variety of escapes.  The
+  (op strings "" "Arc supports Unicode strings, and a variety of escapes.  The
   escape sequences are not the same as the character escape sequences."
     (tests "(prn \"a \\102 \\n \\x00 \\x5a \\U4e9c 日\")" (type "a")))
-  (op-nolink symbols "" "By quoting a symbol, it will not be evaluated."
+  (op symbols "" "By quoting a symbol, it will not be evaluated."
     (tests 'a (quote b) (type 'c)))
-  (op-nolink lists "" "Lists are built up of cons cells.  They are terminated with nil,
+  (op lists "" "Lists are built up of cons cells.  They are terminated with nil,
   in contrast to Scheme, where they are terminated with '()."
     (tests '(1 2 3) (type '(1))))
-  (op-nolink procedures "" "Procedures are created by fn or def."
+  (op procedures "" "Procedures are created by fn or def."
     (tests (fn (x) (+ x 1)) (def foo (x) (+ x 1)) (type (fn (x) (+ x 1)))))
-  (op-nolink macros "" "Macros are created by mac."
+  (op macros "" "Macros are created by mac."
     (tests (mac bar (x) `(+ ,x 1)) (type (mac baz (x) `(+ ,x 1)))))
-  (op-nolink tagged "" "Arc supports arbitrary tagged types."
+  (op tagged "" "Arc supports arbitrary tagged types."
     (tests (annotate 'mytype 'x) (type (annotate 'mytype 'x))))
-  (op-nolink table "" "Arc supports hash tables.  Tables can be used as
+  (op table "" "Arc supports hash tables.  Tables can be used as
   functions; they look up the key."
     (tests (table) "(let x (table)
     (= (x 'key) 'value)
     (prn (x 'key) (x 'foo 'default)))"
     (type (table))))
-  (op-nolink input "" "Input ports can be from files, sockets, or strings."
+  (op input "" "Input ports can be from files, sockets, or strings."
     (tests (type (stdin))))
-  (op-nolink output "" "Output ports can be from files, sockets, or strings."
+  (op output "" "Output ports can be from files, sockets, or strings."
     (tests (type (outfile "/tmp/junk"))))
-  (op-nolink exception "" "A thread can throw an exception if an error occurs, or
+  (op exception "" "A thread can throw an exception if an error occurs, or
   generate an exception with err."
     (tests "(on-err (fn (ex) (prn ex) (prn (details ex)) (type ex))
     (fn () (car 1)))"))
-  (op-nolink socket "" "A TCP socket is created with open-socket.  Arc's socket
+  (op socket "" "A TCP socket is created with open-socket.  Arc's socket
   support is limited to incoming TCP connections."
     (tests (type (open-socket 8080))))
-  (op-nolink threads "" "Threads are created with new-thread."
+  (op threads "" "Threads are created with new-thread."
     (tests (type (new-thread (fn x)))))
 
 
@@ -108,17 +108,17 @@ object.")
 
 (newtable "Invoking a type"
   (text "Arc permits lists, tables, and strings to be used as functions.")
-  (op-nolink procedure "[arg ...]" "Invokes the procedure or macro."
+  (op procedure "[arg ...]" "Invokes the procedure or macro."
     (tests (sqrt 2)))
-  (op-nolink list "n" "Returns the nth element of the list."
+  (op list "n" "Returns the nth element of the list."
     (tests ('(a b c) 1)))
-  (op-nolink table "value [default]" "Looks up the value in the table.  Returns nil (or default) if the
+  (op table "value [default]" "Looks up the value in the table.  Returns nil (or default) if the
   element is not present in the table."
     (tests "(let tbl (table)
   (= (tbl 3) 9)
   (= (tbl 4) 16)
   (tbl 3))"))
-  (op-nolink string "n" "Returns the nth character of the string."
+  (op string "n" "Returns the nth character of the string."
     (tests ("abc" 1)))
   )
 
@@ -471,7 +471,7 @@ operations</a>.")
   (tests (msec)))
   (op seconds " " "Returns current time in seconds, from a platform-specific
   starting date." (tests (seconds))) 
-  (op timedate [secs]" " "Converts time to string; default is current time.  New in arc3."
+  (op timedate "[secs]" "Converts time to string; default is current time.  New in arc3."
     (tests (timedate) (timedate 0)))
   )
 

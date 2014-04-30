@@ -105,8 +105,6 @@
     (prn "  <tr>")
     (pr "    <td class='arc'>")
     (add-anchor2 (coerce operation 'string))
-    (if (no (intags 'nolink tags))
-      (prn "<a target='CODE' href='/src/"  (subst "%2f" "%" (codelinkencode (string operation))) ".html'><img src='code.gif' title='code'/></a>"))
     (if (intags 'mac tags) (prn "<img src='macro.gif' title='Macro'/>"))
     (if (intags 'op tags) (prn "<img src='foundation.gif' title='Foundation'/>"))
     (if (intags 'def tags) (prn "<img src='proc.gif' title='Procedure'/>"))
@@ -114,9 +112,7 @@
     (if (intags 'destructive tags) (prn "<img src='destructive.gif' title='Destructive'/>"))
     (if (intags 'predicate tags) (prn "<img src='predicate.gif' title='Predicate'/>"))
 
-    (if (intags 'nolink tags)
-      (pr "<span class='op'>" operation "</span> ")
-      (pr "<a class='op' href='http://practical-scheme.net/wiliki/arcxref?" (url-esc operation) "'>" operation "</a> "))
+    (pr "<span class='op'>" operation "</span> ")
     (prn "<span class='args'>" arglist "</span>")
     (prn "    <div class='desc'>" desc "</div>")
     (prn "    </td>")
@@ -208,7 +204,6 @@
          (is 'mac cmd)  (op (cons 'mac args))
          (is 'def cmd)  (op (cons 'def args))
          (is 'var cmd)  (op (cons 'var args))
-         (is 'op-nolink cmd)  (op (join '(op nolink) args))
          (is 'index cmd)  (index)
          (is 'import cmd)   (copy-file (args 0))
          (is 'template)   nil
@@ -289,7 +284,7 @@
   (= out-file-name* (+ "html/" (subst "" ".tem" filename) ".html"))
   (= page* "")
   (= out-file* (outfile out-file-name*))
-  (= links* (getlinks filename))
+  (= links* (or (getlinks filename) ""))
   (doit (sread (infile filename) 'eof))
   out-file-name*)
 

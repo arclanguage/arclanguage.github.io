@@ -33,9 +33,8 @@ For details on the internals of Arc macros, see <a href="http://arcfn.com/doc/ma
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='mac'></a>
-<a target='CODE' href='/src/mac.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?mac'>mac</a> <span class='args'>name args [body ...]</span>
+<span class='op'>mac</span> <span class='args'>name args [body ...]</span>
     <div class='desc'>Creates a macro.</div>
     </td>
     <td class='arc'><pre>
@@ -45,9 +44,8 @@ For details on the internals of Arc macros, see <a href="http://arcfn.com/doc/ma
   </td></tr>
   <tr>
     <td class='arc'><a name='macex'></a>
-<a target='CODE' href='/src/macex.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?macex'>macex</a> <span class='args'>macro</span>
+<span class='op'>macex</span> <span class='args'>macro</span>
     <div class='desc'>Expands a macro.</div>
     </td>
     <td class='arc'><pre>
@@ -57,9 +55,8 @@ For details on the internals of Arc macros, see <a href="http://arcfn.com/doc/ma
   </td></tr>
   <tr>
     <td class='arc'><a name='macex1'></a>
-<a target='CODE' href='/src/macex1.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?macex1'>macex1</a> <span class='args'> macro</span>
+<span class='op'>macex1</span> <span class='args'> macro</span>
     <div class='desc'>Expands a macro to one level.</div>
     </td>
     <td class='arc'><pre>
@@ -69,35 +66,32 @@ For details on the internals of Arc macros, see <a href="http://arcfn.com/doc/ma
   </td></tr>
   <tr>
     <td class='arc'><a name='uniq'></a>
-<a target='CODE' href='/src/uniq.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?uniq'>uniq</a> <span class='args'> </span>
+<span class='op'>uniq</span> <span class='args'> </span>
     <div class='desc'>Generates a unique symbol.</div>
     </td>
     <td class='arc'><pre>
 &gt;(uniq)
-<span class="return">gs2134
+<span class="return">gs2136
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='w/uniq'></a>
-<a target='CODE' href='/src/w%2f2funiq.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/uniq'>w/uniq</a> <span class='args'>names [body ...]</span>
+<span class='op'>w/uniq</span> <span class='args'>names [body ...]</span>
     <div class='desc'>Assigns a unique symbol to each name in <code>names</code> and executes <code>body</code>.  <code>names</code> can either be a single symbol or a list of symbols.</div>
     </td>
     <td class='arc'><pre>
 &gt;(w/uniq (a b c) (prn a b c))
-<span class="stdout">gs2135gs2136gs2137
+<span class="stdout">gs2137gs2138gs2139
 
-</span><span class="return">gs2135
+</span><span class="return">gs2137
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='quasiquote'></a>
-<a target='CODE' href='/src/quasiquote.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?quasiquote'>quasiquote</a> <span class='args'>arg</span>
+<span class='op'>quasiquote</span> <span class='args'>arg</span>
     <div class='desc'> The backquote <code>`</code> is shorthand for <code>quasiquote</code>, e.g. <code>`(+ 1 2)</code> is the same as <code>(quasiquote (1 2))</code>.  Inside <code>quasiquote</code>, the <code>unquote</code>
   operator will cause the contents to be evaluated instead of quoated.  The
   <code>unquote-splicing</code> operator will cause contents to be evaluated and spliced
@@ -111,9 +105,8 @@ For details on the internals of Arc macros, see <a href="http://arcfn.com/doc/ma
   </td></tr>
   <tr>
     <td class='arc'><a name='quote'></a>
-<a target='CODE' href='/src/quote.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?quote'>quote</a> <span class='args'>arg</span>
+<span class='op'>quote</span> <span class='args'>arg</span>
     <div class='desc'> The single quote ' is shorthand for quote, e.g. 'x is the same as (quote x) </div>
     </td>
     <td class='arc'><pre>

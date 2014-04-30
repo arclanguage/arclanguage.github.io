@@ -119,9 +119,8 @@ The generated form is:
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='asv'></a>
-<a target='CODE' href='/src/asv.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?asv'>asv</a> <span class='args'>[port]</span>
+<span class='op'>asv</span> <span class='args'>[port]</span>
     <div class='desc'>Starts the application server.</div>
     </td>
     <td class='arc'><pre>
@@ -134,9 +133,8 @@ The generated form is:
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='get-user'></a>
-<a target='CODE' href='/src/get-user.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?get-user'>get-user</a> <span class='args'>req</span>
+<span class='op'>get-user</span> <span class='args'>req</span>
     <div class='desc'>Gets the user id string associated with <code>req</code>.  Returns <code>nil</code> if no associated user.</div>
     </td>
     <td class='arc'><pre>
@@ -146,10 +144,9 @@ foo
   </td></tr>
   <tr>
     <td class='arc'><a name='admin'></a>
-<a target='CODE' href='/src/admin.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?admin'>admin</a> <span class='args'>user</span>
+<span class='op'>admin</span> <span class='args'>user</span>
     <div class='desc'>Tests if <code>user</code> is an administrator; i.e. is in <code>admins*</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -162,10 +159,9 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='goodname'></a>
-<a target='CODE' href='/src/goodname.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?goodname'>goodname</a> <span class='args'>str [min [max]]</span>
+<span class='op'>goodname</span> <span class='args'>str [min [max]]</span>
     <div class='desc'>Tests that <code>str</code> is of the appropriate length and contains no bad characters.</div>
     </td>
     <td class='arc'><pre>
@@ -179,9 +175,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='logout-user'></a>
-<a target='CODE' href='/src/logout-user.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?logout-user'>logout-user</a> <span class='args'>user</span>
+<span class='op'>logout-user</span> <span class='args'>user</span>
     <div class='desc'>Logs out <code>user</code>.  The user's entry is removed from <code>logins*</code>, <code>cookie->user*</code>, <code>user->cookie*</code>, and the updated <code>cookie->user*</code> is written to <code>cookfile*</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -191,9 +186,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='set-pw'></a>
-<a target='CODE' href='/src/set-pw.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?set-pw'>set-pw</a> <span class='args'>user pw</span>
+<span class='op'>set-pw</span> <span class='args'>user pw</span>
     <div class='desc'>Creates (or updates) account with the name <code>user</code> and password <code>pw</code>.  Saves <code>hpasswords*</code> in <code>hpwfile*</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -203,9 +197,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='defopl'></a>
-<a target='CODE' href='/src/defopl.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defopl'>defopl</a> <span class='args'>name parm [body]</span>
+<span class='op'>defopl</span> <span class='args'>name parm [body]</span>
     <div class='desc'>Version of <code>defop</code> to create handler that will redirect to login page if the user is not logged in.</div>
     </td>
     <td class='arc'><pre>
@@ -215,9 +208,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='uform'></a>
-<a target='CODE' href='/src/uform.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?uform'>uform</a> <span class='args'>user req after [body ...]</span>
+<span class='op'>uform</span> <span class='args'>user req after [body ...]</span>
     <div class='desc'>Generates form that ensures it was submitted by <code>user</code> (by using <code>when-umatch</code>).  <code>body</code> outputs the form body to stdout.  After submission, the continuation code <code>after</code> is executed; <code>req</code> specifies the varible name in <code>after</code> to receive the request.</div>
     </td>
     <td class='arc'><pre>
@@ -227,9 +219,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='urform'></a>
-<a target='CODE' href='/src/urform.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?urform'>urform</a> <span class='args'>user req after [body ...]</span>
+<span class='op'>urform</span> <span class='args'>user req after [body ...]</span>
     <div class='desc'>Generates form with redirection target with guard that <code>user</code> submitted it.  After submission, the continuation expression <code>after</code> is executed and must return the redirect string; <code>req</code> specifies the varible name in <code>after</code> to receive the request.</div>
     </td>
     <td class='arc'><pre>
@@ -239,9 +230,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='when-umatch'></a>
-<a target='CODE' href='/src/when-umatch.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?when-umatch'>when-umatch</a> <span class='args'>user req [body...]</span>
+<span class='op'>when-umatch</span> <span class='args'>user req [body...]</span>
     <div class='desc'>If <code>user</code> matches the user associated with <code>req</code>, executes <code>body</code>.  Otherwise executes <code>mismatch-message</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -252,9 +242,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='when-umatch/r'></a>
-<a target='CODE' href='/src/when-umatch%2f2fr.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?when-umatch/r'>when-umatch/r</a> <span class='args'>user req [body ...]</span>
+<span class='op'>when-umatch/r</span> <span class='args'>user req [body ...]</span>
     <div class='desc'>Test <code>user</code> for use with redirect.  If <code>user</code> is the user associated with <code>req</code>, executes body.  Otherwise returns "mismatch", to redirect to the mismatch page.</div>
     </td>
     <td class='arc'><pre>
@@ -264,9 +253,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='ulink'></a>
-<a target='CODE' href='/src/ulink.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ulink'>ulink</a> <span class='args'>user text [body ...]</span>
+<span class='op'>ulink</span> <span class='args'>user text [body ...]</span>
     <div class='desc'>Outputs a HTML link with <code>text</code>.  When clicked, the link will execute <code>body</code> if the user matches <code>user</code>.  Similar to <code>onlink</code>, but with the user guard.  Renamed from userlink in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -276,9 +264,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='admin-page'></a>
-<a target='CODE' href='/src/admin-page.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?admin-page'>admin-page</a> <span class='args'>user [msg]</span>
+<span class='op'>admin-page</span> <span class='args'>user [msg]</span>
     <div class='desc'>Generates the administrator page. This page allows new accounts to be created.  The current admin login (<code>user</code>) is displayed at the top of the page, along with <code>msg</code>, if present.</div>
     </td>
     <td class='arc'><pre>
@@ -288,9 +275,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='login-page'></a>
-<a target='CODE' href='/src/login-page.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?login-page'>login-page</a> <span class='args'>switch [msg [afterward]]</span>
+<span class='op'>login-page</span> <span class='args'>switch [msg [afterward]]</span>
     <div class='desc'>Generates a login page.  <code>switch</code> is <code>'register</code>, <code>'login</code>, or <code>'both</code>, allowing account creation, account login, or both operations respectively.  The top of the page displays <code>msg</code>.  After the page completes, the <code>afterward</code> continuation is executed (by default <code>hello-page</code>).  <code>afterward</code> is either a function or a (function, redirect-string) pair.  The function takes the user name and IP as arguments.</div>
     </td>
     <td class='arc'><pre>
@@ -304,17 +290,15 @@ tifier
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='vars-form'></a>
-<a target='CODE' href='/src/vars-form.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?vars-form'>vars-form</a> <span class='args'>user fields f done [button [lasts]]</span>
+<span class='op'>vars-form</span> <span class='args'>user fields f done [button [lasts]]</span>
     <div class='desc'>Generates a form for <code>user</code>.  <code>fields</code> is a list of <code>(type label value view modify question)</code> lists specifying the form.  When submitted, <code>f</code> is executed on each field, with the arguments <code>label newval</code>.  Then continuation function <code>done</code> is executed. If there is a modifiable field, a submit button is generated with label specified by <code>button</code>.  The lifetime of the associated fnid can be specified with <code>lasts</code>.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='md-from-form'></a>
-<a target='CODE' href='/src/md-from-form.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?md-from-form'>md-from-form</a> <span class='args'>str [nolinks]</span>
+<span class='op'>md-from-form</span> <span class='args'>str [nolinks]</span>
     <div class='desc'>Converts <code>str</code> to markdown after escaping it.  URLs will be converted to links unless <code>nolinks</code> is set.  Used to generate markdown from form input.</div>
     </td>
     <td class='arc'><pre>
@@ -324,9 +308,8 @@ tifier
   </td></tr>
   <tr>
     <td class='arc'><a name='markdown'></a>
-<a target='CODE' href='/src/markdown.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?markdown'>markdown</a> <span class='args'>s [maxurl [nolinks]]</span>
+<span class='op'>markdown</span> <span class='args'>s [maxurl [nolinks]]</span>
     <div class='desc'>Applies the markdown rules to <code>s</code> to generate HTML.</div>
     </td>
     <td class='arc'><pre>
@@ -344,9 +327,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='unmarkdown'></a>
-<a target='CODE' href='/src/unmarkdown.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?unmarkdown'>unmarkdown</a> <span class='args'>s</span>
+<span class='op'>unmarkdown</span> <span class='args'>s</span>
     <div class='desc'>Inverse of <code>markdown</code> to convert HTML to a marked-down string.</div>
     </td>
     <td class='arc'><pre>
@@ -356,9 +338,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='paras'></a>
-<a target='CODE' href='/src/paras.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?paras'>paras</a> <span class='args'>s</span>
+<span class='op'>paras</span> <span class='args'>s</span>
     <div class='desc'>Returns list of paragraph indices.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -371,65 +352,57 @@ Text<p><pre><code>  Code</code></pre>
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='good-logins*'></a>
-<a target='CODE' href='/src/good-logins%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?good-logins*'>good-logins*</a> <span class='args'></span>
+<span class='op'>good-logins*</span> <span class='args'></span>
     <div class='desc'>A queue of successful logins, holding lists of the timestamp, IP, and user id.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='bad-logins*'></a>
-<a target='CODE' href='/src/bad-logins%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?bad-logins*'>bad-logins*</a> <span class='args'></span>
+<span class='op'>bad-logins*</span> <span class='args'></span>
     <div class='desc'>A queue of unsuccessful logins, holding lists of the timestamp, IP, and user id.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='hpasswords*'></a>
-<a target='CODE' href='/src/hpasswords%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hpasswords*'>hpasswords*</a> <span class='args'></span>
+<span class='op'>hpasswords*</span> <span class='args'></span>
     <div class='desc'>Table of passwords mapping from user to hash.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='admins*'></a>
-<a target='CODE' href='/src/admins%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?admins*'>admins*</a> <span class='args'></span>
+<span class='op'>admins*</span> <span class='args'></span>
     <div class='desc'>Admin stuff.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='cookie->user*'></a>
-<a target='CODE' href='/src/cookie-%2f3euser%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cookie->user*'>cookie->user*</a> <span class='args'></span>
+<span class='op'>cookie->user*</span> <span class='args'></span>
     <div class='desc'>Table mapping cookies to users.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='user->cookie*'></a>
-<a target='CODE' href='/src/user-%2f3ecookie%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?user->cookie*'>user->cookie*</a> <span class='args'></span>
+<span class='op'>user->cookie*</span> <span class='args'></span>
     <div class='desc'>Table mapping users to cookies.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='logins*'></a>
-<a target='CODE' href='/src/logins%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?logins*'>logins*</a> <span class='args'></span>
+<span class='op'>logins*</span> <span class='args'></span>
     <div class='desc'>Table of logins mapping from user name to IP address.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='hpwfile*'></a>
-<a target='CODE' href='/src/hpwfile%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hpwfile*'>hpwfile*</a> <span class='args'></span>
+<span class='op'>hpwfile*</span> <span class='args'></span>
     <div class='desc'>Password file, backs <code>hpasswords*</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -439,9 +412,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='adminfile*'></a>
-<a target='CODE' href='/src/adminfile%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?adminfile*'>adminfile*</a> <span class='args'></span>
+<span class='op'>adminfile*</span> <span class='args'></span>
     <div class='desc'>Admin file, backs <code>admins*</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -451,9 +423,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='cookfile*'></a>
-<a target='CODE' href='/src/cookfile%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cookfile*'>cookfile*</a> <span class='args'></span>
+<span class='op'>cookfile*</span> <span class='args'></span>
     <div class='desc'>Cookie file, backs <code>cookie->user*</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -463,9 +434,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='formwid*'></a>
-<a target='CODE' href='/src/formwid%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?formwid*'>formwid*</a> <span class='args'></span>
+<span class='op'>formwid*</span> <span class='args'></span>
     <div class='desc'>Specifies width of form field.</div>
     </td>
     <td class='arc'><pre>
@@ -475,9 +445,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='bigformwid*'></a>
-<a target='CODE' href='/src/bigformwid%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?bigformwid*'>bigformwid*</a> <span class='args'></span>
+<span class='op'>bigformwid*</span> <span class='args'></span>
     <div class='desc'></div>
     </td>
     <td class='arc'><pre>
@@ -487,9 +456,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='numwid*'></a>
-<a target='CODE' href='/src/numwid%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?numwid*'>numwid*</a> <span class='args'></span>
+<span class='op'>numwid*</span> <span class='args'></span>
     <div class='desc'></div>
     </td>
     <td class='arc'><pre>
@@ -499,9 +467,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='formatdoc-url*'></a>
-<a target='CODE' href='/src/formatdoc-url%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?formatdoc-url*'>formatdoc-url*</a> <span class='args'></span>
+<span class='op'>formatdoc-url*</span> <span class='args'></span>
     <div class='desc'></div>
     </td>
     <td class='arc'><pre>
@@ -511,9 +478,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='oidfile*'></a>
-<a target='CODE' href='/src/oidfile%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?oidfile*'>oidfile*</a> <span class='args'></span>
+<span class='op'>oidfile*</span> <span class='args'></span>
     <div class='desc'>Openids file; apparently unused.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -523,9 +489,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='dc-usernames*'></a>
-<a target='CODE' href='/src/dc-usernames%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?dc-usernames*'>dc-usernames*</a> <span class='args'></span>
+<span class='op'>dc-usernames*</span> <span class='args'></span>
     <div class='desc'>Downcased usernames.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -535,9 +500,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='months*'></a>
-<a target='CODE' href='/src/months%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?months*'>months*</a> <span class='args'></span>
+<span class='op'>months*</span> <span class='args'></span>
     <div class='desc'>Month names.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -547,9 +511,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='month-names*'></a>
-<a target='CODE' href='/src/month-names%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?month-names*'>month-names*</a> <span class='args'></span>
+<span class='op'>month-names*</span> <span class='args'></span>
     <div class='desc'>Table from month name to month number.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -566,9 +529,8 @@ Text<p><pre><code>  Code</code></pre>
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='load-userinfo'></a>
-<a target='CODE' href='/src/load-userinfo.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?load-userinfo'>load-userinfo</a> <span class='args'></span>
+<span class='op'>load-userinfo</span> <span class='args'></span>
     <div class='desc'>Initializes <code>hpasswords*</code>, <code>admins*</code>, and <code>cookie->user</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -578,9 +540,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='mismatch-message'></a>
-<a target='CODE' href='/src/mismatch-message.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?mismatch-message'>mismatch-message</a> <span class='args'></span>
+<span class='op'>mismatch-message</span> <span class='args'></span>
     <div class='desc'>Prints an error message if the user doesn't match the cookie.</div>
     </td>
     <td class='arc'><pre>
@@ -592,9 +553,8 @@ Text<p><pre><code>  Code</code></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='admin-gate'></a>
-<a target='CODE' href='/src/admin-gate.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?admin-gate'>admin-gate</a> <span class='args'>user</span>
+<span class='op'>admin-gate</span> <span class='args'>user</span>
     <div class='desc'>Gates access to admin-page.  If <code>user</code> is an admin, displays <code>admin-page</code>, otherwise redirects to <code>login-page</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -604,10 +564,9 @@ t
   </td></tr>
   <tr>
     <td class='arc'><a name='user-exists'></a>
-<a target='CODE' href='/src/user-exists.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?user-exists'>user-exists</a> <span class='args'>user</span>
+<span class='op'>user-exists</span> <span class='args'>user</span>
     <div class='desc'>Tests if <code>user</code> is not <code>nil</code> and present in <code>hpasswords*</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -617,33 +576,30 @@ t
   </td></tr>
   <tr>
     <td class='arc'><a name='cook-user'></a>
-<a target='CODE' href='/src/cook-user.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cook-user'>cook-user</a> <span class='args'>user</span>
+<span class='op'>cook-user</span> <span class='args'>user</span>
     <div class='desc'>Generates and saves a cookie for <code>user</code>.  Returns the cookie id.</div>
     </td>
     <td class='arc'><pre>
 &gt;(cook-user "testuser")
-<span class="return">2IQsQsRQ
+<span class="return">OTjpZr78
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='new-user-cookie'></a>
-<a target='CODE' href='/src/new-user-cookie.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?new-user-cookie'>new-user-cookie</a> <span class='args'></span>
+<span class='op'>new-user-cookie</span> <span class='args'></span>
     <div class='desc'>Generates a unique cookie id.</div>
     </td>
     <td class='arc'><pre>
 &gt;(new-user-cookie)
-<span class="return">XJJIuytV
+<span class="return">KGSh9DZ9
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='create-acct'></a>
-<a target='CODE' href='/src/create-acct.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?create-acct'>create-acct</a> <span class='args'>user pw</span>
+<span class='op'>create-acct</span> <span class='args'>user pw</span>
     <div class='desc'>Creates a user account.  Just a wrapper around <code>set-pw</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -653,29 +609,26 @@ t
   </td></tr>
   <tr>
     <td class='arc'><a name='disable-acct'></a>
-<a target='CODE' href='/src/disable-acct.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?disable-acct'>disable-acct</a> <span class='args'>user</span>
+<span class='op'>disable-acct</span> <span class='args'>user</span>
     <div class='desc'>Disables user account by logging user out and changing the password to a random string.</div>
     </td>
     <td class='arc'><pre>
 &gt;(disable-acct "badperson")
-<span class="return">((2IQsQsRQ "testuser"))
+<span class="return">((OTjpZr78 "testuser"))
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='hello-page'></a>
-<a target='CODE' href='/src/hello-page.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hello-page'>hello-page</a> <span class='args'>user ip</span>
+<span class='op'>hello-page</span> <span class='args'>user ip</span>
     <div class='desc'>Displays a simple page saying 'hello <i>user</i> at <i>ip</i>'.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='prcookie'></a>
-<a target='CODE' href='/src/prcookie.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?prcookie'>prcookie</a> <span class='args'>cook</span>
+<span class='op'>prcookie</span> <span class='args'>cook</span>
     <div class='desc'>Prints a header field to update cookie <code>user</code> to the value <code>cook</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -687,9 +640,8 @@ GMT
   </td></tr>
   <tr>
     <td class='arc'><a name='pwfields'></a>
-<a target='CODE' href='/src/pwfields.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pwfields'>pwfields</a> <span class='args'>[label]</span>
+<span class='op'>pwfields</span> <span class='args'>[label]</span>
     <div class='desc'>Generates HTML for username and password fields, and a submit button, labelled "login" by default.</div>
     </td>
     <td class='arc'><pre>
@@ -706,9 +658,8 @@ GMT
   </td></tr>
   <tr>
     <td class='arc'><a name='good-login'></a>
-<a target='CODE' href='/src/good-login.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?good-login'>good-login</a> <span class='args'>user pw ip</span>
+<span class='op'>good-login</span> <span class='args'>user pw ip</span>
     <div class='desc'>Tests if the user and password are valid according to <code>hpasswords*</code>.  Returns <code>user</code> on success, and <code>nil</code> on failure.  Updates <code>good-logins*</code> or <code>bad-logins</code> as appropriate.</div>
     </td>
     <td class='arc'><pre>
@@ -718,9 +669,8 @@ GMT
   </td></tr>
   <tr>
     <td class='arc'><a name='shash'></a>
-<a target='CODE' href='/src/shash.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?shash'>shash</a> <span class='args'>str</span>
+<span class='op'>shash</span> <span class='args'>str</span>
     <div class='desc'>Hashes <code>str</code> to a sha1 digest using <code>openssl</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -730,9 +680,8 @@ GMT
   </td></tr>
   <tr>
     <td class='arc'><a name='bad-newacct'></a>
-<a target='CODE' href='/src/bad-newacct.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?bad-newacct'>bad-newacct</a> <span class='args'>user pw</span>
+<span class='op'>bad-newacct</span> <span class='args'>user pw</span>
     <div class='desc'>Tests if the new userid and password are bad (bad length, bad characters, or already in use).  Returns an error message if the new account specification is bad, and <code>nil</code> if the information is okay.</div>
     </td>
     <td class='arc'><pre>
@@ -742,9 +691,8 @@ GMT
   </td></tr>
   <tr>
     <td class='arc'><a name='varfield'></a>
-<a target='CODE' href='/src/varfield.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?varfield'>varfield</a> <span class='args'>typ id val</span>
+<span class='op'>varfield</span> <span class='args'>typ id val</span>
     <div class='desc'>Prints HTML for an input field of type <code>typ</code>, name <code>id</code>, and value <code>val</code>.  <code>typ</code> is one of
 <code>bigtoks</code>, <code>date</code>, <code>doc</code>, <code>int</code>, <code>lines</code>, <code>mdtext</code>, <code>mdtext2</code>, <code>num</code>, <code>posint</code>, <code>string</code>, <code>string1</code>, <code>sym</code>, <code>syms</code>, <code>text</code>, <code>time</code>, <code>toks</code>, <code>url</code>, <code>users</code>.  The type of field and the processing of val depend on <code>typ</code>.</div>
     </td>
@@ -760,9 +708,8 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='text-rows'></a>
-<a target='CODE' href='/src/text-rows.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?text-rows'>text-rows</a> <span class='args'>text width [pad]</span>
+<span class='op'>text-rows</span> <span class='args'>text width [pad]</span>
     <div class='desc'>Detemines how many rows to hold <code>text</code> based on <code>width</code> and padding.</div>
     </td>
     <td class='arc'><pre>
@@ -772,9 +719,8 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='needrows'></a>
-<a target='CODE' href='/src/needrows.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?needrows'>needrows</a> <span class='args'>text cols [pad]</span>
+<span class='op'>needrows</span> <span class='args'>text cols [pad]</span>
     <div class='desc'>Determines how many rows are needed to hold <code>text</code>, based on the length of the text and the number of newlines.</div>
     </td>
     <td class='arc'><pre>
@@ -784,9 +730,8 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='varline'></a>
-<a target='CODE' href='/src/varline.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?varline'>varline</a> <span class='args'>type id val [liveurls]</span>
+<span class='op'>varline</span> <span class='args'>type id val [liveurls]</span>
     <div class='desc'>Prints <code>val</code> according to <code>type</code>.  <code>id</code> is ignored.  If <code>liveurls</code> is true, links will be made to URLs.</div>
     </td>
     <td class='arc'><pre>
@@ -796,10 +741,9 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='text-type'></a>
-<a target='CODE' href='/src/text-type.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?text-type'>text-type</a> <span class='args'>type</span>
+<span class='op'>text-type</span> <span class='args'>type</span>
     <div class='desc'>Tests if <code>type</code> is one of <code>string</code>, <code>string1</code>, <code>url</code>, <code>text</code>, <code>mdtext</code>, <code>mdtext2</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -809,9 +753,8 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='readvar'></a>
-<a target='CODE' href='/src/readvar.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?readvar'>readvar</a> <span class='args'>type str [fail]</span>
+<span class='op'>readvar</span> <span class='args'>type str [fail]</span>
     <div class='desc'>Reads variable of <code>type</code> from <code>str</code>.  Returns <code>fail</code> (default <code>nil</code> on failure).</div>
     </td>
     <td class='arc'><pre>
@@ -821,17 +764,15 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='showvars'></a>
-<a target='CODE' href='/src/showvars.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?showvars'>showvars</a> <span class='args'>fields [liveurls]</span>
+<span class='op'>showvars</span> <span class='args'>fields [liveurls]</span>
     <div class='desc'>Generates table rows for a <code>varfield</code> list of fields.  If liveurls is true, will make links to URLs.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='indented-code'></a>
-<a target='CODE' href='/src/indented-code.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?indented-code'>indented-code</a> <span class='args'>s i [newlines [spaces]]</span>
+<span class='op'>indented-code</span> <span class='args'>s i [newlines [spaces]]</span>
     <div class='desc'>Tests if <code>s</code> is indented code under the markup rules.  Returns a pair of the index of the start of the code, and the number of spaces of indentation.  Returns <code>nil</code> if not indented code.  The first <code>i</code> characters are skipped.</div>
     </td>
     <td class='arc'><pre>
@@ -841,9 +782,8 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='parabreak'></a>
-<a target='CODE' href='/src/parabreak.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parabreak'>parabreak</a> <span class='args'>s i [newlines]</span>
+<span class='op'>parabreak</span> <span class='args'>s i [newlines]</span>
     <div class='desc'>If <code>s</code> starts with a paragraph break (at least one blank line), returns the index of the start of the paragraph.  Otherwise returns <code>nil</code>.  Skips the first <code>i</code> characters.</div>
     </td>
     <td class='arc'><pre>
@@ -853,9 +793,8 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='urlend'></a>
-<a target='CODE' href='/src/urlend.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?urlend'>urlend</a> <span class='args'>s i</span>
+<span class='op'>urlend</span> <span class='args'>s i</span>
     <div class='desc'>Finds the logical end of a URL embedded in a string, and returns the index of the first character not in the URL.  The first <code>i</code> characters are skipped.</div>
     </td>
     <td class='arc'><pre>
@@ -865,10 +804,9 @@ a b c</textarea>
   </td></tr>
   <tr>
     <td class='arc'><a name='delimc'></a>
-<a target='CODE' href='/src/delimc.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?delimc'>delimc</a> <span class='args'>c</span>
+<span class='op'>delimc</span> <span class='args'>c</span>
     <div class='desc'>Tests if <code>c</code> is a delimiter: a parenthesis, square bracket, curly bracket, or double quote.</div>
     </td>
     <td class='arc'><pre>
@@ -881,9 +819,8 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='code-block'></a>
-<a target='CODE' href='/src/code-block.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?code-block'>code-block</a> <span class='args'>s i</span>
+<span class='op'>code-block</span> <span class='args'>s i</span>
     <div class='desc'>Markdown formatting: Returns a 'code block', which is terminated by a line that is not indented with whitespace.  The first <code>i+1</code> characters are skipped.</div>
     </td>
     <td class='arc'><pre>
@@ -893,50 +830,44 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='login-form'></a>
-<a target='CODE' href='/src/login-form.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?login-form'>login-form</a> <span class='args'>label switch handler afterward</span>
+<span class='op'>login-form</span> <span class='args'>label switch handler afterward</span>
     <div class='desc'>Creates login form for login-page.  New in arc3.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='login-handler'></a>
-<a target='CODE' href='/src/login-handler.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?login-handler'>login-handler</a> <span class='args'>req switch afterward</span>
+<span class='op'>login-handler</span> <span class='args'>req switch afterward</span>
     <div class='desc'>Handler called from login-page.  New in arc3.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='create-handler'></a>
-<a target='CODE' href='/src/create-handler.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?create-handler'>create-handler</a> <span class='args'>req switch afterward</span>
+<span class='op'>create-handler</span> <span class='args'>req switch afterward</span>
     <div class='desc'>Handler called from login-page to create account.  New in arc3.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='login'></a>
-<a target='CODE' href='/src/login.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?login'>login</a> <span class='args'>user ip cookie afterward</span>
+<span class='op'>login</span> <span class='args'>user ip cookie afterward</span>
     <div class='desc'>Handles successful login.  New in arc3.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='failed-login'></a>
-<a target='CODE' href='/src/failed-login.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?failed-login'>failed-login</a> <span class='args'>user ip cookie afterward</span>
+<span class='op'>failed-login</span> <span class='args'>user ip cookie afterward</span>
     <div class='desc'>Handles login failure.  New in arc3.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='username-taken'></a>
-<a target='CODE' href='/src/username-taken.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?username-taken'>username-taken</a> <span class='args'>user</span>
+<span class='op'>username-taken</span> <span class='args'>user</span>
     <div class='desc'>Tests if username is in dc-usernames* and updates that table.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -946,9 +877,8 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='next-parabreak'></a>
-<a target='CODE' href='/src/next-parabreak.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?next-parabreak'>next-parabreak</a> <span class='args'>s i</span>
+<span class='op'>next-parabreak</span> <span class='args'>s i</span>
     <div class='desc'>Returns index of next paragraph break after i, if any.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -958,10 +888,9 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='opendelim'></a>
-<a target='CODE' href='/src/opendelim.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?opendelim'>opendelim</a> <span class='args'>c</span>
+<span class='op'>opendelim</span> <span class='args'>c</span>
     <div class='desc'>Tests is character is an opening delimiter.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -971,10 +900,9 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='closedelim'></a>
-<a target='CODE' href='/src/closedelim.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?closedelim'>closedelim</a> <span class='args'>c</span>
+<span class='op'>closedelim</span> <span class='args'>c</span>
     <div class='desc'>Tests is character is an closing delimiter.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -984,9 +912,8 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='english-time'></a>
-<a target='CODE' href='/src/english-time.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?english-time'>english-time</a> <span class='args'>min</span>
+<span class='op'>english-time</span> <span class='args'>min</span>
     <div class='desc'>Converts time in minutes to string.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -996,9 +923,8 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='parse-time'></a>
-<a target='CODE' href='/src/parse-time.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parse-time'>parse-time</a> <span class='args'>s</span>
+<span class='op'>parse-time</span> <span class='args'>s</span>
     <div class='desc'>Parses a time string to minutes.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -1008,9 +934,8 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='english-date'></a>
-<a target='CODE' href='/src/english-date.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?english-date'>english-date</a> <span class='args'>(y m d)</span>
+<span class='op'>english-date</span> <span class='args'>(y m d)</span>
     <div class='desc'>Converts date to string.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -1021,9 +946,8 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='monthnum'></a>
-<a target='CODE' href='/src/monthnum.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?monthnum'>monthnum</a> <span class='args'>s</span>
+<span class='op'>monthnum</span> <span class='args'>s</span>
     <div class='desc'>Converts month name to number.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -1033,9 +957,8 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='date-nums'></a>
-<a target='CODE' href='/src/date-nums.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?date-nums'>date-nums</a> <span class='args'>s</span>
+<span class='op'>date-nums</span> <span class='args'>s</span>
     <div class='desc'>Used by date-nums to parses a date string to (y m d).  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -1053,10 +976,9 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='valid-date'></a>
-<a target='CODE' href='/src/valid-date.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?valid-date'>valid-date</a> <span class='args'>(y m d)</span>
+<span class='op'>valid-date</span> <span class='args'>(y m d)</span>
     <div class='desc'>Minimal validation on date.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -1074,9 +996,8 @@ ifier
   </td></tr>
   <tr>
     <td class='arc'><a name='parse-date'></a>
-<a target='CODE' href='/src/parse-date.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parse-date'>parse-date</a> <span class='args'>s</span>
+<span class='op'>parse-date</span> <span class='args'>s</span>
     <div class='desc'>Parses a date string to (y m d) with some validation.  New in arc3.</div>
     </td>
     <td class='arc'><pre>

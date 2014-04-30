@@ -53,9 +53,8 @@ Arc also includes multiple string I/O operations that allow a string to be used 
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='readb'></a>
-<a target='CODE' href='/src/readb.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?readb'>readb</a> <span class='args'>[input-port]</span>
+<span class='op'>readb</span> <span class='args'>[input-port]</span>
     <div class='desc'>Reads a byte from the input-port (or default of
   stdin).  Returns nil on end-of-file.</div>
     </td>
@@ -66,9 +65,8 @@ Arc also includes multiple string I/O operations that allow a string to be used 
   </td></tr>
   <tr>
     <td class='arc'><a name='readc'></a>
-<a target='CODE' href='/src/readc.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?readc'>readc</a> <span class='args'>[input-port]</span>
+<span class='op'>readc</span> <span class='args'>[input-port]</span>
     <div class='desc'>Reads a character from the input-port (or default of
   stdin).  Returns nil on end-of-file.</div>
     </td>
@@ -79,9 +77,8 @@ Arc also includes multiple string I/O operations that allow a string to be used 
   </td></tr>
   <tr>
     <td class='arc'><a name='peekc'></a>
-<a target='CODE' href='/src/peekc.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?peekc'>peekc</a> <span class='args'>input-port</span>
+<span class='op'>peekc</span> <span class='args'>input-port</span>
     <div class='desc'>Peeks at the next character from the input port, but
   leaves the character for future reads.  It
   uses stdin if the argument is nil.  It returns the character, or nil for
@@ -94,9 +91,8 @@ Arc also includes multiple string I/O operations that allow a string to be used 
   </td></tr>
   <tr>
     <td class='arc'><a name='readline'></a>
-<a target='CODE' href='/src/readline.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?readline'>readline</a> <span class='args'>[input-port]</span>
+<span class='op'>readline</span> <span class='args'>[input-port]</span>
     <div class='desc'>Reads a line from the specified port or stdin.  The line is read up to a newline, nil, or eof.  An initial newline does not terminate the input and appears in the output.  A trailing newline is not included in the returned value.</div>
     </td>
     <td class='arc'><pre>
@@ -114,9 +110,8 @@ d}
   </td></tr>
   <tr>
     <td class='arc'><a name='sread'></a>
-<a target='CODE' href='/src/sread.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?sread'>sread</a> <span class='args'>input-port eof</span>
+<span class='op'>sread</span> <span class='args'>input-port eof</span>
     <div class='desc'>Reads a S-expression from the input port.  Returns eof on end-of-file.</div>
     </td>
     <td class='arc'><pre>
@@ -126,9 +121,8 @@ d}
   </td></tr>
   <tr>
     <td class='arc'><a name='read'></a>
-<a target='CODE' href='/src/read.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?read'>read</a> <span class='args'>[input-source [eof]]</span>
+<span class='op'>read</span> <span class='args'>[input-source [eof]]</span>
     <div class='desc'>Reads a S-expression from the input-source, which can be either a string or an input-port.  If the end of file is reached, nil is returned or the specified eof value.</div>
     </td>
     <td class='arc'><pre>
@@ -146,9 +140,8 @@ d}
   </td></tr>
   <tr>
     <td class='arc'><a name='readstring1'></a>
-<a target='CODE' href='/src/readstring1.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?readstring1'>readstring1</a> <span class='args'>string [eof]</span>
+<span class='op'>readstring1</span> <span class='args'>string [eof]</span>
     <div class='desc'>Reads a S-expression from the string. This is the same as <code>read</code>, except only handles a string.</div>
     </td>
     <td class='arc'><pre>
@@ -158,9 +151,8 @@ d}
   </td></tr>
   <tr>
     <td class='arc'><a name='saferead'></a>
-<a target='CODE' href='/src/saferead.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?saferead'>saferead</a> <span class='args'>input-source</span>
+<span class='op'>saferead</span> <span class='args'>input-source</span>
     <div class='desc'>Reads a S-expression from the input-source, which can be either a string or an input-port.  If the end of file is reached, nil is returned or the specified eof value.  If an error is encountered in the input, returns nil.</div>
     </td>
     <td class='arc'><pre>
@@ -174,9 +166,8 @@ d}
   </td></tr>
   <tr>
     <td class='arc'><a name='readall'></a>
-<a target='CODE' href='/src/readall.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?readall'>readall</a> <span class='args'>input-source [eof]</span>
+<span class='op'>readall</span> <span class='args'>input-source [eof]</span>
     <div class='desc'>Reads S-expressions from the input-source, which can be either a string or an input-port.  Returns a list of the S-expressions.  If the end of file is reached, nil is returned or the eof value if specified.</div>
     </td>
     <td class='arc'><pre>
@@ -190,9 +181,8 @@ d}
   </td></tr>
   <tr>
     <td class='arc'><a name='load'></a>
-<a target='CODE' href='/src/load.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?load'>load</a> <span class='args'>path</span>
+<span class='op'>load</span> <span class='args'>path</span>
     <div class='desc'>Loads the file of Arc code into the REPL environment.</div>
     </td>
     <td class='arc'><pre>
@@ -205,9 +195,8 @@ nil
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='disp'></a>
-<a target='CODE' href='/src/disp.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?disp'>disp</a> <span class='args'>[arg [output-port]]</span>
+<span class='op'>disp</span> <span class='args'>[arg [output-port]]</span>
     <div class='desc'>Displays the argument on the output-port (or
   current-output-port) using MzScheme's display procedure.  Returns nil.</div>
     </td>
@@ -235,9 +224,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='write'></a>
-<a target='CODE' href='/src/write.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?write'>write</a> <span class='args'>[arg [output-port]]</span>
+<span class='op'>write</span> <span class='args'>[arg [output-port]]</span>
     <div class='desc'>Writes the argument to the output-port (or
   current-output-port).  Returns nil.  The <code>write</code> and <code>disp</code> operations are slightly different: <code>write</code> quotes strings and characters, while <code>disp</code> displays them.  See the
   MzScheme
@@ -263,9 +251,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='writeb'></a>
-<a target='CODE' href='/src/writeb.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?writeb'>writeb</a> <span class='args'>int [output-port]</span>
+<span class='op'>writeb</span> <span class='args'>int [output-port]</span>
     <div class='desc'>Writes the byte to the output-port (or
   default of current-output-port).</div>
     </td>
@@ -277,9 +264,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='writec'></a>
-<a target='CODE' href='/src/writec.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?writec'>writec</a> <span class='args'>char [output-port]</span>
+<span class='op'>writec</span> <span class='args'>char [output-port]</span>
     <div class='desc'>Writes the character to the output-port (or
   default of current-output-port).</div>
     </td>
@@ -291,9 +277,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='pr'></a>
-<a target='CODE' href='/src/pr.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pr'>pr</a> <span class='args'>[arg ...]</span>
+<span class='op'>pr</span> <span class='args'>[arg ...]</span>
     <div class='desc'>Prints arguments using <code>disp</code>.  Returns the first argument.</div>
     </td>
     <td class='arc'><pre>
@@ -304,9 +289,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='prn'></a>
-<a target='CODE' href='/src/prn.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?prn'>prn</a> <span class='args'>[arg ...]</span>
+<span class='op'>prn</span> <span class='args'>[arg ...]</span>
     <div class='desc'>Prints arguments followed by a newline.</div>
     </td>
     <td class='arc'><pre>
@@ -318,9 +302,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='prall'></a>
-<a target='CODE' href='/src/prall.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?prall'>prall</a> <span class='args'>elts [initial-string [separator-string]]</span>
+<span class='op'>prall</span> <span class='args'>elts [initial-string [separator-string]]</span>
     <div class='desc'>Prints each element of list elts.  The initial-string is printed first.  The elements are separated by separator-string.  Returns <code>elts</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -336,9 +319,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='prs'></a>
-<a target='CODE' href='/src/prs.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?prs'>prs</a> <span class='args'>[arg ...]</span>
+<span class='op'>prs</span> <span class='args'>[arg ...]</span>
     <div class='desc'>Prints the arguments, separated by a space.  Returns the arguments as a list.</div>
     </td>
     <td class='arc'><pre>
@@ -349,9 +331,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='prf'></a>
-<a target='CODE' href='/src/prf.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?prf'>prf</a> <span class='args'>str [arg ...]</span>
+<span class='op'>prf</span> <span class='args'>str [arg ...]</span>
     <div class='desc'>Prints args using the format string.</div>
     </td>
     <td class='arc'><pre>
@@ -367,9 +348,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='out'></a>
-<a target='CODE' href='/src/out.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?out'>out</a> <span class='args'>expr</span>
+<span class='op'>out</span> <span class='args'>expr</span>
     <div class='desc'>Prints what expr prints.  expr is evaluated at macro expansion time.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -380,17 +360,15 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='parse-format'></a>
-<a target='CODE' href='/src/parse-format.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?parse-format'>parse-format</a> <span class='args'>str</span>
+<span class='op'>parse-format</span> <span class='args'>str</span>
     <div class='desc'>Parses a format string.  An internal helper for <code>prf</code>.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='ero'></a>
-<a target='CODE' href='/src/ero.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ero'>ero</a> <span class='args'>[arg ...]</span>
+<span class='op'>ero</span> <span class='args'>[arg ...]</span>
     <div class='desc'>Writes the args to stderr.  Returns the first arg.</div>
     </td>
     <td class='arc'><pre>
@@ -400,9 +378,8 @@ b
   </td></tr>
   <tr>
     <td class='arc'><a name='warn'></a>
-<a target='CODE' href='/src/warn.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?warn'>warn</a> <span class='args'>msg [arg ...]</span>
+<span class='op'>warn</span> <span class='args'>msg [arg ...]</span>
     <div class='desc'>Displays warning msg, followed by the arguments.</div>
     </td>
     <td class='arc'><pre>
@@ -417,9 +394,8 @@ b
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='readfile'></a>
-<a target='CODE' href='/src/readfile.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?readfile'>readfile</a> <span class='args'>filename</span>
+<span class='op'>readfile</span> <span class='args'>filename</span>
     <div class='desc'>Reads a file containing Lisp forms.  Returns a list of the forms.</div>
     </td>
     <td class='arc'><pre>
@@ -434,9 +410,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='readfile1'></a>
-<a target='CODE' href='/src/readfile1.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?readfile1'>readfile1</a> <span class='args'>filename</span>
+<span class='op'>readfile1</span> <span class='args'>filename</span>
     <div class='desc'>Reads a single Lisp form from the specified file.</div>
     </td>
     <td class='arc'><pre>
@@ -451,9 +426,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='writefile'></a>
-<a target='CODE' href='/src/writefile.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?writefile'>writefile</a> <span class='args'>obj filename</span>
+<span class='op'>writefile</span> <span class='args'>obj filename</span>
     <div class='desc'>Writes obj to the specified file.  The contents are first written to filename.tmp, and then that is moved to filename.</div>
     </td>
     <td class='arc'><pre>
@@ -463,9 +437,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='infile'></a>
-<a target='CODE' href='/src/infile.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?infile'>infile</a> <span class='args'>filename ['binary | 'text]</span>
+<span class='op'>infile</span> <span class='args'>filename ['binary | 'text]</span>
     <div class='desc'>Opens the specified path for
   reading.  By default, the file is opened in binary mode, and bytes are
   returned as read from the file.  In text mode, return and linefeed bytes are 
@@ -484,9 +457,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='w/infile'></a>
-<a target='CODE' href='/src/w%2f2finfile.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/infile'>w/infile</a> <span class='args'>var filename [body ...]</span>
+<span class='op'>w/infile</span> <span class='args'>var filename [body ...]</span>
     <div class='desc'>Opens filename for reading with infile, assigns the input-port to var, executes body, and closes the file.</div>
     </td>
     <td class='arc'><pre>
@@ -501,9 +473,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='outfile'></a>
-<a target='CODE' href='/src/outfile.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?outfile'>outfile</a> <span class='args'>filename ['append]</span>
+<span class='op'>outfile</span> <span class='args'>filename ['append]</span>
     <div class='desc'>Opens the specified path for writing.  By
   default, the file is truncated if it already exists.  Returns an
   output-port.  Arc supports only 'text mode for outfile.</div>
@@ -515,9 +486,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='w/outfile'></a>
-<a target='CODE' href='/src/w%2f2foutfile.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/outfile'>w/outfile</a> <span class='args'>var filename [body ...]</span>
+<span class='op'>w/outfile</span> <span class='args'>var filename [body ...]</span>
     <div class='desc'>Opens filename for writing with outfile, assigns the output-port to var, executes body, and closes the file.</div>
     </td>
     <td class='arc'><pre>
@@ -527,9 +497,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='w/appendfile'></a>
-<a target='CODE' href='/src/w%2f2fappendfile.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/appendfile'>w/appendfile</a> <span class='args'>var filename [body ...]</span>
+<span class='op'>w/appendfile</span> <span class='args'>var filename [body ...]</span>
     <div class='desc'>Opens filename for appending with outfile, assigns the output-port to var, executes body, and closes the file.</div>
     </td>
     <td class='arc'><pre>
@@ -541,9 +510,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='close'></a>
-<a target='CODE' href='/src/close.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?close'>close</a> <span class='args'>port [...]</span>
+<span class='op'>close</span> <span class='args'>port [...]</span>
     <div class='desc'>Closes a port or ports.  In arc0, close took a single argument only.</div>
     </td>
     <td class='arc'><pre>
@@ -553,9 +521,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='pipe-from'></a>
-<a target='CODE' href='/src/pipe-from.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?pipe-from'>pipe-from</a> <span class='args'>command</span>
+<span class='op'>pipe-from</span> <span class='args'>command</span>
     <div class='desc'>Executes command in the underlying OS.  Then opens
   an input-port to the results.  Note that this is not a genuine pipe as the command completes before the results can be read.</div>
     </td>
@@ -566,9 +533,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='flushout'></a>
-<a target='CODE' href='/src/flushout.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?flushout'>flushout</a> <span class='args'></span>
+<span class='op'>flushout</span> <span class='args'></span>
     <div class='desc'>Flushes output.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -581,9 +547,8 @@ r: No such file or directory; errno=2
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='diskvar'></a>
-<a target='CODE' href='/src/diskvar.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?diskvar'>diskvar</a> <span class='args'>var file</span>
+<span class='op'>diskvar</span> <span class='args'>var file</span>
     <div class='desc'>Creates a variable that will be loaded from file and stored in file.  If file exists, var is initialzed from file.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -593,9 +558,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='disktable'></a>
-<a target='CODE' href='/src/disktable.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?disktable'>disktable</a> <span class='args'>var file</span>
+<span class='op'>disktable</span> <span class='args'>var file</span>
     <div class='desc'>Creates a table variable that will be loaded from file and stored in file.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -605,9 +569,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='todisk'></a>
-<a target='CODE' href='/src/todisk.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?todisk'>todisk</a> <span class='args'>var [expr]</span>
+<span class='op'>todisk</span> <span class='args'>var [expr]</span>
     <div class='desc'>Writes var to disk, optionally setting it to expr first.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -619,9 +582,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='fromdisk'></a>
-<a target='CODE' href='/src/fromdisk.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fromdisk'>fromdisk</a> <span class='args'>var file init load save</span>
+<span class='op'>fromdisk</span> <span class='args'>var file init load save</span>
     <div class='desc'>If var is not bound, var is initialized either by calling load function on file or using init.  The save function is saved for later use.  Internal function.  New in arc3.</div>
     </td>
     <td class='arc'>  </td></tr>
@@ -630,9 +592,8 @@ r: No such file or directory; errno=2
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='stdin'></a>
-<a target='CODE' href='/src/stdin.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?stdin'>stdin</a> <span class='args'></span>
+<span class='op'>stdin</span> <span class='args'></span>
     <div class='desc'>stdin: returns the input-port stdin</div>
     </td>
     <td class='arc'><pre>
@@ -642,9 +603,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='stdout'></a>
-<a target='CODE' href='/src/stdout.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?stdout'>stdout</a> <span class='args'></span>
+<span class='op'>stdout</span> <span class='args'></span>
     <div class='desc'>current-output-port: returns the output-port stdout</div>
     </td>
     <td class='arc'><pre>
@@ -654,9 +614,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='stderr'></a>
-<a target='CODE' href='/src/stderr.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?stderr'>stderr</a> <span class='args'></span>
+<span class='op'>stderr</span> <span class='args'></span>
     <div class='desc'>current-error-port: returns the output-port stderr</div>
     </td>
     <td class='arc'><pre>
@@ -670,9 +629,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='call-w/stdin'></a>
-<a target='CODE' href='/src/call-w%2f2fstdin.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?call-w/stdin'>call-w/stdin</a> <span class='args'>input-port thunk</span>
+<span class='op'>call-w/stdin</span> <span class='args'>input-port thunk</span>
     <div class='desc'>Sets stdin
   to the specified port and then executes the thunk.</div>
     </td>
@@ -683,9 +641,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='w/stdin'></a>
-<a target='CODE' href='/src/w%2f2fstdin.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/stdin'>w/stdin</a> <span class='args'>input-port [body ...]</span>
+<span class='op'>w/stdin</span> <span class='args'>input-port [body ...]</span>
     <div class='desc'>Sets stdin to the specified port and then executes the body.</div>
     </td>
     <td class='arc'><pre>
@@ -695,9 +652,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='call-w/stdout'></a>
-<a target='CODE' href='/src/call-w%2f2fstdout.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?call-w/stdout'>call-w/stdout</a> <span class='args'>output-port thunk</span>
+<span class='op'>call-w/stdout</span> <span class='args'>output-port thunk</span>
     <div class='desc'>Calls thunk, setting stdin
   to the specified port.</div>
     </td>
@@ -710,9 +666,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='w/stdout'></a>
-<a target='CODE' href='/src/w%2f2fstdout.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/stdout'>w/stdout</a> <span class='args'>output-port [body ...]</span>
+<span class='op'>w/stdout</span> <span class='args'>output-port [body ...]</span>
     <div class='desc'>Executes the body port with stdout redirected to the output-port.  This is a wrapper around call-w/stdout.</div>
     </td>
     <td class='arc'><pre>
@@ -727,9 +682,8 @@ r: No such file or directory; errno=2
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='instring'></a>
-<a target='CODE' href='/src/instring.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?instring'>instring</a> <span class='args'>string [name]</span>
+<span class='op'>instring</span> <span class='args'>string [name]</span>
     <div class='desc'>Creates an input port to read UTF-8 bytes from the
   string.  This is MzScheme's open-input-string.</div>
     </td>
@@ -740,9 +694,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='w/instring'></a>
-<a target='CODE' href='/src/w%2f2finstring.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/instring'>w/instring</a> <span class='args'>var str [body ...]</span>
+<span class='op'>w/instring</span> <span class='args'>var str [body ...]</span>
     <div class='desc'>Creates an string input-port from str with instring, assigns it to var, executes body, and then closes the input port.</div>
     </td>
     <td class='arc'><pre>
@@ -752,9 +705,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='fromstring'></a>
-<a target='CODE' href='/src/fromstring.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fromstring'>fromstring</a> <span class='args'>str [body ...]</span>
+<span class='op'>fromstring</span> <span class='args'>str [body ...]</span>
     <div class='desc'>Executes the body, using the contents of <code>str</code> as stdin.</div>
     </td>
     <td class='arc'><pre>
@@ -764,9 +716,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='outstring'></a>
-<a target='CODE' href='/src/outstring.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?outstring'>outstring</a> <span class='args'>[name]</span>
+<span class='op'>outstring</span> <span class='args'>[name]</span>
     <div class='desc'>Creates an output-port that accumulates the output
   into a byte string.  The string can be retrieved with inside.  This is
   MzScheme's open-output-string.</div>
@@ -778,9 +729,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='inside'></a>
-<a target='CODE' href='/src/inside.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?inside'>inside</a> <span class='args'>string-output-port</span>
+<span class='op'>inside</span> <span class='args'>string-output-port</span>
     <div class='desc'>Returns (as a string) the bytes accumulated
   in a string-output-port generated by outstring.  This is MzScheme's get-output-string.</div>
     </td>
@@ -791,9 +741,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='w/outstring'></a>
-<a target='CODE' href='/src/w%2f2foutstring.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/outstring'>w/outstring</a> <span class='args'>var [body ...]</span>
+<span class='op'>w/outstring</span> <span class='args'>var [body ...]</span>
     <div class='desc'>Creates a string output-port with outstring, assigns it to var, and executes body.</div>
     </td>
     <td class='arc'><pre>
@@ -805,9 +754,8 @@ r: No such file or directory; errno=2
   </td></tr>
   <tr>
     <td class='arc'><a name='tostring'></a>
-<a target='CODE' href='/src/tostring.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tostring'>tostring</a> <span class='args'>[body ...]</span>
+<span class='op'>tostring</span> <span class='args'>[body ...]</span>
     <div class='desc'>Executes the body.  Any output that was sent to stdout is captured and returned as a string.</div>
     </td>
     <td class='arc'><pre>

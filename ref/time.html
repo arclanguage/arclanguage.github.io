@@ -46,9 +46,8 @@ evaluated
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='date'></a>
-<a target='CODE' href='/src/date.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?date'>date</a> <span class='args'>[time]</span>
+<span class='op'>date</span> <span class='args'>[time]</span>
     <div class='desc'>Displays the specified date (or current date by default).  This works only on Unix-like systems.</div>
     </td>
     <td class='arc'><pre>
@@ -58,40 +57,37 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='seconds'></a>
-<a target='CODE' href='/src/seconds.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?seconds'>seconds</a> <span class='args'> </span>
+<span class='op'>seconds</span> <span class='args'> </span>
     <div class='desc'>Returns current time in seconds, from a platform-specific
   starting date.</div>
     </td>
     <td class='arc'><pre>
 &gt;(seconds)
-<span class="return">1398869899
+<span class="return">1398879649
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='msec'></a>
-<a target='CODE' href='/src/msec.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?msec'>msec</a> <span class='args'></span>
+<span class='op'>msec</span> <span class='args'></span>
     <div class='desc'>Returns current time in milliseconds.  The time is from an
   arbitrary starting date, and can wrap or be negative.</div>
     </td>
     <td class='arc'><pre>
 &gt;(msec)
-<span class="return">1398869899318
+<span class="return">1398879649663
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='timedate'></a>
-<a target='CODE' href='/src/timedate.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?timedate'>timedate</a> <span class='args'>[secs]</span>
+<span class='op'>timedate</span> <span class='args'>[secs]</span>
     <div class='desc'>Converts time to string; default is current time.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
 &gt;(timedate)
-<span class="return">(19 58 14 30 4 2014)
+<span class="return">(49 40 17 30 4 2014)
 </span></pre>
 <pre>
 &gt;(timedate 0)
@@ -100,35 +96,32 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='current-gc-milliseconds'></a>
-<a target='CODE' href='/src/current-gc-milliseconds.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?current-gc-milliseconds'>current-gc-milliseconds</a> <span class='args'> </span>
+<span class='op'>current-gc-milliseconds</span> <span class='args'> </span>
     <div class='desc'>Returns the amount of time spent in garbage
   collection.</div>
     </td>
     <td class='arc'><pre>
 &gt;(current-gc-milliseconds)
-<span class="return">165
+<span class="return">162
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='current-process-milliseconds'></a>
-<a target='CODE' href='/src/current-process-milliseconds.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?current-process-milliseconds'>current-process-milliseconds</a> <span class='args'></span>
+<span class='op'>current-process-milliseconds</span> <span class='args'></span>
     <div class='desc'>Returns the number of milliseconds of
   processor time used.</div>
     </td>
     <td class='arc'><pre>
 &gt;(current-process-milliseconds)
-<span class="return">1850
+<span class="return">1783
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='since'></a>
-<a target='CODE' href='/src/since.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?since'>since</a> <span class='args'>t0</span>
+<span class='op'>since</span> <span class='args'>t0</span>
     <div class='desc'>Displays the number of seconds since <code>t0</code>.  The base time <code>t0</code> should come from <code>seconds</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -138,9 +131,8 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='minutes-since'></a>
-<a target='CODE' href='/src/minutes-since.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?minutes-since'>minutes-since</a> <span class='args'>t0</span>
+<span class='op'>minutes-since</span> <span class='args'>t0</span>
     <div class='desc'>Displays number of minutes since <code>t0</code>.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -150,9 +142,8 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='hours-since'></a>
-<a target='CODE' href='/src/hours-since.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?hours-since'>hours-since</a> <span class='args'>t0</span>
+<span class='op'>hours-since</span> <span class='args'>t0</span>
     <div class='desc'>Displays number of hours since <code>t0</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -162,9 +153,8 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='days-since'></a>
-<a target='CODE' href='/src/days-since.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?days-since'>days-since</a> <span class='args'>t0</span>
+<span class='op'>days-since</span> <span class='args'>t0</span>
     <div class='desc'>Displays number of days since <code>t0</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -174,9 +164,8 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='datestring'></a>
-<a target='CODE' href='/src/datestring.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?datestring'>datestring</a> <span class='args'>[secs]</span>
+<span class='op'>datestring</span> <span class='args'>[secs]</span>
     <div class='desc'>Creates a date string from the current time or given seconds.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
@@ -193,9 +182,8 @@ evaluated
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='time'></a>
-<a target='CODE' href='/src/time.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?time'>time</a> <span class='args'>expr</span>
+<span class='op'>time</span> <span class='args'>expr</span>
     <div class='desc'>Executes <code>expr</code> and prints how long it took to execute.</div>
     </td>
     <td class='arc'><pre>
@@ -207,9 +195,8 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='jtime'></a>
-<a target='CODE' href='/src/jtime.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?jtime'>jtime</a> <span class='args'>expr</span>
+<span class='op'>jtime</span> <span class='args'>expr</span>
     <div class='desc'>Executes <code>expr</code>, prints how long it took to execute, and returns the symbol <code>ok</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -221,9 +208,8 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='time10'></a>
-<a target='CODE' href='/src/time10.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?time10'>time10</a> <span class='args'>expr</span>
+<span class='op'>time10</span> <span class='args'>expr</span>
     <div class='desc'>Executes <code>expr</code> 10 times and prints how long it took in total to execute.</div>
     </td>
     <td class='arc'><pre>
@@ -238,9 +224,8 @@ evaluated
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='cache'></a>
-<a target='CODE' href='/src/cache.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?cache'>cache</a> <span class='args'>timef valf</span>
+<span class='op'>cache</span> <span class='args'>timef valf</span>
     <div class='desc'>Returns a caching procedure.  <code>timef</code> is a function that returns the cache lifetime in seconds.  <code>valf</code> is a function that returns the value to be cached.</div>
     </td>
     <td class='arc'><pre>
@@ -250,9 +235,8 @@ evaluated
   </td></tr>
   <tr>
     <td class='arc'><a name='defcache'></a>
-<a target='CODE' href='/src/defcache.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defcache'>defcache</a> <span class='args'>name lasts [body ...]</span>
+<span class='op'>defcache</span> <span class='args'>name lasts [body ...]</span>
     <div class='desc'>Assigns a caching procedure to variable name.  lasts is the cache lifetime in seconds.  The body code returns the value to be cached.  New in arc3.</div>
     </td>
     <td class='arc'><pre>

@@ -19,9 +19,6 @@ exec racket -f $0
   (declare 'atstrings nil)
   (load "template.arc")
   (runall)
-  ;fails with "Expected tests" error
-  ;(run "foundation-doc.tem")
-  (system "cp foundation-doc.html html/")
-))
+  (run "foundation-doc.tem")))
 (system "cp docs/* html/* ../ref")
 (system "rm -rf html")

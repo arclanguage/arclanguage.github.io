@@ -32,9 +32,8 @@ This can be useful when an expression needs to be used later, as in <code>aif</c
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='aif'></a>
-<a target='CODE' href='/src/aif.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?aif'>aif</a> <span class='args'>expr body [expr body] ...</span>
+<span class='op'>aif</span> <span class='args'>expr body [expr body] ...</span>
     <div class='desc'>Anaphoric <code>if</code>: each <code>expr</code> is evaluated until one is true, and then the corresponding <code>body</code> is executed.  Within the body, the anaphoric variable <code>it</code> refers back to the value of <code>expr</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -48,9 +47,8 @@ This can be useful when an expression needs to be used later, as in <code>aif</c
   </td></tr>
   <tr>
     <td class='arc'><a name='awhen'></a>
-<a target='CODE' href='/src/awhen.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?awhen'>awhen</a> <span class='args'>expr [body ...]</span>
+<span class='op'>awhen</span> <span class='args'>expr [body ...]</span>
     <div class='desc'>Anaphoric <code>when</code>: if the <code>expr</code> is true, the <code>body</code> is executed.  Within the body, the variable <code>it</code> refers back to the value of <code>expr</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -60,9 +58,8 @@ This can be useful when an expression needs to be used later, as in <code>aif</c
   </td></tr>
   <tr>
     <td class='arc'><a name='aand'></a>
-<a target='CODE' href='/src/aand.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?aand'>aand</a> <span class='args'>[arg ...]</span>
+<span class='op'>aand</span> <span class='args'>[arg ...]</span>
     <div class='desc'>Anaphoric <code>and</code>.  Returns the last argument if all arguments are true, otherwise returns <code>nil</code>.  Inside each argument the anaphoric variable <code>it</code> refers to the value of the previous argument.  Like <code>and</code>, lazy evaluation is used, so evaluation stops after encountering a false argument.</div>
     </td>
     <td class='arc'><pre>
@@ -72,9 +69,8 @@ This can be useful when an expression needs to be used later, as in <code>aif</c
   </td></tr>
   <tr>
     <td class='arc'><a name='afn'></a>
-<a target='CODE' href='/src/afn.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?afn'>afn</a> <span class='args'>parms [body ...]</span>
+<span class='op'>afn</span> <span class='args'>parms [body ...]</span>
     <div class='desc'>Creates an anaphoric function, which can be called recursively with the name <code>self</code>.  This allows a recursive function to be created without assigning it a name.</div>
     </td>
     <td class='arc'><pre>
@@ -84,9 +80,8 @@ This can be useful when an expression needs to be used later, as in <code>aif</c
   </td></tr>
   <tr>
     <td class='arc'><a name='rfn'></a>
-<a target='CODE' href='/src/rfn.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?rfn'>rfn</a> <span class='args'>name parms [body ...]</span>
+<span class='op'>rfn</span> <span class='args'>name parms [body ...]</span>
     <div class='desc'>Creates a function with the given <code>name</code>.  The name is only inside the scope of the <code>rfn</code> macro.  This allows recursive functions to be created without polluting the wider scope.</div>
     </td>
     <td class='arc'><pre>
@@ -96,9 +91,8 @@ This can be useful when an expression needs to be used later, as in <code>aif</c
   </td></tr>
   <tr>
     <td class='arc'><a name='trav'></a>
-<a target='CODE' href='/src/trav.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?trav'>trav</a> <span class='args'>obj [function ...]</span>
+<span class='op'>trav</span> <span class='args'>obj [function ...]</span>
     <div class='desc'>Recursive traversal.  Applies each <code>function</code> in sequence to <code>obj</code>, if <code>obj</code> is not <code>nil</code>.  The function can recursively call itself with a new <code>obj</code> with <code>(self obj)</code>.</div>
     </td>
     <td class='arc'><pre>

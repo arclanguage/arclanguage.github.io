@@ -44,9 +44,8 @@ arc> (apply + (qlist q))
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='queue'></a>
-<a target='CODE' href='/src/queue.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?queue'>queue</a> <span class='args'></span>
+<span class='op'>queue</span> <span class='args'></span>
     <div class='desc'>Creates a queue.</div>
     </td>
     <td class='arc'><pre>
@@ -60,10 +59,9 @@ arc> (apply + (qlist q))
   </td></tr>
   <tr>
     <td class='arc'><a name='enq'></a>
-<a target='CODE' href='/src/enq.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?enq'>enq</a> <span class='args'>obj q</span>
+<span class='op'>enq</span> <span class='args'>obj q</span>
     <div class='desc'>Adds obj to the end of queue q.  Returns the queue as a list. The operation is wrapped in <code>atomic</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -73,10 +71,9 @@ arc> (apply + (qlist q))
   </td></tr>
   <tr>
     <td class='arc'><a name='enq-limit'></a>
-<a target='CODE' href='/src/enq-limit.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?enq-limit'>enq-limit</a> <span class='args'>obj q [limit]</span>
+<span class='op'>enq-limit</span> <span class='args'>obj q [limit]</span>
     <div class='desc'>Adds obj to the queue q.  If the new length would exceed the limit, the first element is dequeued.  The new contents of the queue is returned as a list.  Note that the length of the queue will either grow by one or remain constant; the queue will not be shortened to the limit.  The operation is wrapped in <code>atomic</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -89,10 +86,9 @@ arc> (apply + (qlist q))
   </td></tr>
   <tr>
     <td class='arc'><a name='deq'></a>
-<a target='CODE' href='/src/deq.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?deq'>deq</a> <span class='args'>q</span>
+<span class='op'>deq</span> <span class='args'>q</span>
     <div class='desc'>Removes the first element from the queue q and returns the removed element.  The operation is wrapped in <code>atomic</code>.</div>
     </td>
     <td class='arc'><pre>
@@ -102,9 +98,8 @@ arc> (apply + (qlist q))
   </td></tr>
   <tr>
     <td class='arc'><a name='qlen'></a>
-<a target='CODE' href='/src/qlen.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?qlen'>qlen</a> <span class='args'>q</span>
+<span class='op'>qlen</span> <span class='args'>q</span>
     <div class='desc'>Returns the length of queue q.</div>
     </td>
     <td class='arc'><pre>
@@ -114,9 +109,8 @@ arc> (apply + (qlist q))
   </td></tr>
   <tr>
     <td class='arc'><a name='qlist'></a>
-<a target='CODE' href='/src/qlist.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?qlist'>qlist</a> <span class='args'>q</span>
+<span class='op'>qlist</span> <span class='args'>q</span>
     <div class='desc'>Returns the contents of queue q as a list.</div>
     </td>
     <td class='arc'><pre>

@@ -46,9 +46,8 @@ see <a href="http://gd.tuwien.ac.at/languages/scheme/tutorial-dsitaram/t-y-schem
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='point'></a>
-<a target='CODE' href='/src/point.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?point'>point</a> <span class='args'>name [body ...]</span>
+<span class='op'>point</span> <span class='args'>name [body ...]</span>
     <div class='desc'>Creates a 'throw' function called
 <code>name</code> and executes <code>body</code>.  If <code>name</code> is
 executed within <code>body</code>, that value will be returned from
@@ -62,9 +61,8 @@ returned.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='catch'></a>
-<a target='CODE' href='/src/catch.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?catch'>catch</a> <span class='args'>body</span>
+<span class='op'>catch</span> <span class='args'>body</span>
     <div class='desc'>Executes <code>body</code> and catches any value passed to <code>throw</code>.  This is the same as <code>point</code> with the throw function's name predefined.</div>
     </td>
     <td class='arc'><pre>
@@ -74,9 +72,8 @@ returned.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='ccc'></a>
-<a target='CODE' href='/src/ccc.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?ccc'>ccc</a> <span class='args'>procedure</span>
+<span class='op'>ccc</span> <span class='args'>procedure</span>
     <div class='desc'>Packages up the current continuation into an 'escape
   procedure' and passes it to the procedure.  Equivalent to Scheme's <code>call/cc</code> or <a
   href='http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-9.html#%_idx_566'>call-with-current-continuation</a>.</div>
@@ -88,9 +85,8 @@ returned.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='protect'></a>
-<a target='CODE' href='/src/protect.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?protect'>protect</a> <span class='args'>during-procedure after-procedure</span>
+<span class='op'>protect</span> <span class='args'>during-procedure after-procedure</span>
     <div class='desc'>Uses Scheme's
   <a
   href='http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-9.html#%_idx_576'>dynamic-wind</a> to
@@ -106,18 +102,16 @@ Error: /: division by zero
   </td></tr>
   <tr>
     <td class='arc'><a name='after'></a>
-<a target='CODE' href='/src/after.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?after'>after</a> <span class='args'>during-body [after-body ...]</span>
+<span class='op'>after</span> <span class='args'>during-body [after-body ...]</span>
     <div class='desc'>Ensures that
 <code>after-body</code> executes whenever <code>during-body</code> exits.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='details'></a>
-<a target='CODE' href='/src/details.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?details'>details</a> <span class='args'>exception</span>
+<span class='op'>details</span> <span class='args'>exception</span>
     <div class='desc'>Returns the message associated with an exception.</div>
     </td>
     <td class='arc'><pre>
@@ -128,9 +122,8 @@ Error: /: division by zero
   </td></tr>
   <tr>
     <td class='arc'><a name='err'></a>
-<a target='CODE' href='/src/err.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?err'>err</a> <span class='args'>string ...</span>
+<span class='op'>err</span> <span class='args'>string ...</span>
     <div class='desc'>Raises an exception with the given text.</div>
     </td>
     <td class='arc'><pre>
@@ -141,9 +134,8 @@ Error: /: division by zero
   </td></tr>
   <tr>
     <td class='arc'><a name='on-err'></a>
-<a target='CODE' href='/src/on-err.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?on-err'>on-err</a> <span class='args'>err-proc proc</span>
+<span class='op'>on-err</span> <span class='args'>err-proc proc</span>
     <div class='desc'>Executes proc.  Calls err-proc if an exception
   occurs in proc.  The exception is passed to err-proc</div>
     </td>
@@ -155,9 +147,8 @@ Error: /: division by zero
   </td></tr>
   <tr>
     <td class='arc'><a name='errsafe'></a>
-<a target='CODE' href='/src/errsafe.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?errsafe'>errsafe</a> <span class='args'>expr</span>
+<span class='op'>errsafe</span> <span class='args'>expr</span>
     <div class='desc'>Executes expr, returning nil if an error occurs.</div>
     </td>
     <td class='arc'><pre>

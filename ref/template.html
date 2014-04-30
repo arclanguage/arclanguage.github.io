@@ -52,33 +52,30 @@ Note that the parameters to the different template operations are unexpectedly d
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='deftem'></a>
-<a target='CODE' href='/src/deftem.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?deftem'>deftem</a> <span class='args'>template-name(s) key default-value [key default-value] ...</span>
+<span class='op'>deftem</span> <span class='args'>template-name(s) key default-value [key default-value] ...</span>
     <div class='desc'>Creates a template.  The template-name can be any table key, but typically a symbol.  The template name can also be a list of template names, where the first name is the new template, and it inherits key/value pairs from the following template names. If a default-value is nil, then no default value will be used for that key, but the key is permitted in templatize and related functions.</div>
     </td>
     <td class='arc'><pre>
 &gt;(deftem tem1 a "def1" b "def2")
-<span class="return">((a #&lt;procedure: gs2216&gt;) (b #&lt;procedure: gs2216&gt;))
+<span class="return">((a #&lt;procedure: gs2218&gt;) (b #&lt;procedure: gs2218&gt;))
 </span></pre>
 <pre>
 &gt;(deftem (tem2 tem1) b "def3" c "def4")
-<span class="return">((a #&lt;procedure: gs2216&gt;) (b #&lt;procedure: gs2216&gt;) (b #&lt;procedure: gs2220&gt;) (c #&lt;procedure: gs2220&gt;))
+<span class="return">((a #&lt;procedure: gs2218&gt;) (b #&lt;procedure: gs2218&gt;) (b #&lt;procedure: gs2222&gt;) (c #&lt;procedure: gs2222&gt;))
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='addtem'></a>
-<a target='CODE' href='/src/addtem.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?addtem'>addtem</a> <span class='args'>template-name [key value ...]</span>
+<span class='op'>addtem</span> <span class='args'>template-name [key value ...]</span>
     <div class='desc'>Modifies the specified template by adding (or updating) the keys and values.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='inst'></a>
-<a target='CODE' href='/src/inst.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?inst'>inst</a> <span class='args'>template-name [key value ...]</span>
+<span class='op'>inst</span> <span class='args'>template-name [key value ...]</span>
     <div class='desc'>Instantiates a template.  A new table is created from the key-value pairs.  The table contains the default values from the template, unless they are overridden in the key-value arguments.</div>
     </td>
     <td class='arc'><pre>
@@ -88,9 +85,8 @@ Note that the parameters to the different template operations are unexpectedly d
   </td></tr>
   <tr>
     <td class='arc'><a name='templatize'></a>
-<a target='CODE' href='/src/templatize.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?templatize'>templatize</a> <span class='args'>template-name ([(key value) ...])</span>
+<span class='op'>templatize</span> <span class='args'>template-name ([(key value) ...])</span>
     <div class='desc'>Instantiates a template.  The key-value pairs are given as a list of two-element lists.  Any keys not defined in the template are ignored.</div>
     </td>
     <td class='arc'><pre>
@@ -100,9 +96,8 @@ Note that the parameters to the different template operations are unexpectedly d
   </td></tr>
   <tr>
     <td class='arc'><a name='temread'></a>
-<a target='CODE' href='/src/temread.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?temread'>temread</a> <span class='args'>template-name [input-port]</span>
+<span class='op'>temread</span> <span class='args'>template-name [input-port]</span>
     <div class='desc'>Instantiates a template from input.  Reads a list from input-port or stdin and applies templatize.</div>
     </td>
     <td class='arc'><pre>
@@ -112,9 +107,8 @@ Note that the parameters to the different template operations are unexpectedly d
   </td></tr>
   <tr>
     <td class='arc'><a name='temload'></a>
-<a target='CODE' href='/src/temload.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?temload'>temload</a> <span class='args'>template-name filename</span>
+<span class='op'>temload</span> <span class='args'>template-name filename</span>
     <div class='desc'>Instantiates a template from a file.  Applies templatize to the given file.</div>
     </td>
     <td class='arc'><pre>
@@ -124,9 +118,8 @@ Note that the parameters to the different template operations are unexpectedly d
   </td></tr>
   <tr>
     <td class='arc'><a name='temloadall'></a>
-<a target='CODE' href='/src/temloadall.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?temloadall'>temloadall</a> <span class='args'>template-name file</span>
+<span class='op'>temloadall</span> <span class='args'>template-name file</span>
     <div class='desc'>Instantiates a template multiple times from a file, which contains multiple lists of key-value lists.  Returns a list of tables.</div>
     </td>
     <td class='arc'><pre>
@@ -137,9 +130,8 @@ Note that the parameters to the different template operations are unexpectedly d
   </td></tr>
   <tr>
     <td class='arc'><a name='templates*'></a>
-<a target='CODE' href='/src/templates%2f2a.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?templates*'>templates*</a> <span class='args'></span>
+<span class='op'>templates*</span> <span class='args'></span>
     <div class='desc'>Global variable holding all templates.</div>
     </td>
     <td class='arc'>  </td></tr>

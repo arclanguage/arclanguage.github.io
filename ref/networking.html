@@ -31,9 +31,8 @@ Arc's networking functions are limited to those necessary to support a
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='client-ip'></a>
-<a target='CODE' href='/src/client-ip.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?client-ip'>client-ip</a> <span class='args'>tcp-output-argument</span>
+<span class='op'>client-ip</span> <span class='args'>tcp-output-argument</span>
     <div class='desc'>Returns the IP address of the client
   connected to a TCP port.  The <code>tcp-output-argument</code> is the second value
   returned from <code>socket-accept</code>.  The address is returned as a string, the same as
@@ -47,9 +46,8 @@ Arc's networking functions are limited to those necessary to support a
   </td></tr>
   <tr>
     <td class='arc'><a name='open-socket'></a>
-<a target='CODE' href='/src/open-socket.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?open-socket'>open-socket</a> <span class='args'>port</span>
+<span class='op'>open-socket</span> <span class='args'>port</span>
     <div class='desc'>Opens a tcp-listener on the given port.</div>
     </td>
     <td class='arc'><pre>
@@ -59,9 +57,8 @@ Arc's networking functions are limited to those necessary to support a
   </td></tr>
   <tr>
     <td class='arc'><a name='socket-accept'></a>
-<a target='CODE' href='/src/socket-accept.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?socket-accept'>socket-accept</a> <span class='args'>tcp-port</span>
+<span class='op'>socket-accept</span> <span class='args'>tcp-port</span>
     <div class='desc'>Accepts a connection on the given tcp-listener.
   The thread blocks until a connection is received.  It returns a list of
   <code>(input-port output-port client-ip-string)</code>.</div>
@@ -73,9 +70,8 @@ Arc's networking functions are limited to those necessary to support a
   </td></tr>
   <tr>
     <td class='arc'><a name='w/socket'></a>
-<a target='CODE' href='/src/w%2f2fsocket.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/socket'>w/socket</a> <span class='args'>var port [body ...]</span>
+<span class='op'>w/socket</span> <span class='args'>var port [body ...]</span>
     <div class='desc'>Opens a socket with <code>open-socket</code>, assigns it to <code>var</code>, executes <code>body</code>, and closes the socket.</div>
     </td>
     <td class='arc'><pre>

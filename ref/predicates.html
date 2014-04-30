@@ -30,9 +30,8 @@ Arc includes multiple predicates.  The dead and ssyntax predicates are
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='<'></a>
-<a target='CODE' href='/src/%2f3c.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?<'><</a> <span class='args'>arg arg [...]</span>
+<span class='op'><</span> <span class='args'>arg arg [...]</span>
     <div class='desc'>Less than comparison.  Applies to numbers, strings, symbols, or
   chars.  If multiple arguments are given, the sequence must be monotonically
   increasing.</div>
@@ -64,9 +63,8 @@ Arc includes multiple predicates.  The dead and ssyntax predicates are
   </td></tr>
   <tr>
     <td class='arc'><a name='>'></a>
-<a target='CODE' href='/src/%2f3e.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?>'>></a> <span class='args'>arg arg [...]</span>
+<span class='op'>></span> <span class='args'>arg arg [...]</span>
     <div class='desc'>Greater than comparison.  Applies to numbers, strings, symbols, or
   chars.  If multiple arguments are given, the sequence must be monotonically
   decreasing.</div>
@@ -94,9 +92,8 @@ Arc includes multiple predicates.  The dead and ssyntax predicates are
   </td></tr>
   <tr>
     <td class='arc'><a name='bound'></a>
-<a target='CODE' href='/src/bound.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?bound'>bound</a> <span class='args'>symbol</span>
+<span class='op'>bound</span> <span class='args'>symbol</span>
     <div class='desc'>Tests is a symbol is bound.</div>
     </td>
     <td class='arc'><pre>
@@ -112,9 +109,8 @@ Arc includes multiple predicates.  The dead and ssyntax predicates are
   </td></tr>
   <tr>
     <td class='arc'><a name='exact'></a>
-<a target='CODE' href='/src/exact.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?exact'>exact</a> <span class='args'>value</span>
+<span class='op'>exact</span> <span class='args'>value</span>
     <div class='desc'>Tests if the value is an exact integer.</div>
     </td>
     <td class='arc'><pre>
@@ -128,9 +124,8 @@ Arc includes multiple predicates.  The dead and ssyntax predicates are
   </td></tr>
   <tr>
     <td class='arc'><a name='is'></a>
-<a target='CODE' href='/src/is.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?is'>is</a> <span class='args'>val [val ...] </span>
+<span class='op'>is</span> <span class='args'>val [val ...] </span>
     <div class='desc'>Tests equality with eqv?</div>
     </td>
     <td class='arc'><pre>
@@ -156,9 +151,8 @@ Arc includes multiple predicates.  The dead and ssyntax predicates are
   </td></tr>
   <tr>
     <td class='arc'><a name='<%3d'></a>
-<a target='CODE' href='/src/%2f3c=.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?<%3d'><=</a> <span class='args'>[arg ...]</span>
+<span class='op'><=</span> <span class='args'>[arg ...]</span>
     <div class='desc'>The less-than-or-equal predicate.  It can take an arbitrary number of arguments.  There is no short-circuiting; all arguments are evaluated.  Arguments must be comparable.  Arguments can be numbers, characters or strings, but all arguments must be of the same type.</div>
     </td>
     <td class='arc'><pre>
@@ -176,9 +170,8 @@ Arc includes multiple predicates.  The dead and ssyntax predicates are
   </td></tr>
   <tr>
     <td class='arc'><a name='>%3d'></a>
-<a target='CODE' href='/src/%2f3e=.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?>%3d'>>=</a> <span class='args'>[arg ...]</span>
+<span class='op'>>=</span> <span class='args'>[arg ...]</span>
     <div class='desc'>The greater-than-or-equal predicate.  It can take an arbitrary number of arguments.  There is no short-circuiting; all arguments are evaluated.  Arguments must be comparable.  Arguments can be numbers, characters or strings, but all arguments must be of the same type.</div>
     </td>
     <td class='arc'><pre>
@@ -196,123 +189,109 @@ Arc includes multiple predicates.  The dead and ssyntax predicates are
   </td></tr>
   <tr>
     <td class='arc'><a name='dotted'></a>
-<a target='CODE' href='/src/dotted.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?dotted'>dotted</a> <span class='args'>x</span>
+<span class='op'>dotted</span> <span class='args'>x</span>
     <div class='desc'>Returns true if x is a dotted list.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='isa'></a>
-<a target='CODE' href='/src/isa.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?isa'>isa</a> <span class='args'>x y</span>
+<span class='op'>isa</span> <span class='args'>x y</span>
     <div class='desc'>Tests if x has type y.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='orf'></a>
-<a target='CODE' href='/src/orf.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?orf'>orf</a> <span class='args'>function ...</span>
+<span class='op'>orf</span> <span class='args'>function ...</span>
     <div class='desc'>Creates a function on one variable that tests if any of the original functions are true when applied to the variable.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='andf'></a>
-<a target='CODE' href='/src/andf.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?andf'>andf</a> <span class='args'>function ...</span>
+<span class='op'>andf</span> <span class='args'>function ...</span>
     <div class='desc'>Creates a function on one variable that tests if all of the original functions are true when applied to the variable.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='atend'></a>
-<a target='CODE' href='/src/atend.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?atend'>atend</a> <span class='args'>i s</span>
+<span class='op'>atend</span> <span class='args'>i s</span>
     <div class='desc'>Tests if index i is at the end or beyond in sequence or string s.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='testify'></a>
-<a target='CODE' href='/src/testify.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?testify'>testify</a> <span class='args'>test</span>
+<span class='op'>testify</span> <span class='args'>test</span>
     <div class='desc'>Creates a predicate from test.  If test is a function, it is used as the predicate.  Otherwise, a function is created to test equality with test using 'is'.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='acons'></a>
-<a target='CODE' href='/src/acons.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?acons'>acons</a> <span class='args'>x</span>
+<span class='op'>acons</span> <span class='args'>x</span>
     <div class='desc'>Tests if x is of type 'cons, i.e. if x is a non-nil list.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='atom'></a>
-<a target='CODE' href='/src/atom.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?atom'>atom</a> <span class='args'>x</span>
+<span class='op'>atom</span> <span class='args'>x</span>
     <div class='desc'>Tests if x is an atom, that is anything other than type 'cons.  Note that atom and acons are opposites.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='alist'></a>
-<a target='CODE' href='/src/alist.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?alist'>alist</a> <span class='args'>x</span>
+<span class='op'>alist</span> <span class='args'>x</span>
     <div class='desc'>Tests if x is a list, i.e. nil or of type 'cons.  The alist and acons predicates are the same except for nil, which is a list but an atom, not acons.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='some'></a>
-<a target='CODE' href='/src/some.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?some'>some</a> <span class='args'>test seq</span>
+<span class='op'>some</span> <span class='args'>test seq</span>
     <div class='desc'>Tests if any element of seq satisfies test.  The sequence is either a list or a string.  The test is a predicate or value, which is wrapped in testify.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='all'></a>
-<a target='CODE' href='/src/all.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?all'>all</a> <span class='args'>test seq</span>
+<span class='op'>all</span> <span class='args'>test seq</span>
     <div class='desc'>Tests if all elements of seq satisfies test.  The sequence is either a list or a string.  The test is a predicate or value, which is wrapped in testify.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='isnt'></a>
-<a target='CODE' href='/src/isnt.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?isnt'>isnt</a> <span class='args'>x y</span>
+<span class='op'>isnt</span> <span class='args'>x y</span>
     <div class='desc'>Tests inequality; opposite of is.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='iso'></a>
-<a target='CODE' href='/src/iso.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?iso'>iso</a> <span class='args'>x y</span>
+<span class='op'>iso</span> <span class='args'>x y</span>
     <div class='desc'>Compares x and y.  If they are lists, they are compared element-by-element.</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='empty'></a>
-<a target='CODE' href='/src/empty.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?empty'>empty</a> <span class='args'>seq</span>
+<span class='op'>empty</span> <span class='args'>seq</span>
     <div class='desc'>Tests if seq is empty.  Works on lists, strings, and tables.</div>
     </td>
     <td class='arc'>  </td></tr>

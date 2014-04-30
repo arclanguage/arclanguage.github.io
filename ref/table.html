@@ -36,22 +36,20 @@ See also <a href="template.html">template operations</a>, which provide a more c
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='obj'></a>
-<a target='CODE' href='/src/obj.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?obj'>obj</a> <span class='args'>[key value ...]</span>
+<span class='op'>obj</span> <span class='args'>[key value ...]</span>
     <div class='desc'>Creates a table with the specified key/value
 pairs.  (The table can be considered an object with the keys as field names.)</div>
     </td>
     <td class='arc'><pre>
 &gt;(obj key1 42 key2 "hello")
-<span class="return">#hash((key1 . 42) (key2 . "hello"))
+<span class="return">#hash((key2 . "hello") (key1 . 42))
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='w/table'></a>
-<a target='CODE' href='/src/w%2f2ftable.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?w/table'>w/table</a> <span class='args'>var [body ...]</span>
+<span class='op'>w/table</span> <span class='args'>var [body ...]</span>
     <div class='desc'>Assigns an empty table to var and then
 executes body.</div>
     </td>
@@ -63,33 +61,30 @@ executes body.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='tablist'></a>
-<a target='CODE' href='/src/tablist.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?tablist'>tablist</a> <span class='args'>table</span>
+<span class='op'>tablist</span> <span class='args'>table</span>
     <div class='desc'>Returns the table as a list of key/value pairs</div>
     </td>
     <td class='arc'><pre>
 &gt;(tablist (obj key1 42 key2 "hello"))
-<span class="return">((key2 "hello") (key1 42))
+<span class="return">((key1 42) (key2 "hello"))
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='listtab'></a>
-<a target='CODE' href='/src/listtab.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?listtab'>listtab</a> <span class='args'>list</span>
+<span class='op'>listtab</span> <span class='args'>list</span>
     <div class='desc'>Converts a list of key/value pairs to a table.</div>
     </td>
     <td class='arc'><pre>
 &gt;(listtab '((key1 val1) (key2 val2)))
-<span class="return">#hash((key1 . val1) (key2 . val2))
+<span class="return">#hash((key2 . val2) (key1 . val1))
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='read-table'></a>
-<a target='CODE' href='/src/read-table.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?read-table'>read-table</a> <span class='args'>[[input-port] eof]</span>
+<span class='op'>read-table</span> <span class='args'>[[input-port] eof]</span>
     <div class='desc'>Reads a table (as a list of pairs) from the
 given input-port or stdin.  If end-of-file is encountered, the given eof value
 is returned; if it is a list, it will be processed into a table.</div>
@@ -101,9 +96,8 @@ is returned; if it is a list, it will be processed into a table.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='load-table'></a>
-<a target='CODE' href='/src/load-table.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?load-table'>load-table</a> <span class='args'>filename [eof]</span>
+<span class='op'>load-table</span> <span class='args'>filename [eof]</span>
     <div class='desc'>Reads a table from the given filename.  This
 is similar to read-table, except the input is specified as a filename, rather
 than an input-port.</div>
@@ -115,9 +109,8 @@ than an input-port.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='safe-load-table'></a>
-<a target='CODE' href='/src/safe-load-table.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?safe-load-table'>safe-load-table</a> <span class='args'>filename</span>
+<span class='op'>safe-load-table</span> <span class='args'>filename</span>
     <div class='desc'>Loads a table from the given file, like
 load-table.  However, if an error is encountered, an empty table is returned
 instead of an exception.</div>
@@ -129,9 +122,8 @@ instead of an exception.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='load-tables'></a>
-<a target='CODE' href='/src/load-tables.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?load-tables'>load-tables</a> <span class='args'>filename</span>
+<span class='op'>load-tables</span> <span class='args'>filename</span>
     <div class='desc'>Loads tables from the specified file until
 end-of-file is reached.  Returns a list of tables.</div>
     </td>
@@ -142,9 +134,8 @@ end-of-file is reached.  Returns a list of tables.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='write-table'></a>
-<a target='CODE' href='/src/write-table.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?write-table'>write-table</a> <span class='args'>h [output-port]</span>
+<span class='op'>write-table</span> <span class='args'>h [output-port]</span>
     <div class='desc'>Writes the table to the output-port (or
 stdout) as a list of key/value pairs.</div>
     </td>
@@ -156,9 +147,8 @@ stdout) as a list of key/value pairs.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='save-table'></a>
-<a target='CODE' href='/src/save-table.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?save-table'>save-table</a> <span class='args'>table filename</span>
+<span class='op'>save-table</span> <span class='args'>table filename</span>
     <div class='desc'>Writes the table to the specified filename
 as a list of key/value pairs.</div>
     </td>
@@ -169,9 +159,8 @@ as a list of key/value pairs.</div>
   </td></tr>
   <tr>
     <td class='arc'><a name='maptable'></a>
-<a target='CODE' href='/src/maptable.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?maptable'>maptable</a> <span class='args'>proc table </span>
+<span class='op'>maptable</span> <span class='args'>proc table </span>
     <div class='desc'>Applies proc to each element of the table and returns the table.</div>
     </td>
     <td class='arc'><pre>
@@ -184,9 +173,8 @@ b 2
   </td></tr>
   <tr>
     <td class='arc'><a name='table'></a>
-<a target='CODE' href='/src/table.html'><img src='code.gif' title='code'/></a>
 <img src='foundation.gif' title='Foundation'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?table'>table</a> <span class='args'></span>
+<span class='op'>table</span> <span class='args'></span>
     <div class='desc'>Creates an empty hash table.</div>
     </td>
     <td class='arc'><pre>
@@ -196,10 +184,9 @@ b 2
   </td></tr>
   <tr>
     <td class='arc'><a name='fill-table'></a>
-<a target='CODE' href='/src/fill-table.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?fill-table'>fill-table</a> <span class='args'>table data</span>
+<span class='op'>fill-table</span> <span class='args'>table data</span>
     <div class='desc'>Fills the table from the list <code>data</code>, which is interpreted as key-value pairs.  <code>table</code> must already be a table.</div>
     </td>
     <td class='arc'><pre>
@@ -209,9 +196,8 @@ b 2
   </td></tr>
   <tr>
     <td class='arc'><a name='keys'></a>
-<a target='CODE' href='/src/keys.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?keys'>keys</a> <span class='args'>table</span>
+<span class='op'>keys</span> <span class='args'>table</span>
     <div class='desc'>Returns a list of keys for the table.</div>
     </td>
     <td class='arc'><pre>
@@ -221,9 +207,8 @@ b 2
   </td></tr>
   <tr>
     <td class='arc'><a name='vals'></a>
-<a target='CODE' href='/src/vals.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?vals'>vals</a> <span class='args'>table</span>
+<span class='op'>vals</span> <span class='args'>table</span>
     <div class='desc'>Returns a list of values for the table.</div>
     </td>
     <td class='arc'><pre>
@@ -233,9 +218,8 @@ b 2
   </td></tr>
   <tr>
     <td class='arc'><a name='memtable'></a>
-<a target='CODE' href='/src/memtable.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?memtable'>memtable</a> <span class='args'>keylist</span>
+<span class='op'>memtable</span> <span class='args'>keylist</span>
     <div class='desc'>Creates a table with the value true for each key in <code>keylist</code>.</div>
     </td>
     <td class='arc'><pre>

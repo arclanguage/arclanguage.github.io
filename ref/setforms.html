@@ -216,30 +216,27 @@ Arc's <code>defset</code> is similar to Common Lisp's <a href="http://www.lispwo
 <p><table class='arc'>
   <tr>
     <td class='arc'><a name='setforms'></a>
-<a target='CODE' href='/src/setforms.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?setforms'>setforms</a> <span class='args'>place</span>
+<span class='op'>setforms</span> <span class='args'>place</span>
     <div class='desc'>Generates the getter and setter code to access a place.</div>
     </td>
     <td class='arc'><pre>
 &gt;(setforms '(car x))
-<span class="return">((gs2453 x) (car gs2453) (fn (val) (scar gs2453 val)))
+<span class="return">((gs2455 x) (car gs2455) (fn (val) (scar gs2455 val)))
 </span></pre>
   </td></tr>
   <tr>
     <td class='arc'><a name='setter'></a>
-<a target='CODE' href='/src/setter.html'><img src='code.gif' title='code'/></a>
 <img src='var.gif' title='Variable'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?setter'>setter</a> <span class='args'></span>
+<span class='op'>setter</span> <span class='args'></span>
     <div class='desc'>(tests)</div>
     </td>
     <td class='arc'>  </td></tr>
   <tr>
     <td class='arc'><a name='defset'></a>
-<a target='CODE' href='/src/defset.html'><img src='code.gif' title='code'/></a>
 <img src='macro.gif' title='Macro'/>
 <img src='destructive.gif' title='Destructive'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?defset'>defset</a> <span class='args'>name parms [body ...]</span>
+<span class='op'>defset</span> <span class='args'>name parms [body ...]</span>
     <div class='desc'>Defines a new type of place.  Creates a new <code>setforms</code> handler for the function of the specified name.</div>
     </td>
     <td class='arc'><pre>
@@ -249,10 +246,9 @@ Arc's <code>defset</code> is similar to Common Lisp's <a href="http://www.lispwo
   </td></tr>
   <tr>
     <td class='arc'><a name='metafn'></a>
-<a target='CODE' href='/src/metafn.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
 <img src='predicate.gif' title='Predicate'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?metafn'>metafn</a> <span class='args'>x</span>
+<span class='op'>metafn</span> <span class='args'>x</span>
     <div class='desc'>Helper predicate for setforms.  Tests if x is a meta function: that is, it has special syntax, or uses compose or complement.</div>
     </td>
     <td class='arc'><pre>
@@ -262,9 +258,8 @@ Arc's <code>defset</code> is similar to Common Lisp's <a href="http://www.lispwo
   </td></tr>
   <tr>
     <td class='arc'><a name='expand-metafn-call'></a>
-<a target='CODE' href='/src/expand-metafn-call.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?expand-metafn-call'>expand-metafn-call</a> <span class='args'>f args</span>
+<span class='op'>expand-metafn-call</span> <span class='args'>f args</span>
     <div class='desc'>Helper for setforms.  Take a function of the form (compose ...) and expands it into the approprate composed function calls..</div>
     </td>
     <td class='arc'><pre>
@@ -274,9 +269,8 @@ Arc's <code>defset</code> is similar to Common Lisp's <a href="http://www.lispwo
   </td></tr>
   <tr>
     <td class='arc'><a name='expand%3d'></a>
-<a target='CODE' href='/src/expand=.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?expand%3d'>expand=</a> <span class='args'>place val</span>
+<span class='op'>expand=</span> <span class='args'>place val</span>
     <div class='desc'>Helper for =.  Generates code to assign val to place.</div>
     </td>
     <td class='arc'><pre>
@@ -286,9 +280,8 @@ Arc's <code>defset</code> is similar to Common Lisp's <a href="http://www.lispwo
   </td></tr>
   <tr>
     <td class='arc'><a name='expand%3dlist'></a>
-<a target='CODE' href='/src/expand=list.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?expand%3dlist'>expand=list</a> <span class='args'>terms</span>
+<span class='op'>expand=list</span> <span class='args'>terms</span>
     <div class='desc'>Helper for =.  Pairs up the arguments to =, and calls expand= on each pair.</div>
     </td>
     <td class='arc'><pre>
@@ -299,9 +292,8 @@ Arc's <code>defset</code> is similar to Common Lisp's <a href="http://www.lispwo
 </table>
   <tr>
     <td class='arc'><a name='or%3d'></a>
-<a target='CODE' href='/src/or=.html'><img src='code.gif' title='code'/></a>
 <img src='proc.gif' title='Procedure'/>
-<a class='op' href='http://practical-scheme.net/wiliki/arcxref?or%3d'>or=</a> <span class='args'>place val</span>
+<span class='op'>or=</span> <span class='args'>place val</span>
     <div class='desc'>Similar to the or macro, except assigns val to place if place is nil.  New in arc3.</div>
     </td>
     <td class='arc'><pre>
