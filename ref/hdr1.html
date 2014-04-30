@@ -1,27 +1,18 @@
 The Arc language is implemented by a "foundation" of functionality
-implemented in Scheme in 
-<code>ac.scm</code>.  On top of this the <a
+implemented in Scheme in <code>ac.scm</code>. On top of this the <a
 href="http://paulgraham.com/core.html">core</a> of the language is implemented
-in the Arc language itself in <code>arc.arc</code>.  Finally, various libraries
-are implemented on top of the core.  This page provides some documentation
-of the functionality in the foundation.
-<p>
-In one sense, the foundation can be considered the "<a
-href="http://paulgraham.com/arcchallenge.html">axioms</a>", and the full language is
-created out of these axioms.  However, in my view, the current foundation
-both contains too much and too little to be considered an axiomatic base.
-For example, it contains enough networking functionality to implement a
-web server, but not enough to fetch a web page.  The math functions include
-square root and exponentiation, but not trigonometry.  Nonetheless, the
-foundation provides the basis for a very interesting language.
-For more information on how the foundation is implemented, see my article
+in the Arc language itself in <code>arc.arc</code>. Finally, various libraries
+are implemented on top of the core. This page provides some documentation
+of the functionality in the foundation. For more information on how the
+foundation is implemented, see the article
 <a href="http://arcfn.com/2008/02/arc-internals-part-1.html">Arc Internals</a>.
-<p>
-This reference was created using Arc. An Arc data structure contains the
-functions, descriptions and test examples, and an Arc program processes this
-data structure to generate html. The examples on the right, for the most part,
-show actual output from running the embedded code while generating the page.
-(A few commands, such as quit and the socket operations, are not suitable for
-execution in this way and their output was "faked".)
-Please inform us in <a href='http://arclanguage.org/forum'>the forum</a> if
-you find anything unclear or anomalous.
+
+<br/><br/>
+This reference was created using
+<a href='https://github.com/arclanguage/arclanguage.github.io/blob/master/_ref/generate.sh'>an Arc program</a>
+The examples on the right, for
+the most part, show actual output from running the embedded code while
+generating the page. (A few commands, such as quit and the socket operations,
+are not suitable for execution in this way and their output was "faked".)
+Please inform <a href='http://arclanguage.org/forum'>the forum</a> if you find
+anything unclear or anomalous.
