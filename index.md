@@ -37,7 +37,7 @@ title: Arc Programming Language
       href='https://sites.google.com/site/arclanguagewiki/arc-3_1/known-bugs-and-gotchas'>bugfixes</a>
       from the folks at <a href='http://arclanguage.org/forum'>the forum</a>.
       (Arc 3.1 was last updated in 2009.)</li>
-      <li>Tries to keep with the spirit and philosophy of arc. The tutorial still applies to it.</li>
+      <li>Tries to keep with the spirit and philosophy of arc. The <a href='http://ycombinator.com/arc/tut.txt'>tutorial</a> still applies to it.</li>
       <li>Like arc, makes no guarantees of compatibility. Anyone can make changes to it.</li>
       <li>Commit privileges freely given to anyone who asks.</li>
     </ul>
@@ -52,7 +52,7 @@ Evaluates each expression in sequence and returns the result
 of the last expression.
 <span style='color:grey'>arc&gt;</span> (load "tests.arc")  <span style='color:blue'>; lots of automated tests</span>
 <span style='color:grey'>arc&gt;</span> (quit)
-<span style='color:grey'>arc&gt;</span> </pre>
+<span style='color:grey'>$</span> </pre>
   </div>
   <br clear='both'/>
 </div>
