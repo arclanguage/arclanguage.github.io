@@ -7,12 +7,12 @@ title: Arc Programming Language
   <div class='col-md-6'>
     <div style='text-align:center'>
       <h2><a href='http://arclanguage.org'>Arc 3.1</a></h2>
-      <p><i>A lisp dialect by Paul Graham and Robert Morris</i></p>
+      <p><i>A lisp dialect for sketching out programs</i></p>
     </div>
     <ul>
       <li>Try it in your browser at <a href='http://tryarc.org'>tryarc.org</a>.</li>
-      <li>Work through the <a href='http://ycombinator.com/arc/tut.txt'>tutorial</a>.</li>
-      <li>Read the <a href='/ref/'>detailed documentation</a> by <a href='http://www.righto.com'>Ken Shirriff</a>.</li>
+      <li>Work through the official <a href='http://ycombinator.com/arc/tut.txt'>tutorial</a>.</li>
+      <li>Read the <a href='/ref/'>detailed documentation</a>.</li>
       <li>Future versions may make incompatible changes.</li>
     </ul>
     To install, first install <a href='http://racket-lang.org'>racket</a>,
