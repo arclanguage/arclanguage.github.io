@@ -122,11 +122,11 @@
     (prn "    </td>")
     (pr "    <td class='arc'>")
     (if (no testlist) nil
-        (no (testlist 0)) nil
-        (is 'faketest ((testlist 0) 0)) (faketest ((testlist 0) 1) ((testlist 0) 2))
-        (is 'tests ((testlist 0) 0)) (map dotest (cdr:car testlist))
-        (is 'htmltests ((testlist 0) 0)) (map dohtmltest (cdr:car testlist))
-         (err "Expected tests" operation (car testlist) ))
+        (no car.testlist) nil
+        (is 'faketest (car.testlist 0)) (faketest (car.testlist 1) (car.testlist 2))
+        (is 'tests (car.testlist 0)) (map dotest (cdr car.testlist))
+        (is 'htmltests (car.testlist 0)) (map dohtmltest (cdr car.testlist))
+         (err "Expected tests" operation car.testlist))
     (prn "  </td></tr>")))
 
 (def pair? (x) (is (type x) 'cons))
