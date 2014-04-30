@@ -2,15 +2,15 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 <title>Arc: Web server</title>
+<link rel="shortcut icon" href="/assets/favicon.png">
 <link rel="stylesheet" type="text/css" href="code.css">
-<link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/assets/bootstrap.css" rel="stylesheet">
 </head>
 <body style='margin:12px 50px 0'>
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <a class="brand" href="/">Arc</a>
-      <ul class="nav">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Arc</a>
         <li><a href="http://tryarc.org">Try it</a></li>
         <li><a href="http://github.com/arclanguage/anarki">Get it</a></li>
         <li><a href="http://ycombinator.com/arc/tut.txt">Tutorial</a></li>
@@ -187,7 +187,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop foo req (prn "Hello"))
-<span class="return">#&lt;procedure: gs2255&gt;
+<span class="return">#&lt;procedure: gs2259&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -200,7 +200,7 @@ The form can be executed multiple times, and each execution will have a unique s
     <td class='arc'><pre>
 &gt;(defop-raw fooraw (str req)
   (w/stdout str (prn "X-Arc: foo") (prn) (prn "Hello")))
-<span class="return">#&lt;procedure: gs2261&gt;
+<span class="return">#&lt;procedure: gs2265&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -212,7 +212,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defopr bar req (prn "foo"))
-<span class="return">#&lt;procedure: gs2272&gt;
+<span class="return">#&lt;procedure: gs2276&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -225,7 +225,7 @@ The form can be executed multiple times, and each execution will have a unique s
     <td class='arc'><pre>
 &gt;(defopr-raw baz (str req)
   (disp "Set-Cookie: this=that\n" str) "foo")
-<span class="return">#&lt;procedure: gs2281&gt;
+<span class="return">#&lt;procedure: gs2285&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -237,7 +237,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop af rq (aform (fn (req) (prn req)) (submit)))
-<span class="return">#&lt;procedure: gs2291&gt;
+<span class="return">#&lt;procedure: gs2295&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -249,7 +249,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop af rq (fnform (fn (req) (fn (_) (prn req))) (submit)))
-<span class="return">#&lt;procedure: gs2303&gt;
+<span class="return">#&lt;procedure: gs2307&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -261,7 +261,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop taf rq (timed-aform 10 (fn (req) (prn req)) (submit)))
-<span class="return">#&lt;procedure: gs2314&gt;
+<span class="return">#&lt;procedure: gs2318&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -273,7 +273,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop taf rq (timed-arform 10 (fn (req) (prn req)) (submit)))
-<span class="return">#&lt;procedure: gs2325&gt;
+<span class="return">#&lt;procedure: gs2329&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -285,7 +285,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop arf rq (arform (fn (req) "foo") (prn "Click:") (submit)))
-<span class="return">#&lt;procedure: gs2336&gt;
+<span class="return">#&lt;procedure: gs2340&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -299,7 +299,7 @@ The form can be executed multiple times, and each execution will have a unique s
 &gt;(defop afh rq (aformh
   (fn (req) (prn "Set-Cookie: a=b\n") (prn req))
   (prn "Click:") (submit)))
-<span class="return">#&lt;procedure: gs2347&gt;
+<span class="return">#&lt;procedure: gs2351&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -312,7 +312,7 @@ The form can be executed multiple times, and each execution will have a unique s
     <td class='arc'><pre>
 &gt;(defop arfh rq (arform (fn (req) (prn "Set-Cookie: a=b") "foo")
   (prn "Click:") (submit)))
-<span class="return">#&lt;procedure: gs2358&gt;
+<span class="return">#&lt;procedure: gs2362&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -336,7 +336,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(afnid (fn (req) (prn "\nFnid is " it)))
-<span class="return">J745H8FKXX
+<span class="return">Llg5phpvSs
 </span></pre>
   </td></tr>
   <tr>
@@ -348,7 +348,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(flink (fn (req) (prn "hi")))
-<span class="return">"/x?fnid=W2xD3bBeSQ"
+<span class="return">"/x?fnid=QUWF30gkk8"
 </span></pre>
   </td></tr>
   <tr>
@@ -360,7 +360,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(rflink (fn (req) (prn "Header: x") "foo"))
-<span class="return">"/r?fnid=ogFYHqT1Sm"
+<span class="return">"/r?fnid=nHJhKc6Llz"
 </span></pre>
   </td></tr>
   <tr>
@@ -372,7 +372,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop wl req (w/link (prn "You clicked.") (prn "Click here")))
-<span class="return">#&lt;procedure: gs2376&gt;
+<span class="return">#&lt;procedure: gs2380&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -385,7 +385,7 @@ The form can be executed multiple times, and each execution will have a unique s
     <td class='arc'><pre>
 &gt;(defop wli req (w/link-if t (prn "You clicked.")
   (prn "Click here")))
-<span class="return">#&lt;procedure: gs2388&gt;
+<span class="return">#&lt;procedure: gs2392&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -397,7 +397,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop wrl req (w/rlink "foo" (prn "Click here")))
-<span class="return">#&lt;procedure: gs2400&gt;
+<span class="return">#&lt;procedure: gs2404&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -409,7 +409,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop ol req (onlink "Click here" (prn "You clicked.")))
-<span class="return">#&lt;procedure: gs2412&gt;
+<span class="return">#&lt;procedure: gs2416&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -421,7 +421,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop ol req (onrlink "Click here" (prn "You clicked.")))
-<span class="return">#&lt;procedure: gs2424&gt;
+<span class="return">#&lt;procedure: gs2428&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -433,7 +433,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop lf rq (linkf "Click here" (req) (prn "Your request: " req)))
-<span class="return">#&lt;procedure: gs2436&gt;
+<span class="return">#&lt;procedure: gs2440&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -445,7 +445,7 @@ The form can be executed multiple times, and each execution will have a unique s
     </td>
     <td class='arc'><pre>
 &gt;(defop rlf rq (rlinkf "Click here" (req) "foo"))
-<span class="return">#&lt;procedure: gs2447&gt;
+<span class="return">#&lt;procedure: gs2451&gt;
 </span></pre>
   </td></tr>
   <tr>
@@ -484,8 +484,8 @@ The form can be executed multiple times, and each execution will have a unique s
 &gt;(srvlog 'blog "Stuff to log")
 <span class="stdout">Error: open-output-file: cannot open output file
   path: /ho
-me/dram/arc/arclanguage.github.io/_ref/arc/logs/blog-2013-06
--11
+me/agaram/Desktop/minilangs/arcsite/_ref/arc/logs/blog-2014-
+04-30
   system error: No such file or directory; errno=2
 
 </span></pre>
@@ -922,7 +922,7 @@ The following table lists the operations and variables in <code>srv.arc</code> t
     </td>
     <td class='arc'><pre>
 &gt;(new-fnid)
-<span class="return">vcyBEvq0ER
+<span class="return">5svBTs8lPM
 </span></pre>
   </td></tr>
   <tr>
@@ -934,7 +934,7 @@ The following table lists the operations and variables in <code>srv.arc</code> t
     </td>
     <td class='arc'><pre>
 &gt;(fnid (fn (req) (prn "hi")))
-<span class="return">Wx0wopkM1O
+<span class="return">yR84w95BaM
 </span></pre>
   </td></tr>
   <tr>
@@ -946,7 +946,7 @@ The following table lists the operations and variables in <code>srv.arc</code> t
     </td>
     <td class='arc'><pre>
 &gt;(timed-fnid 100 (fn (req) (prn "hi")))
-<span class="return">QRtjDm0DRu
+<span class="return">eOxDt0OvWK
 </span></pre>
   </td></tr>
   <tr>
@@ -982,7 +982,7 @@ The following table lists the operations and variables in <code>srv.arc</code> t
     </td>
     <td class='arc'><pre>
 &gt;(unique-id)
-<span class="return">UydmuSu1
+<span class="return">QVzE53N5
 </span></pre>
   </td></tr>
   <tr>
@@ -1146,7 +1146,7 @@ The following table lists the operations and variables in <code>srv.arc</code> t
     </td>
     <td class='arc'><pre>
 &gt;(keys type-header*)
-<span class="return">(jpg gif png text/html)
+<span class="return">(text/html jpg png gif)
 </span></pre>
   </td></tr>
   <tr>
@@ -1269,7 +1269,7 @@ ined identifier
     </td>
     <td class='arc'><pre>
 &gt;(logfile-name "gif")
-<span class="return">"arc/logs/gif-2013-06-11"
+<span class="return">"arc/logs/gif-2014-04-30"
 </span></pre>
   </td></tr>
   <tr>

@@ -2,15 +2,15 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 <title>Arc: List manipulation</title>
+<link rel="shortcut icon" href="/assets/favicon.png">
 <link rel="stylesheet" type="text/css" href="code.css">
-<link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/assets/bootstrap.css" rel="stylesheet">
 </head>
 <body style='margin:12px 50px 0'>
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <a class="brand" href="/">Arc</a>
-      <ul class="nav">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Arc</a>
         <li><a href="http://tryarc.org">Try it</a></li>
         <li><a href="http://github.com/arclanguage/anarki">Get it</a></li>
         <li><a href="http://ycombinator.com/arc/tut.txt">Tutorial</a></li>
@@ -446,7 +446,7 @@ n: 3
     </td>
     <td class='arc'><pre>
 &gt;(counts '(b a n a n a))
-<span class="return">#hash((n . 2) (a . 3) (b . 1))
+<span class="return">#hash((b . 1) (n . 2) (a . 3))
 </span></pre>
 <pre>
 &gt;(let tl (table)
@@ -923,7 +923,7 @@ ring? (not/c immutable?))
 </span></pre>
 <pre>
 &gt;(dedup (obj a 1 b 2 c 1))
-<span class="return">((c 1) (b 2) (a 1))
+<span class="return">((a 1) (c 1) (b 2))
 </span></pre>
   </td></tr>
   <tr>
@@ -1219,7 +1219,7 @@ s...:
     </td>
     <td class='arc'><pre>
 &gt;(rand-choice "a" 42 '(1 2 3))
-<span class="return">"a"
+<span class="return">42
 </span></pre>
   </td></tr>
   <tr>

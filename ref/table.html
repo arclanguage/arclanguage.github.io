@@ -2,15 +2,15 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 <title>Arc: Table operations</title>
+<link rel="shortcut icon" href="/assets/favicon.png">
 <link rel="stylesheet" type="text/css" href="code.css">
-<link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/assets/bootstrap.css" rel="stylesheet">
 </head>
 <body style='margin:12px 50px 0'>
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <a class="brand" href="/">Arc</a>
-      <ul class="nav">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Arc</a>
         <li><a href="http://tryarc.org">Try it</a></li>
         <li><a href="http://github.com/arclanguage/anarki">Get it</a></li>
         <li><a href="http://ycombinator.com/arc/tut.txt">Tutorial</a></li>
@@ -44,7 +44,7 @@ pairs.  (The table can be considered an object with the keys as field names.)</d
     </td>
     <td class='arc'><pre>
 &gt;(obj key1 42 key2 "hello")
-<span class="return">#hash((key2 . "hello") (key1 . 42))
+<span class="return">#hash((key1 . 42) (key2 . "hello"))
 </span></pre>
   </td></tr>
   <tr>
@@ -70,7 +70,7 @@ executes body.</div>
     </td>
     <td class='arc'><pre>
 &gt;(tablist (obj key1 42 key2 "hello"))
-<span class="return">((key1 42) (key2 "hello"))
+<span class="return">((key2 "hello") (key1 42))
 </span></pre>
   </td></tr>
   <tr>
@@ -82,7 +82,7 @@ executes body.</div>
     </td>
     <td class='arc'><pre>
 &gt;(listtab '((key1 val1) (key2 val2)))
-<span class="return">#hash((key2 . val2) (key1 . val1))
+<span class="return">#hash((key1 . val1) (key2 . val2))
 </span></pre>
   </td></tr>
   <tr>
@@ -96,7 +96,7 @@ is returned; if it is a list, it will be processed into a table.</div>
     </td>
     <td class='arc'><pre>
 &gt;(w/instring ins "((a 10)(b 20))" (read-table ins))
-<span class="return">#hash((a . 10) (b . 20))
+<span class="return">#hash((b . 20) (a . 10))
 </span></pre>
   </td></tr>
   <tr>
@@ -150,7 +150,7 @@ stdout) as a list of key/value pairs.</div>
     </td>
     <td class='arc'><pre>
 &gt;(write-table (obj a 1 b 2))
-<span class="stdout">((b 2) (a 1))
+<span class="stdout">((a 1) (b 2))
 </span><span class="return">nil
 </span></pre>
   </td></tr>
@@ -164,7 +164,7 @@ as a list of key/value pairs.</div>
     </td>
     <td class='arc'><pre>
 &gt;(save-table (obj a 10 b 20) "tfile")
-<span class="return">((b 20) (a 10))
+<span class="return">((a 10) (b 20))
 </span></pre>
   </td></tr>
   <tr>
@@ -176,10 +176,10 @@ as a list of key/value pairs.</div>
     </td>
     <td class='arc'><pre>
 &gt;(maptable (fn (key val) (prn key " " val)) (obj a 1 b 2))
-<span class="stdout">b 2
-a 1
+<span class="stdout">a 1
+b 2
 
-</span><span class="return">#hash((a . 1) (b . 2))
+</span><span class="return">#hash((b . 2) (a . 1))
 </span></pre>
   </td></tr>
   <tr>
@@ -204,7 +204,7 @@ a 1
     </td>
     <td class='arc'><pre>
 &gt;(let tb (obj a 1 b 2) (fill-table tb '(c 3 d 4)))
-<span class="return">#hash((d . 4) (a . 1) (b . 2) (c . 3))
+<span class="return">#hash((b . 2) (c . 3) (d . 4) (a . 1))
 </span></pre>
   </td></tr>
   <tr>
@@ -216,7 +216,7 @@ a 1
     </td>
     <td class='arc'><pre>
 &gt;(keys (obj a 1 b 2))
-<span class="return">(b a)
+<span class="return">(a b)
 </span></pre>
   </td></tr>
   <tr>
@@ -228,7 +228,7 @@ a 1
     </td>
     <td class='arc'><pre>
 &gt;(vals (obj a 1 b 2))
-<span class="return">(2 1)
+<span class="return">(1 2)
 </span></pre>
   </td></tr>
   <tr>
@@ -240,7 +240,7 @@ a 1
     </td>
     <td class='arc'><pre>
 &gt;(memtable '(a b c))
-<span class="return">#hash((a . t) (b . t) (c . t))
+<span class="return">#hash((b . t) (c . t) (a . t))
 </span></pre>
   </td></tr>
 </table>

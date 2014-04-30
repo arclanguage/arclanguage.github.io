@@ -2,15 +2,15 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 <title>Arc: Time</title>
+<link rel="shortcut icon" href="/assets/favicon.png">
 <link rel="stylesheet" type="text/css" href="code.css">
-<link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/assets/bootstrap.css" rel="stylesheet">
 </head>
 <body style='margin:12px 50px 0'>
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <a class="brand" href="/">Arc</a>
-      <ul class="nav">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Arc</a>
         <li><a href="http://tryarc.org">Try it</a></li>
         <li><a href="http://github.com/arclanguage/anarki">Get it</a></li>
         <li><a href="http://ycombinator.com/arc/tut.txt">Tutorial</a></li>
@@ -66,7 +66,7 @@ evaluated
     </td>
     <td class='arc'><pre>
 &gt;(seconds)
-<span class="return">1370930532
+<span class="return">1398869899
 </span></pre>
   </td></tr>
   <tr>
@@ -79,7 +79,7 @@ evaluated
     </td>
     <td class='arc'><pre>
 &gt;(msec)
-<span class="return">1370930532714
+<span class="return">1398869899318
 </span></pre>
   </td></tr>
   <tr>
@@ -91,7 +91,7 @@ evaluated
     </td>
     <td class='arc'><pre>
 &gt;(timedate)
-<span class="return">(12 2 6 11 6 2013)
+<span class="return">(19 58 14 30 4 2014)
 </span></pre>
 <pre>
 &gt;(timedate 0)
@@ -108,7 +108,7 @@ evaluated
     </td>
     <td class='arc'><pre>
 &gt;(current-gc-milliseconds)
-<span class="return">220
+<span class="return">165
 </span></pre>
   </td></tr>
   <tr>
@@ -121,7 +121,7 @@ evaluated
     </td>
     <td class='arc'><pre>
 &gt;(current-process-milliseconds)
-<span class="return">2324
+<span class="return">1850
 </span></pre>
   </td></tr>
   <tr>
@@ -181,7 +181,7 @@ evaluated
     </td>
     <td class='arc'><pre>
 &gt;(datestring)
-<span class="return">"2013-06-11"
+<span class="return">"2014-04-30"
 </span></pre>
 <pre>
 &gt;(datestring 0)
@@ -228,7 +228,7 @@ evaluated
     </td>
     <td class='arc'><pre>
 &gt;(time10 (sleep 0.1))
-<span class="stdout">time: 1000 msec.
+<span class="stdout">time: 1001 msec.
 
 </span><span class="return">nil
 </span></pre>

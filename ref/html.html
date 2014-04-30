@@ -2,15 +2,15 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 <title>Arc: HTML operations</title>
+<link rel="shortcut icon" href="/assets/favicon.png">
 <link rel="stylesheet" type="text/css" href="code.css">
-<link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/assets/bootstrap.css" rel="stylesheet">
 </head>
 <body style='margin:12px 50px 0'>
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <a class="brand" href="/">Arc</a>
-      <ul class="nav">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Arc</a>
         <li><a href="http://tryarc.org">Try it</a></li>
         <li><a href="http://github.com/arclanguage/anarki">Get it</a></li>
         <li><a href="http://ycombinator.com/arc/tut.txt">Tutorial</a></li>
@@ -729,7 +729,7 @@ Secret<input type=password name="i1" size=5> <input type=submit value="Submit">
     </td>
     <td class='arc'><pre>
 &gt;(color 255 0 128)
-<span class="return">#hash((g . 0) (r . 255) (b . 128))
+<span class="return">#hash((r . 255) (b . 128) (g . 0))
 </span></pre>
   </td></tr>
   <tr>
@@ -741,7 +741,7 @@ Secret<input type=password name="i1" size=5> <input type=submit value="Submit">
     </td>
     <td class='arc'><pre>
 &gt;(hex&gt;color "ff00cc")
-<span class="return">#hash((g . 0) (r . 255) (b . 204))
+<span class="return">#hash((r . 255) (b . 204) (g . 0))
 </span></pre>
   </td></tr>
   <tr>
@@ -753,7 +753,7 @@ Secret<input type=password name="i1" size=5> <input type=submit value="Submit">
     </td>
     <td class='arc'><pre>
 &gt;(gray 100)
-<span class="return">#hash((g . 100) (r . 100) (b . 100))
+<span class="return">#hash((r . 100) (b . 100) (g . 100))
 </span></pre>
   </td></tr>
   <tr>
@@ -907,7 +907,7 @@ The implementation of HTML handling in Arc centers around the <code>opmeths*</co
     </td>
     <td class='arc'><pre>
 &gt;(opcolor 'bgcolor orange)
-<span class="return">(whenlet gs2244 #hash((g . 102) (r . 255) (b . 0)) (pr " bgcolor=#" (hexrep gs2244)))
+<span class="return">(whenlet gs2248 #hash((r . 255) (b . 0) (g . 102)) (pr " bgcolor=#" (hexrep gs2248)))
 </span></pre>
   </td></tr>
   <tr>
@@ -1003,7 +1003,7 @@ The implementation of HTML handling in Arc centers around the <code>opmeths*</co
     </td>
     <td class='arc'><pre>
 &gt;(tag-options 'td '((bgcolor red) (width 42)))
-<span class="return">((whenlet gs2245 red (pr " bgcolor=#" (hexrep gs2245))) " width=42")
+<span class="return">((whenlet gs2249 red (pr " bgcolor=#" (hexrep gs2249))) " width=42")
 </span></pre>
   </td></tr>
   <tr>

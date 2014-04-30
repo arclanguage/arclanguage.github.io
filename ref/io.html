@@ -2,15 +2,15 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 <title>Arc: I/O</title>
+<link rel="shortcut icon" href="/assets/favicon.png">
 <link rel="stylesheet" type="text/css" href="code.css">
-<link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/assets/bootstrap.css" rel="stylesheet">
 </head>
 <body style='margin:12px 50px 0'>
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <a class="brand" href="/">Arc</a>
-      <ul class="nav">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Arc</a>
         <li><a href="http://tryarc.org">Try it</a></li>
         <li><a href="http://github.com/arclanguage/anarki">Get it</a></li>
         <li><a href="http://ycombinator.com/arc/tut.txt">Tutorial</a></li>
@@ -426,9 +426,9 @@ b
 &gt;(readfile "foo.arc")
 <span class="stdout">Error: open-input-file: cannot open input file
   path: /home
-/dram/arc/arclanguage.github.io/_ref/foo.arc
-  system error:
- No such file or directory; errno=2
+/agaram/Desktop/minilangs/arcsite/_ref/foo.arc
+  system erro
+r: No such file or directory; errno=2
 
 </span></pre>
   </td></tr>
@@ -443,9 +443,9 @@ b
 &gt;(readfile1 "foo.arc")
 <span class="stdout">Error: open-input-file: cannot open input file
   path: /home
-/dram/arc/arclanguage.github.io/_ref/foo.arc
-  system error:
- No such file or directory; errno=2
+/agaram/Desktop/minilangs/arcsite/_ref/foo.arc
+  system erro
+r: No such file or directory; errno=2
 
 </span></pre>
   </td></tr>
@@ -476,9 +476,9 @@ b
 &gt;(infile "foo.arc")
 <span class="stdout">Error: open-input-file: cannot open input file
   path: /home
-/dram/arc/arclanguage.github.io/_ref/foo.arc
-  system error:
- No such file or directory; errno=2
+/agaram/Desktop/minilangs/arcsite/_ref/foo.arc
+  system erro
+r: No such file or directory; errno=2
 
 </span></pre>
   </td></tr>
@@ -493,9 +493,9 @@ b
 &gt;(w/infile inf "foo.arc" (read inf))
 <span class="stdout">Error: open-input-file: cannot open input file
   path: /home
-/dram/arc/arclanguage.github.io/_ref/foo.arc
-  system error:
- No such file or directory; errno=2
+/agaram/Desktop/minilangs/arcsite/_ref/foo.arc
+  system erro
+r: No such file or directory; errno=2
 
 </span></pre>
   </td></tr>

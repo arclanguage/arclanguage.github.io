@@ -2,15 +2,15 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 <title>Arc: Template operations</title>
+<link rel="shortcut icon" href="/assets/favicon.png">
 <link rel="stylesheet" type="text/css" href="code.css">
-<link href="/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/assets/bootstrap.css" rel="stylesheet">
 </head>
 <body style='margin:12px 50px 0'>
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <a class="brand" href="/">Arc</a>
-      <ul class="nav">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Arc</a>
         <li><a href="http://tryarc.org">Try it</a></li>
         <li><a href="http://github.com/arclanguage/anarki">Get it</a></li>
         <li><a href="http://ycombinator.com/arc/tut.txt">Tutorial</a></li>
@@ -59,11 +59,11 @@ Note that the parameters to the different template operations are unexpectedly d
     </td>
     <td class='arc'><pre>
 &gt;(deftem tem1 a "def1" b "def2")
-<span class="return">((a #&lt;procedure: gs2212&gt;) (b #&lt;procedure: gs2212&gt;))
+<span class="return">((a #&lt;procedure: gs2216&gt;) (b #&lt;procedure: gs2216&gt;))
 </span></pre>
 <pre>
 &gt;(deftem (tem2 tem1) b "def3" c "def4")
-<span class="return">((a #&lt;procedure: gs2212&gt;) (b #&lt;procedure: gs2212&gt;) (b #&lt;procedure: gs2216&gt;) (c #&lt;procedure: gs2216&gt;))
+<span class="return">((a #&lt;procedure: gs2216&gt;) (b #&lt;procedure: gs2216&gt;) (b #&lt;procedure: gs2220&gt;) (c #&lt;procedure: gs2220&gt;))
 </span></pre>
   </td></tr>
   <tr>
@@ -83,7 +83,7 @@ Note that the parameters to the different template operations are unexpectedly d
     </td>
     <td class='arc'><pre>
 &gt;(inst 'tem1 'b "newval" 'd 42)
-<span class="return">#hash((d . 42) (a . "def1") (b . "newval"))
+<span class="return">#hash((b . "newval") (d . 42) (a . "def1"))
 </span></pre>
   </td></tr>
   <tr>
@@ -95,7 +95,7 @@ Note that the parameters to the different template operations are unexpectedly d
     </td>
     <td class='arc'><pre>
 &gt;(templatize 'tem1 '((b "newval") (d 42)))
-<span class="return">#hash((a . "def1") (b . "newval"))
+<span class="return">#hash((b . "newval") (a . "def1"))
 </span></pre>
   </td></tr>
   <tr>
@@ -107,7 +107,7 @@ Note that the parameters to the different template operations are unexpectedly d
     </td>
     <td class='arc'><pre>
 &gt;(w/instring s "((b newval d 42))" (temread 'tem1 s))
-<span class="return">#hash((a . "def1") (b . newval))
+<span class="return">#hash((b . newval) (a . "def1"))
 </span></pre>
   </td></tr>
   <tr>
