@@ -34,7 +34,7 @@
 (def tuples "list [n]" "Splits <code>list</code> into groups of <code>n</code>. <code>tuples</code> is a generalization of <code>pair</code>." (tests (tuples '(1 2 3 4 5) 1) (tuples '(1 2 3 4 5)) (tuples '(1 2 3 4 5) 3)))
 (def join "[list ...]" "Joins lists into one list." (tests (join '(1 2) nil '(3 4))))
 (def list "[arg ...]" "Creates a list of the arguments." (tests (list 1 2 3) (list "a" '(1 2) 3)))
-(def copylist "[arg ...]" "Identical to list.  New in arc3 and probably temporary." (tests (copylist 1 2 3) (copylist "a" '(1 2) 3)))
+(def copylist "args" "Identical to list." (tests (copylist '(1 2 3)) (copylist '("a" (1 2) 3))))
 (def range "start end" "Creates a list of numbers from start to end in steps of 1.  The last number is <= end." (tests (range 0 10) (range 1.5 3.8)))
 (mac n-of "n expr" "Evaluates <code>expr</code> <code>n</code> times and returns a list of the results." (tests (n-of 5 "a") (w/instring ins "abcdefg" (n-of 5 (readc ins)))))
 (def adjoin "elt list [test]" "Cons <code>elt</code> onto <code>list</code> unless <code>(test elt y)</code> is true for some <code>y</code> in <code>list</code>.  By default, <code>test</code> is <code>iso</code>, so <code>elt</code> will be joined if it is not present in <code>list</code>." (tests (adjoin 2 '(1 2 3)) (adjoin 2 '(1 3 5)) (adjoin 2 '(1 2 3) <) (adjoin 2 '(0 1 2) <)))
@@ -82,12 +82,11 @@
 (text "These operations act on lists, strings, or hash tables.")
   (op destructive sref "seq value index" "Sets indexed entry in a list, string, or hash table to
   the given value." 
-    (tests "(do
-    (= x \"abc\")
+    (tests "(let x (copy \"abc\")  ; <span style='color:blue'>make the string literal mutable</span>
     (sref x #\\d 1) x)"
        "(do
     (= x '(1 2 3))
-    (sref x #\\d 1) x)"))
+    (sref x 4 1) x)"))
 (def count "test seq" "Counts the number of elements of <code>seq</code> that satisfy <code>test</code>.  <code>test</code> is an object or predicate.  For a table, the elements are the values." (tests (count #\a "banana") (count [odd _] '(1 2 3 4 5))) (count [odd _] (obj a 1 b 2 c 3)))
 (def union "f xs ys" "Takes union of sequence <code>xs</code> and <code>ys</code>.  Predicate <code>f</code> is used to determine equality to filter out duplicates. <code>xs</code> and <code>ys</code> must both be lists or strings."  (tests
 (union is '(1 2 3) '(2 3 4))
@@ -122,7 +121,7 @@ the sequences are identical." (tests (mismatch "abcde" "abXde") (mismatch '(1
 (map [list _ (* _ 10)] '(1 2 3)) (map cdr '((1) (2 3) (4 5)))
 (map (fn (c n) (coerce (+ n (coerce c 'int)) 'char)) "abc" '(0 2 4))
 (map min "bird" "elephant")))
-(def sum "f seq" "Applies f to the elements of the sequence and sums the results.  New in arc3." (tests (sum int "abc") (sum log '(1 2 3)) (sum idfn (obj 'a 1 'b 2 'c 3))))
+(def sum "f seq" "Applies f to the elements of the sequence and sums the results.  New in arc3." (tests (sum int "abc") (sum log '(1 2 3)) (sum cadr (obj a 1 b 2 c 3))))
 
 (def get "index" "Generates a function to get the element referenced by index; the function can be applied to a table.  This is useful for mapping, for instance.  (It can also be applied to functions, not jus sequences.) New in arc3."
 (tests (map get.2 '((a b c) (1 2 3) (p q r))) (get!b (obj a 10 b 20)) (get.42 log)))

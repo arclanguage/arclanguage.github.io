@@ -326,36 +326,16 @@ As lists are the key data structure in Arc, the language includes a large number
   <tr>
     <td class='arc'><a name='copylist'></a>
 <img src='proc.gif' title='Procedure'/>
-<span class='op'>copylist</span> <span class='args'>[arg ...]</span>
-    <div class='desc'>Identical to list.  New in arc3 and probably temporary.</div>
+<span class='op'>copylist</span> <span class='args'>args</span>
+    <div class='desc'>Identical to list.</div>
     </td>
     <td class='arc'><pre>
-&gt;(copylist 1 2 3)
-<span class="stdout">Error:  copylist: arity mismatch;
- the expected number of ar
-guments does not match the given number
-  expected: 1
-  give
-n: 3
-  arguments...:
-   1
-   2
-   3
-
+&gt;(copylist '(1 2 3))
+<span class="return">(1 2 3)
 </span></pre>
 <pre>
-&gt;(copylist "a" '(1 2) 3)
-<span class="stdout">Error:  copylist: arity mismatch;
- the expected number of ar
-guments does not match the given number
-  expected: 1
-  give
-n: 3
-  arguments...:
-   "a"
-   '(1 2 . nil)
-   3
-
+&gt;(copylist '("a" (1 2) 3))
+<span class="return">("a" (1 2) 3)
 </span></pre>
   </td></tr>
   <tr>
@@ -741,25 +721,15 @@ These operations act on lists, strings, or hash tables.
   the given value.</div>
     </td>
     <td class='arc'><pre>
-&gt;(do
-    (= x "abc")
+&gt;(let x (copy "abc")  ; <span style='color:blue'>make the string literal mutable</span>
     (sref x #\d 1) x)
-<span class="stdout">Error: string-set!: contract violation
-  expected: (and/c st
-ring? (not/c immutable?))
-  given: "abc"
-  argument position
-: 1st
-  other arguments...:
-   1
-   #\d
-
+<span class="return">"adc"
 </span></pre>
 <pre>
 &gt;(do
     (= x '(1 2 3))
-    (sref x #\d 1) x)
-<span class="return">(1 #\d 3)
+    (sref x 4 1) x)
+<span class="return">(1 4 3)
 </span></pre>
   </td></tr>
   <tr>
@@ -953,11 +923,11 @@ ring? (not/c immutable?))
     </td>
     <td class='arc'><pre>
 &gt;(rand-elt '(1 2 3))
-<span class="return">2
+<span class="return">1
 </span></pre>
 <pre>
 &gt;(rand-elt "abcd")
-<span class="return">#\a
+<span class="return">#\d
 </span></pre>
   </td></tr>
   <tr>
@@ -1112,16 +1082,8 @@ the sequences are identical.</div>
 <span class="return">1.791759469228055
 </span></pre>
 <pre>
-&gt;(sum idfn (obj 'a 1 'b 2 'c 3))
-<span class="stdout">Error: +: contract violation
-  expected: number?
-  given: '(
-(quote b . nil) 2)
-  argument position: 2nd
-  other argument
-s...:
-   0
-
+&gt;(sum cadr (obj a 1 b 2 c 3))
+<span class="return">6
 </span></pre>
   </td></tr>
   <tr>
@@ -1154,7 +1116,7 @@ s...:
     </td>
     <td class='arc'><pre>
 &gt;(rand-choice "a" 42 '(1 2 3))
-<span class="return">(1 2 3)
+<span class="return">42
 </span></pre>
   </td></tr>
   <tr>
