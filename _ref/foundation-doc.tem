@@ -144,7 +144,7 @@ object.")
            "(> 'a 'b)"
 	   (> #\a #\b)
     )) 
-  (op predicate bound "symbol" "Tests is a symbol is bound."
+  (op predicate bound "symbol" "Tests if a symbol is bound."
     (tests (bound 'foobar)
       "(do
        (assign y 1)
