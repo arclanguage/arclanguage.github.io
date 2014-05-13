@@ -42,7 +42,7 @@ pairs.  (The table can be considered an object with the keys as field names.)</d
     </td>
     <td class='arc'><pre>
 &gt;(obj key1 42 key2 "hello")
-<span class="return">#hash((key2 . "hello") (key1 . 42))
+<span class="return">#hash((key1 . 42) (key2 . "hello"))
 </span></pre>
   </td></tr>
   <tr>
@@ -66,7 +66,7 @@ executes body.</div>
     </td>
     <td class='arc'><pre>
 &gt;(tablist (obj key1 42 key2 "hello"))
-<span class="return">((key1 42) (key2 "hello"))
+<span class="return">((key2 "hello") (key1 42))
 </span></pre>
   </td></tr>
   <tr>
@@ -77,7 +77,7 @@ executes body.</div>
     </td>
     <td class='arc'><pre>
 &gt;(listtab '((key1 val1) (key2 val2)))
-<span class="return">#hash((key2 . val2) (key1 . val1))
+<span class="return">#hash((key1 . val1) (key2 . val2))
 </span></pre>
   </td></tr>
   <tr>

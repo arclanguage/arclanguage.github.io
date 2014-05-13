@@ -186,19 +186,10 @@ b
     </td>
     <td class='arc'><pre>
 &gt;(do
-    (= x "abc")
+    (= x (copy "abc"))
     (scar x #\d)
     x)
-<span class="stdout">Error: string-set!: contract violation
-  expected: (and/c st
-ring? (not/c immutable?))
-  given: "abc"
-  argument position
-: 1st
-  other arguments...:
-   0
-   #\d
-
+<span class="return">"dbc"
 </span></pre>
 <pre>
 &gt;(do
@@ -288,17 +279,8 @@ ring? (not/c immutable?))
     <div class='desc'>Assigns <i>place2</i> to <i>place1</i>, assigns <i>place3</i> to </i>place2</i>, and so on, assigning <i>place1</i> to the last place.</div>
     </td>
     <td class='arc'><pre>
-&gt;(let s "abc" (rotate (s 0) (s 1) (s 2)) s)
-<span class="stdout">Error: string-set!: contract violation
-  expected: (and/c st
-ring? (not/c immutable?))
-  given: "abc"
-  argument position
-: 1st
-  other arguments...:
-   0
-   #\b
-
+&gt;(let s (copy "abc") (rotate (s 0) (s 1) (s 2)) s)
+<span class="return">"bca"
 </span></pre>
   </td></tr>
   <tr>

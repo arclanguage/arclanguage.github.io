@@ -6,7 +6,7 @@
   string, assigns to the first character of the string, which must have length at
   least one."
     (tests "(do
-    (= x \"abc\")
+    (= x (copy \"abc\"))
     (scar x #\\d)
     x)"
        "(do
@@ -26,7 +26,7 @@
   (swap x y)
   (prn \"x:\" x)
   y)"))
-(mac destructive rotate "[place1 place2 ...]" "Assigns <i>place2</i> to <i>place1</i>, assigns <i>place3</i> to </i>place2</i>, and so on, assigning <i>place1</i> to the last place." (tests (let s "abc" (rotate (s 0) (s 1) (s 2)) s)))
+(mac destructive rotate "[place1 place2 ...]" "Assigns <i>place2</i> to <i>place1</i>, assigns <i>place3</i> to </i>place2</i>, and so on, assigning <i>place1</i> to the last place." (tests (let s (copy "abc") (rotate (s 0) (s 1) (s 2)) s)))
 (mac destructive ++ "place [i]" "Increments the value at <code>place</code> by <code>i</code>.  The default increment is 1."  (tests (let x '(10 20) (++ (car x)) (++ (x 1) 5) x)))
 (mac destructive -- "place [i]" "Decrements the value at <code>place</code> by <code>i</code>.  The default decrement is 1."  (tests (let x '(10 20) (-- (car x)) (-- (x 1) 5) x)))
 (mac destructive zap "op place [args ...]" "Gets the value at the place, evaluates <code>(op <i>value args...</i>)</code>, and stores the result in the place." (tests
