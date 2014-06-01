@@ -94,6 +94,7 @@
   (with (tag nil tags nil operation nil arglist nil desc nil testlist nil)
     (push (pop args) tags)
     (= tag (pop args))
+
     (while (in tag 'destructive 'predicate)
       (push tag tags)
       (= tag (pop args)))
@@ -105,12 +106,33 @@
     (prn "  <tr>")
     (pr "    <td class='arc'>")
     (add-anchor2 (coerce operation 'string))
-    (if (intags 'mac tags) (prn "<img src='macro.gif' title='Macro'/>"))
+
+    (= op-type "Function")
+
+    (when (intags 'mac tags)
+          (prn "<img src='macro.gif' title='Macro'/>")
+          (= op-type "Macro"))
     (if (intags 'op tags) (prn "<img src='foundation.gif' title='Foundation'/>"))
     (if (intags 'def tags) (prn "<img src='proc.gif' title='Procedure'/>"))
-    (if (intags 'var tags) (prn "<img src='var.gif' title='Variable'/>"))
+    (when (intags 'var tags)
+          (prn "<img src='var.gif' title='Variable'/>")
+          (= op-type "Variable"))
     (if (intags 'destructive tags) (prn "<img src='destructive.gif' title='Destructive'/>"))
     (if (intags 'predicate tags) (prn "<img src='predicate.gif' title='Predicate'/>"))
+
+
+    (w/appendfile sql "inserts.sql"
+      (w/stdout sql (prn
+                "INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('"
+                operation
+                "','"
+                op-type
+                "','"
+                out-file-name*
+                "#"
+                (urlencode:string operation)
+                "');")))
+
 
     (pr "<span class='op'>" operation "</span> ")
     (prn "<span class='args'>" arglist "</span>")
