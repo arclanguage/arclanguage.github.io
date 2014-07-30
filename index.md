@@ -46,7 +46,7 @@ title: Arc Programming Language
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
 <span style='color:grey'>$</span> cd anarki
 <span style='color:grey'>$</span> ./arc
-<span style='color:grey'>arc&gt;</span> (help do)  <span style='color:blue'># online help</span>
+<span style='color:grey'>arc&gt;</span> (help do)  <span style='color:blue'>; online help</span>
 [mac] (do . args)
 Evaluates each expression in sequence and returns the result
 of the last expression.
