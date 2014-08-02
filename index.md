@@ -41,10 +41,11 @@ title: Arc Programming Language
       <li>Like arc, makes no guarantees of compatibility. Anyone can make changes to it.</li>
       <li>Commit privileges freely given to anyone who asks.</li>
     </ul>
-    To install, first install <a href='http://racket-lang.org'>racket</a>, and then:
+    To install, first install <a href='http://git-scm.com'>git</a>, <a href='http://mercurial.selenic.com'>mercurial</a> and <a href='http://racket-lang.org'>racket</a>, and then:
     <pre style='margin:0 auto; text-align:left'>
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
 <span style='color:grey'>$</span> cd anarki
+<span style='color:grey'>$</span> hg clone <a href='https://bitbucket.org/zck/unit-test.arc'>https://bitbucket.org/zck/unit-test.arc</a>
 <span style='color:grey'>$</span> ./arc
 <span style='color:grey'>arc&gt;</span> (help do)  <span style='color:blue'>; online help</span>
 [mac] (do . args)
