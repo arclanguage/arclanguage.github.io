@@ -13,11 +13,11 @@ title: Arc Programming Language
       <li>Try it in your browser at <a href='http://tryarc.org'>tryarc.org</a>.</li>
       <li>Work through the official <a href='http://ycombinator.com/arc/tut.txt'>tutorial</a>.</li>
       <li>Read the <a href='/ref/'>detailed documentation</a>.</li>
-      <li>Future versions may make incompatible changes.</li>
+      <li>Future official versions may make incompatible changes.</li>
     </ul>
     To install, first install <a href='http://git-scm.com'>git</a> and <a
     href='http://racket-lang.org'>racket</a>, and then:
-    <pre style='margin:0 auto; padding:5px; width:80%; text-align:left'>
+    <pre style='margin:0 auto; text-align:left'>
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
 <span style='color:grey'>$</span> git checkout stable
 <span style='color:grey'>$</span> cd anarki
