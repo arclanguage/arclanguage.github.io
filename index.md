@@ -21,7 +21,7 @@ title: Arc Programming Language
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
 <span style='color:grey'>$</span> git checkout stable
 <span style='color:grey'>$</span> cd anarki
-<span style='color:grey'>$</span> ./arc
+<span style='color:grey'>$</span> ./arc.sh
 <span style='color:grey'>arc&gt;</span> (quit)
 <span style='color:grey'>$</span></pre>
     <div style='font-size:small'>(<a href='http://arclanguage.org/install'>Official and outdated instructions.</a>)</div>
@@ -46,7 +46,7 @@ title: Arc Programming Language
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
 <span style='color:grey'>$</span> cd anarki
 <span style='color:grey'>$</span> hg clone <a href='https://bitbucket.org/zck/unit-test.arc'>https://bitbucket.org/zck/unit-test.arc</a>
-<span style='color:grey'>$</span> ./arc
+<span style='color:grey'>$</span> ./arc.sh
 <span style='color:grey'>arc&gt;</span> (help do)  <span style='color:blue'>; online help</span>
 [mac] (do . args)
 Evaluates each expression in sequence and returns the result
