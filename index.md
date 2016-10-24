@@ -30,15 +30,15 @@ title: Arc Programming Language
   <div class='col-md-6'>
     <div style='text-align:center'>
       <h2><a href='http://github.com/arclanguage/anarki'>Anarki</a></h2>
-      <p><i>A 'wiki-like' community-supported fork of arc</i></p>
+      <p><i>A 'wiki-like' community-supported fork of Arc</i></p>
     </div>
     <ul>
       <li>Gets more frequent updates and <a
       href='https://sites.google.com/site/arclanguagewiki/arc-3_1/known-bugs-and-gotchas'>bugfixes</a>
       from the folks at <a href='http://arclanguage.org/forum'>the forum</a>.
       (Arc 3.1 was last updated in 2009.)</li>
-      <li>Tries to keep with the spirit and philosophy of arc. The <a href='http://ycombinator.com/arc/tut.txt'>tutorial</a> still applies to it.</li>
-      <li>Like arc, makes no guarantees of compatibility. Anyone can make changes to it.</li>
+      <li>Tries to keep with the spirit and philosophy of Arc. The <a href='http://ycombinator.com/arc/tut.txt'>tutorial</a> still applies to it.</li>
+      <li>Like Arc, makes no guarantees of compatibility. Anyone can make changes to it.</li>
       <li>Commit privileges freely given to anyone who asks.</li>
     </ul>
     To install, first install <a href='http://git-scm.com'>git</a>, <a href='http://mercurial.selenic.com'>mercurial</a> and <a href='http://racket-lang.org'>racket</a>, and then:
