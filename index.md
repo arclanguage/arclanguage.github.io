@@ -40,6 +40,7 @@ title: Arc Programming Language
       <li>Tries to keep with the spirit and philosophy of Arc. The <a href='http://ycombinator.com/arc/tut.txt'>tutorial</a> still applies to it.</li>
       <li>Like Arc, makes no guarantees of compatibility. Anyone can make changes to it.</li>
       <li>Commit privileges freely given to anyone who asks.</li>
+      <li>A gateway to <a href='https://sites.google.com/site/arclanguagewiki'>more arcane forks</a>.</li>
     </ul>
     To install, first install <a href='http://git-scm.com'>git</a>, <a href='http://mercurial.selenic.com'>mercurial</a> and <a href='http://racket-lang.org'>racket</a>, and then:
     <pre style='margin:0 auto; text-align:left'>
