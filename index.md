@@ -42,7 +42,7 @@ title: Arc Programming Language
       <li>Commit privileges freely given to anyone who asks.</li>
       <li>A gateway to <a href='https://sites.google.com/site/arclanguagewiki'>more arcane forks</a>.</li>
     </ul>
-    To install, first install <a href='http://git-scm.com'>git</a>, <a href='http://mercurial.selenic.com'>mercurial</a> and <a href='http://racket-lang.org'>racket (v6.9 or greater)</a>, and then:
+    To install, first install <a href='http://git-scm.com'>git</a>, <a href='http://mercurial.selenic.com'>mercurial</a> and <a href='http://racket-lang.org'>racket (v6.8 or greater)</a>, and then:
     <pre style='margin:0 auto; text-align:left'>
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
 <span style='color:grey'>$</span> cd anarki
