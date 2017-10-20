@@ -1,6 +1,6 @@
 navbar:
-- url: http://ycombinator.com/arc/tut.txt
-  label: Tutorial
+- url: http://arclanguage.org
+  label: Arc
 - url: http://arclanguage.org/forum
   label: Forum
 - url: http://paulgraham.com/arc.html
