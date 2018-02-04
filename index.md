@@ -19,8 +19,8 @@ title: Arc Programming Language
     href='http://racket-lang.org'>racket</a>, and then:
     <pre style='margin:0 auto; text-align:left'>
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
-<span style='color:grey'>$</span> git checkout stable
 <span style='color:grey'>$</span> cd anarki
+<span style='color:grey'>$</span> git checkout stable
 <span style='color:grey'>$</span> ./arc.sh
 <span style='color:grey'>arc&gt;</span> (quit)
 <span style='color:grey'>$</span></pre>
