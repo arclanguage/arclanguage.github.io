@@ -1064,7 +1064,7 @@ For example, consider this definition of `repeat`:
 
 ```
 arc> (mac repeat (n . body)
-       `(for x 1 ,n ,@body))
+       `(up x 1 ,n ,@body))
 #3(tagged mac #<procedure>)
 ```
 
@@ -1088,7 +1088,7 @@ code above is equivalent to
 
 ```
 (let x "blub "
-  (for x 1 3 (pr x)))
+  (up x 1 3 (pr x)))
 ```
 
 Now the bug is obvious.  The macro uses the variable `x` to hold the
@@ -1112,7 +1112,7 @@ the one in the Arc source) is
 
 ```
 (mac repeat (n . body)
-  `(for ,(uniq) 1 ,n ,@body))
+  `(up ,(uniq) 1 ,n ,@body))
 ```
 
 If you need one or more uniqs for use in a macro, you can use `w/uniq`,
