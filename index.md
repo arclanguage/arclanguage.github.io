@@ -10,7 +10,6 @@ title: Arc Programming Language
       <p><i>Minor changes and bugfixes to Arc 3.1</i></p>
     </div>
     <ul>
-      <li>Try it in your browser at <a href='http://tryarc.org'>tryarc.org</a>.</li>
       <li>Work through the <a href='tut-stable.html'>tutorial</a>.</li>
       <li>Read the <a href='/ref/'>detailed documentation</a>.</li>
       <li>Future official versions may make incompatible changes.</li>
