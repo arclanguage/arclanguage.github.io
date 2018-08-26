@@ -31,7 +31,7 @@ exec racket -f $0
 
 ; Start off a folder of HTML files and an SQL file that will contain
 ; the search index. The HTML files and index entries will be populated
-; run template.arc.
+; as we run template.arc.
 
 (arc-do
   (ensure-dir "html")
