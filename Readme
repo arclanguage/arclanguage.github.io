@@ -1,4 +1,5 @@
 Sources for the arc community site at http://arclanguage.github.io.
 
 The arc 3.1 reference at ref/ is generated from _ref/ using the
-_ref/generate.sh script.
+_ref/generate.sh script. The script should be run from the _ref/
+directory.

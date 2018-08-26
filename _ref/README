@@ -3,8 +3,8 @@ template files, run:
 
 $ ./generate.sh
 
-The resulting output will appear in the output/ directory.  You can
-open the output/index.html file directly in your web browser; you
+The resulting output will appear in the ref/ directory.  You can
+open the ref/index.html file directly in your web browser; you
 don't need to be running a web server.
 
 When you're happy with your changes, push to github to update
