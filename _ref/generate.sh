@@ -33,7 +33,8 @@ exec racket -f $0
 (system "rm -fr ../arc.docset/Contents/Resources/Documents/html")
 (system "cp -r ../ref ../arc.docset/Contents/Resources/Documents/html")
 ;; cut navigation toolbar because it is unnecessary in Dash
-(system "sed -i '' '/navbar-inverse/,/end of navbar/d' ../arc.docset/Contents/Resources/Documents/html/*.html")
+(system "sed -i.bak '/navbar-inverse/,/end of navbar/d' ../arc.docset/Contents/Resources/Documents/html/*.html")
+(system "rm ../arc.docset/Contents/Resources/Documents/html/*.html.bak")
 
 (system "rm -f ../arc.docset/Contents/Resources/docSet.dsidx")
 (system "which sqlite3 > /dev/null && cat inserts.sql | sqlite3 ../arc.docset/Contents/Resources/docSet.dsidx")
