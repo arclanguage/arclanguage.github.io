@@ -75,6 +75,9 @@
             (is result-string "#<thread>"))
       (= result result-string))
 
+    ; Pretend displayed file paths come from a fictional directory
+    (zap [subst "/path/to/doc/" (subst "" "\n" (tostring (system "pwd"))) _] stdout-val)
+
     (if (no (is "" stdout-val)) (spanclass "stdout" (prn (html-esc (splitstring stdout-val 60)))))
     (when (and (isnt 'html testtype) (isnt 'err result))
       (spanclass "return" (prn (html-esc result-string))))
