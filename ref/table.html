@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="string.html">String operations</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="type.html">Type operations</a>
@@ -66,7 +66,7 @@ executes body.</div>
     </td>
     <td class='arc'><pre>
 &gt;(tablist (obj key1 42 key2 "hello"))
-<span class="return">((key2 "hello") (key1 42))
+<span class="return">((key1 42) (key2 "hello"))
 </span></pre>
   </td></tr>
   <tr>
@@ -90,7 +90,7 @@ is returned; if it is a list, it will be processed into a table.</div>
     </td>
     <td class='arc'><pre>
 &gt;(w/instring ins "((a 10)(b 20))" (read-table ins))
-<span class="return">#hash((b . 20) (a . 10))
+<span class="return">#hash((a . 10) (b . 20))
 </span></pre>
   </td></tr>
   <tr>
@@ -167,7 +167,7 @@ as a list of key/value pairs.</div>
 <span class="stdout">a 1
 b 2
 
-</span><span class="return">#hash((b . 2) (a . 1))
+</span><span class="return">#hash((a . 1) (b . 2))
 </span></pre>
   </td></tr>
   <tr>
@@ -190,7 +190,7 @@ b 2
     </td>
     <td class='arc'><pre>
 &gt;(let tb (obj a 1 b 2) (fill-table tb '(c 3 d 4)))
-<span class="return">#hash((b . 2) (c . 3) (d . 4) (a . 1))
+<span class="return">#hash((a . 1) (b . 2) (c . 3) (d . 4))
 </span></pre>
   </td></tr>
   <tr>
@@ -223,7 +223,7 @@ b 2
     </td>
     <td class='arc'><pre>
 &gt;(memtable '(a b c))
-<span class="return">#hash((b . t) (c . t) (a . t))
+<span class="return">#hash((a . t) (b . t) (c . t))
 </span></pre>
   </td></tr>
 </table>

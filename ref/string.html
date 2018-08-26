@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="predicates.html">Predicates</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="table.html">Table operations</a>
@@ -177,7 +177,7 @@ Next: <a href="table.html">Table operations</a>
     </td>
     <td class='arc'><pre>
 &gt;(rand-string 10)
-<span class="return">"i5f59P9EGR"
+<span class="return">"FPEMMZuVrt"
 </span></pre>
   </td></tr>
   <tr>
@@ -440,7 +440,7 @@ Next: <a href="table.html">Table operations</a>
     <td class='arc'><a name='trim'></a>
 <img src='proc.gif' title='Procedure'/>
 <span class='op'>trim</span> <span class='args'>str where [test]</span>
-    <div class='desc'>Trims whitespace (or arbitrary expression) from <code>str</code>.  <code>where</code> can have the value <code>'front</code>, to trim the front of the string (currently broken); <code>'back</code>, to trim the end of the string; or </code>'both</code> to trim both ends of the string.  If specified, <code>test</code> is either a character or a predicate function on characters.</div>
+    <div class='desc'>Trims whitespace (or arbitrary expression) from <code>str</code>.  <code>where</code> can have the value <code>'front</code>, to trim the front of the string (currently broken); <code>'end</code>, to trim the end of the string; or </code>'both</code> to trim both ends of the string.  If specified, <code>test</code> is either a character or a predicate function on characters.</div>
     </td>
     <td class='arc'><pre>
 &gt;(trim " abc " 'end)

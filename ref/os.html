@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="atomic.html">Atomic operations</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="io.html">I/O in the Arc language</a>
@@ -35,15 +35,21 @@ The following are miscellaneous operating system operations.
     <td class='arc'><pre>
 &gt;(declare direct-calls t)
 <span class="stdout">Error: _direct-calls: undefined;
- cannot reference undefined
- identifier
+ cannot reference an identi
+fier before its definition
+  in module: top-level
+  internal
+ name: _direct-calls
 
 </span></pre>
 <pre>
 &gt;(declare explicit-flush t)
 <span class="stdout">Error: _explicit-flush: undefined;
- cannot reference undefin
-ed identifier
+ cannot reference an iden
+tifier before its definition
+  in module: top-level
+  intern
+al name: _explicit-flush
 
 </span></pre>
   </td></tr>
@@ -55,7 +61,7 @@ ed identifier
     </td>
     <td class='arc'><pre>
 &gt;(memory)
-<span class="return">41042488
+<span class="return">55065424
 </span></pre>
   </td></tr>
   <tr>
@@ -66,7 +72,7 @@ ed identifier
     </td>
     <td class='arc'><pre>
 &gt;(system "date")
-<span class="stdout">Tue May 13 21:27:30 GMT 2014
+<span class="stdout">Sun Aug 26 08:26:37 GMT 2018
 
 </span><span class="return">nil
 </span></pre>

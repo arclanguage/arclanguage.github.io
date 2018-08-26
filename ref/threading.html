@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="filesystem.html">Filesystem operations</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="time.html">Time operations</a>
@@ -44,7 +44,7 @@ See <a
     </td>
     <td class='arc'><pre>
 &gt;(thread (+ 1 2) (+ 3 4))
-<span class="return">#&lt;thread&gt;
+<span class="return">#&lt;thread:...t/private/kw.rkt:592:14&gt;
 </span></pre>
 <pre>
 &gt;(type (thread (+ 1 2)))
@@ -59,7 +59,7 @@ See <a
     </td>
     <td class='arc'><pre>
 &gt;(new-thread (fn () (+ 1 2)))
-<span class="return">#&lt;thread&gt;
+<span class="return">#&lt;thread:...t/private/kw.rkt:592:14&gt;
 </span></pre>
   </td></tr>
   <tr>

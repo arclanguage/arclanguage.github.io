@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="io.html">I/O in the Arc language</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="threading.html">Threads</a>
@@ -48,12 +48,7 @@ operations</a>.
     </td>
     <td class='arc'><pre>
 &gt;(dir "mydir")
-<span class="stdout">Error: directory-list: could not open directory
-  path: /hom
-e/agaram/Desktop/minilangs/arcsite/_ref/mydir
-  system error
-: No such file or directory; errno=2
-
+<span class="return">("foo")
 </span></pre>
   </td></tr>
   <tr>
@@ -65,7 +60,7 @@ e/agaram/Desktop/minilangs/arcsite/_ref/mydir
     </td>
     <td class='arc'><pre>
 &gt;(dir-exists "mydir")
-<span class="return">nil
+<span class="return">"mydir"
 </span></pre>
   </td></tr>
   <tr>

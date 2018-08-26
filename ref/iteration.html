@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="combining.html">Boolean operations</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="conditionals.html">Conditionals</a>
@@ -228,8 +228,8 @@ c
 </span></pre>
 <pre>
 &gt;(each x (obj key1 'val1 key2 'val2) (prn x))
-<span class="stdout">(key2 val2)
-(key1 val1)
+<span class="stdout">(key1 val1)
+(key2 val2)
 
 </span><span class="return">#hash((key1 . val1) (key2 . val2))
 </span></pre>
@@ -287,8 +287,11 @@ each key and value.</div>
     <td class='arc'><pre>
 &gt;(ontable k v (obj key1 'val1 key2 'val2) (prn k " " v))
 <span class="stdout">Error: _ontable: undefined;
- cannot reference undefined iden
-tifier
+ cannot reference an identifier 
+before its definition
+  in module: top-level
+  internal name
+: _ontable
 
 </span></pre>
   </td></tr>

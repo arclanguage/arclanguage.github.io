@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="anaphoric.html">Anaphoric operations</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="srv.html">The Arc web server</a>
@@ -496,8 +496,11 @@ arc> (tostring (gentag img class "foo"))
 <pre>
 &gt;(tdright "world")
 <span class="stdout">Error: _tdright: undefined;
- cannot reference undefined iden
-tifier
+ cannot reference an identifier 
+before its definition
+  in module: top-level
+  internal name
+: _tdright
 
 </span></pre>
   </td></tr>
@@ -683,7 +686,7 @@ Secret<input type=password name="i1" size=5> <input type=submit value="Submit">
     </td>
     <td class='arc'><pre>
 &gt;(color 255 0 128)
-<span class="return">#hash((r . 255) (b . 128) (g . 0))
+<span class="return">#hash((b . 128) (g . 0) (r . 255))
 </span></pre>
   </td></tr>
   <tr>
@@ -694,7 +697,7 @@ Secret<input type=password name="i1" size=5> <input type=submit value="Submit">
     </td>
     <td class='arc'><pre>
 &gt;(hex&gt;color "ff00cc")
-<span class="return">#hash((r . 255) (b . 204) (g . 0))
+<span class="return">#hash((b . 204) (g . 0) (r . 255))
 </span></pre>
   </td></tr>
   <tr>
@@ -705,7 +708,7 @@ Secret<input type=password name="i1" size=5> <input type=submit value="Submit">
     </td>
     <td class='arc'><pre>
 &gt;(gray 100)
-<span class="return">#hash((r . 100) (b . 100) (g . 100))
+<span class="return">#hash((b . 100) (g . 100) (r . 100))
 </span></pre>
   </td></tr>
   <tr>
@@ -809,7 +812,10 @@ Secret<input type=password name="i1" size=5> <input type=submit value="Submit">
 &gt;(esc&lt;&gt;&amp; "abc&lt; &gt; \" ' &amp;")
 <span class="stdout">Error: _esc
 &lt;&gt;: undefined;
- cannot reference undefined identifier
+ cannot reference an identifier before its de
+finition
+  in module: top-level
+  internal name: _esc&lt;&gt;
 
 </span></pre>
   </td></tr>
@@ -848,7 +854,7 @@ The implementation of HTML handling in Arc centers around the <code>opmeths*</co
     </td>
     <td class='arc'><pre>
 &gt;(opcolor 'bgcolor orange)
-<span class="return">(whenlet gs2250 #hash((r . 255) (b . 0) (g . 102)) (pr " bgcolor=#" (hexrep gs2250)))
+<span class="return">(whenlet gs2254 #hash((b . 0) (g . 102) (r . 255)) (pr " bgcolor=#" (hexrep gs2254)))
 </span></pre>
   </td></tr>
   <tr>
@@ -936,7 +942,7 @@ The implementation of HTML handling in Arc centers around the <code>opmeths*</co
     </td>
     <td class='arc'><pre>
 &gt;(tag-options 'td '((bgcolor red) (width 42)))
-<span class="return">((whenlet gs2251 red (pr " bgcolor=#" (hexrep gs2251))) " width=42")
+<span class="return">((whenlet gs2255 red (pr " bgcolor=#" (hexrep gs2255))) " width=42")
 </span></pre>
   </td></tr>
   <tr>

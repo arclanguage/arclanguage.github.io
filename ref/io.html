@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="os.html">Operating system</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="filesystem.html">Filesystem operations</a>
@@ -400,10 +400,10 @@ b
     <td class='arc'><pre>
 &gt;(readfile "foo.arc")
 <span class="stdout">Error: open-input-file: cannot open input file
-  path: /home
-/agaram/Desktop/minilangs/arcsite/_ref/foo.arc
-  system erro
-r: No such file or directory; errno=2
+  path: /path
+/to/doc/foo.arc
+  system error: No such file or directory; e
+rrno=2
 
 </span></pre>
   </td></tr>
@@ -416,10 +416,10 @@ r: No such file or directory; errno=2
     <td class='arc'><pre>
 &gt;(readfile1 "foo.arc")
 <span class="stdout">Error: open-input-file: cannot open input file
-  path: /home
-/agaram/Desktop/minilangs/arcsite/_ref/foo.arc
-  system erro
-r: No such file or directory; errno=2
+  path: /path
+/to/doc/foo.arc
+  system error: No such file or directory; e
+rrno=2
 
 </span></pre>
   </td></tr>
@@ -447,10 +447,10 @@ r: No such file or directory; errno=2
     <td class='arc'><pre>
 &gt;(infile "foo.arc")
 <span class="stdout">Error: open-input-file: cannot open input file
-  path: /home
-/agaram/Desktop/minilangs/arcsite/_ref/foo.arc
-  system erro
-r: No such file or directory; errno=2
+  path: /path
+/to/doc/foo.arc
+  system error: No such file or directory; e
+rrno=2
 
 </span></pre>
   </td></tr>
@@ -463,10 +463,10 @@ r: No such file or directory; errno=2
     <td class='arc'><pre>
 &gt;(w/infile inf "foo.arc" (read inf))
 <span class="stdout">Error: open-input-file: cannot open input file
-  path: /home
-/agaram/Desktop/minilangs/arcsite/_ref/foo.arc
-  system erro
-r: No such file or directory; errno=2
+  path: /path
+/to/doc/foo.arc
+  system error: No such file or directory; e
+rrno=2
 
 </span></pre>
   </td></tr>

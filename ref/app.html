@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="srv.html">The Arc web server</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="setforms.html">Internals of places and setforms</a>
@@ -151,8 +151,11 @@ foo
     <td class='arc'><pre>
 &gt;(admin "foo")
 <span class="stdout">Error: _admins*: undefined;
- cannot reference undefined iden
-tifier
+ cannot reference an identifier 
+before its definition
+  in module: top-level
+  internal name
+: _admins*
 
 </span></pre>
   </td></tr>
@@ -581,7 +584,7 @@ t
     </td>
     <td class='arc'><pre>
 &gt;(cook-user "testuser")
-<span class="return">7AgOZOED
+<span class="return">wcXi0tW4
 </span></pre>
   </td></tr>
   <tr>
@@ -592,7 +595,7 @@ t
     </td>
     <td class='arc'><pre>
 &gt;(new-user-cookie)
-<span class="return">hgeIRVYe
+<span class="return">BWYtAvav
 </span></pre>
   </td></tr>
   <tr>
@@ -614,7 +617,7 @@ t
     </td>
     <td class='arc'><pre>
 &gt;(disable-acct "badperson")
-<span class="return">((7AgOZOED "testuser"))
+<span class="return">((wcXi0tW4 "testuser"))
 </span></pre>
   </td></tr>
   <tr>
@@ -811,8 +814,11 @@ a b c</textarea>
     <td class='arc'><pre>
 &gt;(delimc #\})
 <span class="stdout">Error: _delimc: undefined;
- cannot reference undefined ident
-ifier
+ cannot reference an identifier b
+efore its definition
+  in module: top-level
+  internal name:
+ _delimc
 
 </span></pre>
   </td></tr>
@@ -970,7 +976,7 @@ ifier
 </span></pre>
 <pre>
 &gt;(date-nums "June 5")
-<span class="return">(2014 6 5)
+<span class="return">(2018 6 5)
 </span></pre>
   </td></tr>
   <tr>

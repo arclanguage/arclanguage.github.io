@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="evaluation.html">Evaluation</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="macro.html">Macros</a>
@@ -400,7 +400,7 @@ As lists are the key data structure in Arc, the language includes a large number
     </td>
     <td class='arc'><pre>
 &gt;(counts '(b a n a n a))
-<span class="return">#hash((b . 1) (n . 2) (a . 3))
+<span class="return">#hash((a . 3) (b . 1) (n . 2))
 </span></pre>
 <pre>
 &gt;(let tl (table)
@@ -841,7 +841,7 @@ These operations act on lists, strings, or hash tables.
 </span></pre>
 <pre>
 &gt;(dedup (obj a 1 b 2 c 1))
-<span class="return">((a 1) (c 1) (b 2))
+<span class="return">((a 1) (b 2) (c 1))
 </span></pre>
   </td></tr>
   <tr>
@@ -923,11 +923,11 @@ These operations act on lists, strings, or hash tables.
     </td>
     <td class='arc'><pre>
 &gt;(rand-elt '(1 2 3))
-<span class="return">1
+<span class="return">2
 </span></pre>
 <pre>
 &gt;(rand-elt "abcd")
-<span class="return">#\b
+<span class="return">#\d
 </span></pre>
   </td></tr>
   <tr>
@@ -1116,7 +1116,7 @@ the sequences are identical.</div>
     </td>
     <td class='arc'><pre>
 &gt;(rand-choice "a" 42 '(1 2 3))
-<span class="return">"a"
+<span class="return">(1 2 3)
 </span></pre>
   </td></tr>
   <tr>

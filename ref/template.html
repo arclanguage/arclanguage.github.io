@@ -17,7 +17,7 @@
         <li><a href="http://arclanguage.org/forum">Forum</a></li>
       </ul>
     </div>
-  </div>
+  </div> <!-- end of navbar -->
 <div class="links">Previous: <a href="assoc.html">Association lists</a>
 Up: <a href="index.html">Contents</a>
 Next: <a href="tree.html">Trees</a>
@@ -57,11 +57,11 @@ Note that the parameters to the different template operations are unexpectedly d
     </td>
     <td class='arc'><pre>
 &gt;(deftem tem1 a "def1" b "def2")
-<span class="return">((a #&lt;procedure: gs2218&gt;) (b #&lt;procedure: gs2218&gt;))
+<span class="return">((a #&lt;procedure: gs2222&gt;) (b #&lt;procedure: gs2222&gt;))
 </span></pre>
 <pre>
 &gt;(deftem (tem2 tem1) b "def3" c "def4")
-<span class="return">((a #&lt;procedure: gs2218&gt;) (b #&lt;procedure: gs2218&gt;) (b #&lt;procedure: gs2222&gt;) (c #&lt;procedure: gs2222&gt;))
+<span class="return">((a #&lt;procedure: gs2222&gt;) (b #&lt;procedure: gs2222&gt;) (b #&lt;procedure: gs2226&gt;) (c #&lt;procedure: gs2226&gt;))
 </span></pre>
   </td></tr>
   <tr>
@@ -79,7 +79,7 @@ Note that the parameters to the different template operations are unexpectedly d
     </td>
     <td class='arc'><pre>
 &gt;(inst 'tem1 'b "newval" 'd 42)
-<span class="return">#hash((b . "newval") (d . 42) (a . "def1"))
+<span class="return">#hash((a . "def1") (b . "newval") (d . 42))
 </span></pre>
   </td></tr>
   <tr>
@@ -90,7 +90,7 @@ Note that the parameters to the different template operations are unexpectedly d
     </td>
     <td class='arc'><pre>
 &gt;(templatize 'tem1 '((b "newval") (d 42)))
-<span class="return">#hash((b . "newval") (a . "def1"))
+<span class="return">#hash((a . "def1") (b . "newval"))
 </span></pre>
   </td></tr>
   <tr>
@@ -101,7 +101,7 @@ Note that the parameters to the different template operations are unexpectedly d
     </td>
     <td class='arc'><pre>
 &gt;(w/instring s "((b newval d 42))" (temread 'tem1 s))
-<span class="return">#hash((b . newval) (a . "def1"))
+<span class="return">#hash((a . "def1") (b . newval))
 </span></pre>
   </td></tr>
   <tr>
