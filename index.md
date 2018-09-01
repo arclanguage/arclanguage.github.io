@@ -37,6 +37,7 @@ title: Arc Programming Language
       from the folks at <a href='http://arclanguage.org/forum'>the forum</a>.
       (Arc 3.1 was last updated in 2009.)</li>
       <li>Tries to keep with the spirit and philosophy of Arc. <a href='tut-anarki.html'>Its version of the tutorial</a> mostly follows Arc 3.1.</li>
+      <li>Has <a href='anarki/help/'>reference documentation</a> that can also be accessed at the REPL.</li>
       <li>Like Arc, makes no guarantees of compatibility. Anyone can make changes to it.</li>
       <li>Commit privileges freely given to anyone who asks.</li>
       <li>A gateway to <a href='https://sites.google.com/site/arclanguagewiki'>more arcane forks</a>.</li>
