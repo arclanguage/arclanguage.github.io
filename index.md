@@ -44,6 +44,7 @@ title: Arc Programming Language
     </ul>
     To install, first install <a href='http://git-scm.com'>git</a>, <a href='http://mercurial.selenic.com'>mercurial</a> and <a href='http://racket-lang.org'>racket (v6.8 or greater)</a>, and then:
     <pre style='margin:0 auto; text-align:left'>
+<span style='color:grey'>$</span> raco pkg install sha
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
 <span style='color:grey'>$</span> cd anarki
 <span style='color:grey'>$</span> hg clone <a href='https://bitbucket.org/zck/unit-test.arc'>https://bitbucket.org/zck/unit-test.arc</a>
