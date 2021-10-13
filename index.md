@@ -7,7 +7,7 @@ title: Arc Programming Language
   <div class='col-md-6'>
     <div style='text-align:center'>
       <h2><a href='http://arclanguage.org'>Anarki Stable</a></h2>
-      <p><i>Minor changes and bugfixes to Arc 3.1</i></p>
+      <p><i>Minor changes and bugfixes to <a href='http://arclanguage.org'>Arc 3.2</a></i></p>
     </div>
     <ul>
       <li>Work through the <a href='tut-stable.html'>tutorial</a>.</li>
@@ -34,15 +34,14 @@ title: Arc Programming Language
     <ul>
       <li>Gets more frequent updates and <a
       href='https://sites.google.com/site/arclanguagewiki/arc-3_1/known-bugs-and-gotchas'>bugfixes</a>
-      from the folks at <a href='http://arclanguage.org/forum'>the forum</a>.
-      (Arc 3.1 was last updated in 2009.)</li>
-      <li>Tries to keep with the spirit and philosophy of Arc. <a href='tut-anarki.html'>Its version of the tutorial</a> mostly follows Arc 3.1.</li>
+      from the folks at <a href='http://arclanguage.org/forum'>the forum</a>.</li>
+      <li>Tries to keep with the spirit and philosophy of Arc. <a href='tut-anarki.html'>Its version of the tutorial</a> mostly follows Arc 3.2.</li>
       <li>Has <a href='anarki/help/'>reference documentation</a> that can also be accessed at the REPL.</li>
       <li>Like Arc, makes no guarantees of compatibility. Anyone can make changes to it.</li>
       <li>Commit privileges freely given to anyone who asks.</li>
       <li>A gateway to <a href='https://sites.google.com/site/arclanguagewiki'>more arcane forks</a>.</li>
     </ul>
-    To install, first install <a href='http://git-scm.com'>git</a> and <a href='http://racket-lang.org'>racket (v6.11 or greater)</a>, and then:
+    To install, first install <a href='http://git-scm.com'>git</a> and <a href='http://racket-lang.org'>racket (v7.7 or greater)</a>, and then:
     <pre style='margin:0 auto; text-align:left'>
 <span style='color:grey'>$</span> raco pkg install sha
 <span style='color:grey'>$</span> git clone <a href='http://github.com/arclanguage/anarki'>http://github.com/arclanguage/anarki</a>
