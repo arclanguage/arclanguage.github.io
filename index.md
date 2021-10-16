@@ -7,7 +7,7 @@ title: Arc Programming Language
   <div class='col-md-6'>
     <div style='text-align:center'>
       <h2><a href='http://arclanguage.org'>Anarki Stable</a></h2>
-      <p><i>Minor changes and bugfixes to <a href='http://arclanguage.org'>Arc 3.2</a></i></p>
+      <p><i>Minor improvements to <a href='http://arclanguage.org'>Arc 3.2</a></i></p>
     </div>
     <ul>
       <li>Work through the <a href='tut-stable.html'>tutorial</a>.</li>
@@ -23,7 +23,7 @@ title: Arc Programming Language
 <span style='color:grey'>$</span> ./arc.sh
 <span style='color:grey'>arc&gt;</span> (quit)
 <span style='color:grey'>$</span></pre>
-    (<a href='http://arclanguage.org/install'>Official and outdated instructions.</a>)
+    (<a href='http://arclanguage.org/install'>Official instructions.</a>)
   </div>
 
   <div class='col-md-6'>
