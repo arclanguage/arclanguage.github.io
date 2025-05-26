@@ -580,7 +580,7 @@
 
 (define fn-signatures (make-hash-table 'equal))
 
-; This is a replacement for xdef that stores opeator signatures.
+; This is a replacement for xdef that stores operator signatures.
 ; Haven't started using it yet.
 
 (define (odef a parms b)

@@ -81,7 +81,7 @@
 )
 
 (newtable "Disk variables"
-  (mac diskvar "var file" "Creates a variable that will be loaded from file and stored in file.  If file exists, var is initialzed from file.  New in arc3." (tests (diskvar foo "file.txt")))
+  (mac diskvar "var file" "Creates a variable that will be loaded from file and stored in file.  If file exists, var is initialized from file.  New in arc3." (tests (diskvar foo "file.txt")))
   (mac disktable "var file" "Creates a table variable that will be loaded from file and stored in file.  New in arc3." (tests (disktable bar "file.txt")))
   (mac todisk "var [expr]" "Writes var to disk, optionally setting it to expr first.  New in arc3."  (tests (todisk bar)))
   (mac fromdisk "var file init load save" "If var is not bound, var is initialized either by calling load function on file or using init.  The save function is saved for later use.  Internal function.  New in arc3.")

@@ -19,10 +19,10 @@
 
 (mac defopl "name parm [body]" "Version of <code>defop</code> to create handler that will redirect to login page if the user is not logged in." (faketest "(defopl foo req (prn \"Welcome!\"))" ""))
 
-(mac uform "user req after [body ...]" "Generates form that ensures it was submitted by <code>user</code> (by using <code>when-umatch</code>).  <code>body</code> outputs the form body to stdout.  After submission, the continuation code <code>after</code> is executed; <code>req</code> specifies the varible name in <code>after</code> to receive the request."
+(mac uform "user req after [body ...]" "Generates form that ensures it was submitted by <code>user</code> (by using <code>when-umatch</code>).  <code>body</code> outputs the form body to stdout.  After submission, the continuation code <code>after</code> is executed; <code>req</code> specifies the variable name in <code>after</code> to receive the request."
 (faketest "(uform user req (prn \"Result\") (prn \"The form\") (submit))" ""))
 
-(mac urform "user req after [body ...]" "Generates form with redirection target with guard that <code>user</code> submitted it.  After submission, the continuation expression <code>after</code> is executed and must return the redirect string; <code>req</code> specifies the varible name in <code>after</code> to receive the request." (faketest "(urform user req \"newpage\" (prn \"Form\") (submit))" ""))
+(mac urform "user req after [body ...]" "Generates form with redirection target with guard that <code>user</code> submitted it.  After submission, the continuation expression <code>after</code> is executed and must return the redirect string; <code>req</code> specifies the variable name in <code>after</code> to receive the request." (faketest "(urform user req \"newpage\" (prn \"Form\") (submit))" ""))
 
 (mac when-umatch "user req [body...]" "If <code>user</code> matches the user associated with <code>req</code>, executes <code>body</code>.  Otherwise executes <code>mismatch-message</code>."
 (faketest "(defopl ul req (let user (get-user req)
@@ -121,7 +121,7 @@
 (def varfield "typ id val" "Prints HTML for an input field of type <code>typ</code>, name <code>id</code>, and value <code>val</code>.  <code>typ</code> is one of
 <code>bigtoks</code>, <code>date</code>, <code>doc</code>, <code>int</code>, <code>lines</code>, <code>mdtext</code>, <code>mdtext2</code>, <code>num</code>, <code>posint</code>, <code>string</code>, <code>string1</code>, <code>sym</code>, <code>syms</code>, <code>text</code>, <code>time</code>, <code>toks</code>, <code>url</code>, <code>users</code>.  The type of field and the processing of val depend on <code>typ</code>." (htmltests (show varfield 'syms 'foo '(a b c))))
 
-(def text-rows "text width [pad]" "Detemines how many rows to hold <code>text</code> based on <code>width</code> and padding." (tests (text-rows "abcde" 2)))
+(def text-rows "text width [pad]" "Determines how many rows to hold <code>text</code> based on <code>width</code> and padding." (tests (text-rows "abcde" 2)))
 
 (def needrows "text cols [pad]" "Determines how many rows are needed to hold <code>text</code>, based on the length of the text and the number of newlines." (tests (needrows "abcde" 2)))
 
