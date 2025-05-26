@@ -123,7 +123,7 @@ the sequences are identical." (tests (mismatch "abcde" "abXde") (mismatch '(1
 (map min "bird" "elephant")))
 (def sum "f seq" "Applies f to the elements of the sequence and sums the results.  New in arc3." (tests (sum int "abc") (sum log '(1 2 3)) (sum cadr (obj a 1 b 2 c 3))))
 
-(def get "index" "Generates a function to get the element referenced by index; the function can be applied to a table.  This is useful for mapping, for instance.  (It can also be applied to functions, not jus sequences.) New in arc3."
+(def get "index" "Generates a function to get the element referenced by index; the function can be applied to a table.  This is useful for mapping, for instance.  (It can also be applied to functions, not just sequences.) New in arc3."
 (tests (map get.2 '((a b c) (1 2 3) (p q r))) (get!b (obj a 10 b 20)) (get.42 log)))
 )
 (newtable "Other"

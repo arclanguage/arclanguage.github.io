@@ -10,7 +10,7 @@
 
 (mac whitepage "[body ...]" "Creates a white page containing the body." (htmltests (whitepage (prn "hello"))))
 (def errpage "[arg ...]" "Prints a white page containing the args." (htmltests (errpage "hello " "world")))
-(mac new-hspace "n" "Prints a horizonal spacer using <code>span</code>." (htmltests (new-hspace 3)))
+(mac new-hspace "n" "Prints a horizontal spacer using <code>span</code>." (htmltests (new-hspace 3)))
 (def blank-url "" "Returns path to a blank spacer GIF (<code>s.gif</code>)." (tests (blank-url)))
 (def hspace "w" "Prints a horizontal spacer image of width <code>w</code>." (htmltests (hspace 3)))
 (def vspace "h" "Prints a vertical spacer image of height <code>h</code>." (htmltests (vspace 3)))
