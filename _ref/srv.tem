@@ -81,7 +81,7 @@
 (faketest "(serve 8080)" ""))
 
 (def srvlog "type [args ...]" "Records timestamp and <code>args</code> in the server log <code>type</code>." (tests (srvlog 'blog "Stuff to log")))
-(def defbg "id sec [body ...]" "Creates a background thread with the given id tha will run the body every sec seconds.  Any existing thread with the same id is terminated.  New in arc3.")
+(def defbg "id sec [body ...]" "Creates a background thread with the given id that will run the body every sec seconds.  Any existing thread with the same id is terminated.  New in arc3.")
 )
 
 (newtable "Web server configuration variables"
@@ -194,6 +194,6 @@
 (mac timed-aform2 "genurl lasts f [body ...]" "timed-aform with ignored genurl argument.")
 (def logfile-name "type" "Creates logfile name for the given type. New in arc3." (tests (logfile-name "gif")))
 (def sortable "table comparison-fn" "Sorts a table.  Default comparison is >.  New in arc3." (tests (sortable (obj 'a 5 'b 2 'c 4))))
-(def new-bgthread "id f sec" "Creates a background thread with the given id tha will run f every sec seconds.  Any existing thread with the same id is terminated.  New in arc3.")
+(def new-bgthread "id f sec" "Creates a background thread with the given id that will run f every sec seconds.  Any existing thread with the same id is terminated.  New in arc3.")
 )
 )

@@ -308,7 +308,7 @@ arc> (with (x 3 y 4)
 5
 ```
 
-So far we've only had things printed out implicity as a result of
+So far we've only had things printed out implicitly as a result of
 evaluating them.  The standard way to print things out in the middle
 of evaluation is with `pr` or `prn`.  They take multiple arguments and
 print them in order; `prn` also prints a newline at the end.  Here's
