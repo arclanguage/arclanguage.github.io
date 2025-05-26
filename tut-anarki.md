@@ -221,7 +221,7 @@ arc> (average 2 4)
 
 The body of the function consists of one expression, `(/ (+ x y) 2)`.
 It's common for functions to consist of one expression; in purely
-functional code (code with no side-effects) they always do.
+functional code (code with no side effects) they always do.
 
 Notice that `def`, like `=`, doesn't evaluate all its arguments.  It
 is another of those operators with its own evaluation rule.
@@ -430,7 +430,7 @@ arc> (def mylen (xs)
 #<procedure: mylen>
 ```
 
-If the list is `nil` the function will immediately return 0.  Otherwise
+If the list is `nil` the function will immediately return 0.  Otherwise,
 it returns 1 more than the length of the `cdr` of the list.
 
 ```
@@ -941,7 +941,7 @@ definition, but with def replaced by mac.
 
 What this macro says is that whenever the expression (foo) occurs
 in your code, it shouldn't be evaluated in the normal way like a
-function call.  Instead it should be replaced by the result of
+function call.  Instead, it should be replaced by the result of
 evaluating the body of the macro definition, (list '+ 1 2).
 This is called the "expansion" of the macro call.
 
@@ -1306,7 +1306,7 @@ first Lisp implementations.  This probably prevented people from
 realizing they hadn't originally been needed.  But most `cond`s in
 the wild seem to occur in purely functional code, and thus pay the
 cost in parens of implicit `progn` without actually needing it.  My
-experience so far suggests it's a net win to offer `progn` *a la carte*
+experience so far suggests it's a net win to offer `progn` *à la carte*
 instead of combining it with the default conditional operator.
 Having to use explicit `do`s may even be an advantage, because it
 calls attention to nonfunctional code.
