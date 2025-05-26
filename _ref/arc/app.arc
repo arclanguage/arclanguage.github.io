@@ -387,7 +387,7 @@
 
 ; (= fail* (uniq))
 
-(def fail* ()) ; coudn't possibly come back from a form
+(def fail* ()) ; couldn't possibly come back from a form
   
 ; Takes a list of fields of the form (type label value view modify) and 
 ; a fn f and generates a form such that when submitted (f label newval) 

@@ -9,7 +9,7 @@
   
 ; main reader function for []s
 ; recursive read starts with default readtable's [ parser,
-; but nested reads still use the curent readtable:
+; but nested reads still use the current readtable:
 
 (define (read-square-brackets ch port src line col pos)
   `(fn (_)

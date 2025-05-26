@@ -212,7 +212,7 @@ before its definition
     <td class='arc'><a name='uform'></a>
 <img src='macro.gif' title='Macro'/>
 <span class='op'>uform</span> <span class='args'>user req after [body ...]</span>
-    <div class='desc'>Generates form that ensures it was submitted by <code>user</code> (by using <code>when-umatch</code>).  <code>body</code> outputs the form body to stdout.  After submission, the continuation code <code>after</code> is executed; <code>req</code> specifies the varible name in <code>after</code> to receive the request.</div>
+    <div class='desc'>Generates form that ensures it was submitted by <code>user</code> (by using <code>when-umatch</code>).  <code>body</code> outputs the form body to stdout.  After submission, the continuation code <code>after</code> is executed; <code>req</code> specifies the variable name in <code>after</code> to receive the request.</div>
     </td>
     <td class='arc'><pre>
 &gt;(uform user req (prn "Result") (prn "The form") (submit))
@@ -223,7 +223,7 @@ before its definition
     <td class='arc'><a name='urform'></a>
 <img src='macro.gif' title='Macro'/>
 <span class='op'>urform</span> <span class='args'>user req after [body ...]</span>
-    <div class='desc'>Generates form with redirection target with guard that <code>user</code> submitted it.  After submission, the continuation expression <code>after</code> is executed and must return the redirect string; <code>req</code> specifies the varible name in <code>after</code> to receive the request.</div>
+    <div class='desc'>Generates form with redirection target with guard that <code>user</code> submitted it.  After submission, the continuation expression <code>after</code> is executed and must return the redirect string; <code>req</code> specifies the variable name in <code>after</code> to receive the request.</div>
     </td>
     <td class='arc'><pre>
 &gt;(urform user req "newpage" (prn "Form") (submit))
@@ -712,7 +712,7 @@ a b c</textarea>
     <td class='arc'><a name='text-rows'></a>
 <img src='proc.gif' title='Procedure'/>
 <span class='op'>text-rows</span> <span class='args'>text width [pad]</span>
-    <div class='desc'>Detemines how many rows to hold <code>text</code> based on <code>width</code> and padding.</div>
+    <div class='desc'>Determines how many rows to hold <code>text</code> based on <code>width</code> and padding.</div>
     </td>
     <td class='arc'><pre>
 &gt;(text-rows "abcde" 2)

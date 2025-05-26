@@ -6,7 +6,7 @@
 (def predicate nonwhite "c" "Predicate to test if a character is not whitespace (space, newline, tab, or return)." (tests (nonwhite #\tab) (nonwhite #\a)))
 (def predicate letter "c" "Predicate to test if a character is alphabetic.  New in arc3." (tests (letter #\A) (letter #\2)))
 (def predicate alphadig "c" "Predicate to test if a character is alphabetic or a digit." (tests (alphadig #\A) (alphadig #\2)))
-(def predicate punc "c" "Predicate to detemine if c is a punctuation character in the set: .,;:!?" (tests (punc #\.) (punc #\a) (punc ".")))
+(def predicate punc "c" "Predicate to determine if c is a punctuation character in the set: .,;:!?" (tests (punc #\.) (punc #\a) (punc ".")))
 (def downcase "str" "Converts a string, character, or symbol to lower case.  This only converts ASCII; Unicode is unchanged." (tests (downcase "abcDEF123") (downcase #\A) (downcase 'abcDEF123)))
 (def upcase "str" "Converts a string, character, or symbol to lower case.  This only converts ASCII; Unicode is unchanged." (tests (upcase "abcDEF123") (upcase #\a) (upcase 'abcDEF123)))
 
